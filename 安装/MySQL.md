@@ -62,28 +62,28 @@ net start mysql
 
 ### MySQL 8.0 + (Linux安装)
 #### 1.查看可以安装哪些安装包
-```sh
+```shell script
 yum repolist all | grep mysql
 rpm -pa |grep mysql
 rpm -pa |grep mariadb
 ```
 #### 2.删除之前的
-```sh
+```shell script
 yum remove ***
 rpm -ev ***
 ```
 #### 3.安装前先添加mysql组,和mysql用户
-```sh
+```shell script
 groupadd mysql
 useradd -r -g mysql mysql
 chown -R mysql:mysql /opt/software/mysql-8.0.21
 ```
 #### 4.安装,这里记一下密码
-```sh
+```shell script
 bin/mysqld --initialize --user=mysql --basedir=/opt/software/mysql-8.0.21 --datadir=/opt/software/mysql-8.0.21/data
 ```
 #### 5.然后记得检查下配置文件是否存在,没有的话手动添加
-```sh
+```shell script
 vim /etc/my.cnf
 
 [mysqld]
@@ -91,7 +91,7 @@ basedir=/opt/software/mysql-8.0.21
 datadir=/opt/software/mysql-8.0.21/data
 ```
 #### 6.添加服务并启动,重启记得先停止!!!
-```sh
+```shell script
 cd support-files/
 cp mysql.server /etc/init.d/mysql 
 chmod +x /etc/init.d/mysql
@@ -118,7 +118,7 @@ flush privileges;
 ### 设置主从配置
 #### 原理 master:每产生磁盘变化就写进binlog日志 slave:转换成repaylog 
 #### 1.master配置文件
-```sh
+```shell script
 server-id=102
 log-bin=mysql-bin
 # statemet(语句变化):影响很多行的情况适合用语句模式
@@ -126,7 +126,7 @@ log-bin=mysql-bin
 binlog-format=mixed
 ``` 
 #### 2.slave配置文件
-```sh
+```shell script
 server-id=201
 relay-log=mysql-relay
 ```
@@ -157,14 +157,14 @@ stop slave;
 
 ### 设置主主配置
 #### 1.master配置文件
-```sh
+```shell script
 server-id=102
 log-bin=mysql-bin
 relay-log=mysql-relay
 binlog-format=mixed
 ```
 #### 2.slave配置文件
-```sh
+```shell script
 server-id=201
 log-bin=mysql-bin
 relay-log=mysql-relay
@@ -211,7 +211,7 @@ ll /usr/lib64/libtinfo.so.5.9
 ```
 
 ### 范例配置文件,不要设置成UTF-8格式
-```sh
+```shell script
 [mysqld]
 # skip-grant-tables
 # 设置3306端口
@@ -310,4 +310,4 @@ local-infile=1
 # 设置mysql客户端连接服务端时默认使用的端口和字符集
 port=3306
 default-character-set=utf8mb4
-```sh
+```shell script
