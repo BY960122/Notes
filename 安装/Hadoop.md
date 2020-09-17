@@ -1,16 +1,16 @@
-### 1.关闭防火墙
+# 1.关闭防火墙
 ```shell script
 systemctl stop firewalld.service
 systemctl disable firewalld.service
 ```
-### 2.配置主机名  
+# 2.配置主机名  
 ```shell script
 vim /etc/hosts
 192.168.1.201 by201
 192.168.1.211 by211
 192.168.1.212 by212
 ```
-### 3.配置免密码登录
+# 3.配置免密码登录
 ```shell script
 vim /etc/hosts
 
@@ -25,7 +25,7 @@ ssh-copy-id -i /root/.ssh/id_rsa.pub root@192.168.1.201
 ssh-copy-id -i /root/.ssh/id_rsa.pub root@192.168.1.202
 ssh-copy-id -i /root/.ssh/id_rsa.pub root@192.168.1.203
 ```
-### 4.配置Java,Zookeeper
+# 4.配置Java,Zookeeper
 ```shell script
 cd /opt/software/apache-zookeeper-3.6.1-bin/conf/
 cp zoo.cfg.bak zoo.cfg
@@ -45,7 +45,7 @@ scp -r /opt/software/apache-zookeeper-3.6.1-bin/ 192.168.1.202:/opt/software/
 # 每台机器唯一的 id 
 echo 1 > /opt/software/apache-zookeeper-3.6.1-bin/zookeeper/myid
 ```
-### 5.修改环境变量
+# 5.修改环境变量
 ```shell script
 vim ~/.bash_profile
 
@@ -89,15 +89,15 @@ export PATH
 
 source ~/.bash_profile
 ```
-### 6.修改配置文件
-#### hadoop-env.sh 
+# 6.修改配置文件
+## hadoop-env.sh 
 ```shell script
 export JAVA_HOME=/opt/software/jdk1.8.0_241
 export HADOOP_HOME=/opt/software/hadoop-3.2.1
 export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
 export TEZ_HOME=/opt/software/tez-0.10.1
 ```
-#### hdfs-site.xml
+## hdfs-site.xml
 ```xml
 <!--表示数据块的冗余度，默认：3-->
 <property>
@@ -115,7 +115,7 @@ export TEZ_HOME=/opt/software/tez-0.10.1
         <value>192.168.1.201:50070</value>
 </property>
 ```
-#### core-site.xml
+## core-site.xml
 ```xml
 <!--配置NameNode地址,9000是RPC通信端口-->
 <property>
@@ -137,7 +137,7 @@ export TEZ_HOME=/opt/software/tez-0.10.1
         <value>*</value>
 </property>
 ```
-#### mapred-site.xml
+## mapred-site.xml
 ```xml
 <!--MR程序运行的框架-->
 <property>
@@ -178,7 +178,7 @@ export TEZ_HOME=/opt/software/tez-0.10.1
         <value>HADOOP_MAPRED_HOME=$HADOOP_HOME</value>
 </property>
 ```
-#### yarn-site.xml
+## yarn-site.xml
 ```xml
 <!--Yarn的主节点RM的位置-->
 <property>
@@ -211,42 +211,42 @@ export TEZ_HOME=/opt/software/tez-0.10.1
         <description>Ratio between virtual memory to physical memory when setting memory limits for containers</description>
 </property>
 ```
-#### slaves
+## slaves
 ```shell script
 by211
 by212
 by213
 ```
-### 7.格式化主节点NameNode
+# 7.格式化主节点NameNode
 ```shell script
 hdfs namenode -format
 
 scp -r /opt/software/hadoop-3.2.1/ 192.168.1.202:/opt/software/hadoop-3.2.1/
 scp -r /opt/software/hadoop-3.2.1/ 192.168.1.203:/opt/software/hadoop-3.2.1/
 ```
-### 8.主节点启动
+# 8.主节点启动
 ```shell script
 sh /opt/software/hadoop-3.2.1/sbin/start-all.sh
 ```
-### 9.验证hadoop服务是否正常启动：打印HDFS的报告
+# 9.验证hadoop服务是否正常启动：打印HDFS的报告
 ```shell script
 hdfs dfsadmin -report  
 ```
-### 10.测试.随便写一个文本上传
+# 10.测试.随便写一个文本上传
 ```shell script
 hdfs dfs -put /home/test.txt /data/
 hadoop jar /opt/software/hadoop-3.2.1/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.2.1.jar wordcount /data/test.txt /out/test1
 ```
-### 11.一些参考信息
-#### HDFS管理界面 
+# 11.一些参考信息
+## HDFS管理界面 
 ```http
 192.168.1.201:50070
 ```
-#### SecondaryNamenode管理界面
+## SecondaryNamenode管理界面
 ```http
 192.168.1.201:50090
 ```
-#### YARN管理界面
+## YARN管理界面
 ```http
 192.168.1.201:8088
 ```

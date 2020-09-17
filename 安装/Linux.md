@@ -1,9 +1,9 @@
-### 下载地址
+# 下载地址
 ```http
 https://mirrors.aliyun.com/centos/
 ```
 
-### 修改Hostname
+# 修改Hostname
 ```shell script
 vim /etc/hostname
 by201
@@ -17,7 +17,7 @@ vim /etc/sysconfig/network
 hostname=by201
 ```
 
-### 修改网卡配置 - 网络地址转换(NAT)模式
+# 修改网卡配置 - 网络地址转换(NAT)模式
 ```shell script
 vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
 ONBOOT=yes
@@ -27,7 +27,7 @@ ip addr
 ipconfig
 ```
 
-### 修改网卡配置 - 桥接网卡模式
+# 修改网卡配置 - 桥接网卡模式
 ```shell script
 BOOTPROTO=static
 ONBOOT=yes
@@ -37,7 +37,7 @@ GETEWAY=192.168.1.1
 DNS1=192.168.1.1
 ```
 
-### Centos7修改repo源配置
+# Centos7修改repo源配置
 ```
 vim /etc/yum.repos.d/CentOS-Base.repo
 [base]
@@ -52,7 +52,7 @@ gpgcheck=1
 gpgkey=http://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-7
 ```
 
-### Centos8修改repo源配置
+# Centos8修改repo源配置
 ```shell script
 cd /etc/yum.repos.d/
 
@@ -106,28 +106,28 @@ gpgcheck=1
 gpgkey=https://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-Official
 ```
 
-### 测试
+# 测试
 ```shell script
 sudo dhclient
 yum -y update
 yum install -y vim net-tools lsof tree ntp npm nodejs git zip mlocate httpd createrepo iptables iptables-services tar chrony
 ```
 
-### iptables安装
+# iptables安装
 ```http
 https://www.cnblogs.com/kreo/p/4368811.html
 ```
-#### 1.安装 iptables
+## 1.安装 iptables
 ```shell script
 yum install -y iptables iptables-services
 ```
-#### 2.禁用 firewalld
+## 2.禁用 firewalld
 ```shell script
 systemctl status firewalld
 systemctl stop firewalld
 systemctl mask firewalld
 ```
-#### 3.设置开放端口,必须写在黄色上面
+## 3.设置开放端口,必须写在黄色上面
 ```shell script
 vim /etc/sysconfig/iptables 
 -A INPUT -p tcp --dport 21 -j ACCEPT
@@ -139,14 +139,14 @@ vim /etc/sysconfig/iptables
 -A INPUT -j REJECT --reject-with icmp-host-prohibited
 -A FORWARD -j REJECT --reject-with icmp-host-prohibited
 ```
-#### 4.启用 iptables
+## 4.启用 iptables
 ```
 service iptables save
 systemctl enable iptables.service
 systemctl start iptables.service
 ```
 
-### ssh免密码登录配置
+# ssh免密码登录配置
 ```shell script
 vim /etc/hosts
 
@@ -162,21 +162,21 @@ ssh-copy-id -i /root/.ssh/id_rsa.pub root@192.168.1.202
 ssh-copy-id -i /root/.ssh/id_rsa.pub root@192.168.1.203
 ```
 
-### 创建本地云源repo压缩包
-#### 1.上传Centos镜像
-#### 2.挂载到一个目录
+# 创建本地云源repo压缩包
+## 1.上传Centos镜像
+## 2.挂载到一个目录
 ```shell script
 mkdir /iso
 mount Centos** /iso
 ```
-#### 3.进入目录
+## 3.进入目录
 ```
 cd /iso/AppStream/Packages
 createrepo /var/www/html/openstack
 ```
 
-### 一些报错信息
-### 配置Windows ftp linux 报错:200 PORT command successful. Consider using PASV.425 Failed to establish connection.
+# 一些报错信息
+# 配置Windows ftp linux 报错:200 PORT command successful. Consider using PASV.425 Failed to establish connection.
 ```shell script
 vim /etc/vsftpd/vsftpd.conf
 pasv_enable=YES
@@ -189,23 +189,23 @@ vim /etc/sysconfig/iptables
 vim /etc/selinux/config
 SELINUX=disabled
 ```
-### ping baidu.com 出现 connect: network is unreachable
+# ping baidu.com 出现 connect: network is unreachable
 ```shell script
 sudo dhclient
 sudo systemctl stop dhcpcd
 sudo systemctl start dhcpcd
 ```
 
-### Centos 8 过期的一些包
-#### unzip 改为 zip
-#### ntpdate 改为 chrony
-### 解除挂载报错:target is busy
+# Centos 8 过期的一些包
+## unzip 改为 zip
+## ntpdate 改为 chrony
+# 解除挂载报错:target is busy
 ```shell script
 yum install psmisc
 fuser -mv /iso # 把下面的进程kill掉
 ```
 
-### 所有命令都无法使用
+# 所有命令都无法使用
 ```shell script
 export PATH=/bin:/usr/bin:$PATH
 source ~/.bash_profile 

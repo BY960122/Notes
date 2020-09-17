@@ -1,29 +1,29 @@
-### 下载地址
+# 下载地址
 ```http
 https://downloads.mysql.com/archives/community/
 https://mirrors.cloud.tencent.com/mysql/downloads/MySQL-8.0/
 ```
 
-### MySQL集群安裝
+# MySQL集群安裝
 ```http
 https://www.cnblogs.com/gomysql/p/3664783.html
 https://www.cnblogs.com/gomysql/
 ```
 
-#### MySQL 8.0 + (windows安装)
-##### 1.配置环境变量 
-##### 2.配置my.ini 文件
-##### 3.进入安装目录下执行
+# MySQL 8.0 + (windows安装)
+## 1.配置环境变量 
+## 2.配置my.ini 文件
+## 3.进入安装目录下执行
 ```txt 
 mysqld --initialize --console (这里会产生密码)
 ```
-##### 4.再执行
+## 4.再执行
 ```txt
 mysqld --install mysql
 net start mysql
 ```
 
-##### 5.进入mysql 修改密码(这是必须是第一步) 
+## 5.进入mysql 修改密码(这是必须是第一步) 
 ```sql
 set global validate_password.length = 6;
 set global validate_password.policy = 0;
@@ -31,58 +31,58 @@ update mysql.user set host = '%' where user = 'root';
 grant all on *.* to 'root'@'%';
 alter user root@'%' identified by 'By9216446o6'; 
 ```
-##### 6.赋予权限 
+## 6.赋予权限 
 ```sql
 grant all on *.* to 'root'@'%';
 ```
-##### 7.刷新权限 
+## 7.刷新权限 
 ```sql
 flush privileges;
 ```
-##### 8.查看权限 
+## 8.查看权限 
 ```sql
 show grants for 'root'@'%';
 ```
 
-### MySQL 8.0 + (windows升级)
-##### 1.删除原有的mysql服务
+# MySQL 8.0 + (windows升级)
+## 1.删除原有的mysql服务
 ```txt
 sc delete mysql
 ```
-##### 2.复制原安装目录的data文件夹和my.ini到新目录
-##### 3.修改环境变量
-##### 4.安装mysql
+## 2.复制原安装目录的data文件夹和my.ini到新目录
+## 3.修改环境变量
+## 4.安装mysql
 ```txt
 mysqld install
 ```
-##### 5.启动mysql,配置文件必须是ANSI格式
+## 5.启动mysql,配置文件必须是ANSI格式
 ```txt
 net start mysql
 ```
 
-### MySQL 8.0 + (Linux安装)
-#### 1.查看可以安装哪些安装包
+# MySQL 8.0 + (Linux安装)
+## 1.查看可以安装哪些安装包
 ```shell script
 yum repolist all | grep mysql
 rpm -pa |grep mysql
 rpm -pa |grep mariadb
 ```
-#### 2.删除之前的
+## 2.删除之前的
 ```shell script
 yum remove ***
 rpm -ev ***
 ```
-#### 3.安装前先添加mysql组,和mysql用户
+## 3.安装前先添加mysql组,和mysql用户
 ```shell script
 groupadd mysql
 useradd -r -g mysql mysql
 chown -R mysql:mysql /opt/software/mysql-8.0.21
 ```
-#### 4.安装,这里记一下密码
+## 4.安装,这里记一下密码
 ```shell script
 bin/mysqld --initialize --user=mysql --basedir=/opt/software/mysql-8.0.21 --datadir=/opt/software/mysql-8.0.21/data
 ```
-#### 5.然后记得检查下配置文件是否存在,没有的话手动添加
+## 5.然后记得检查下配置文件是否存在,没有的话手动添加
 ```shell script
 vim /etc/my.cnf
 
@@ -90,7 +90,7 @@ vim /etc/my.cnf
 basedir=/opt/software/mysql-8.0.21
 datadir=/opt/software/mysql-8.0.21/data
 ```
-#### 6.添加服务并启动,重启记得先停止!!!
+## 6.添加服务并启动,重启记得先停止!!!
 ```shell script
 cd support-files/
 cp mysql.server /etc/init.d/mysql 
@@ -99,7 +99,7 @@ chkconfig --add mysql
 systemctl start mysql
 systemctl status mysql
 ```
-#### 7.连接mysql
+## 7.连接mysql
 ```sql
 set global validate_password.length = 8;
 set global validate_password.policy = 0;
@@ -108,16 +108,16 @@ grant all on *.* to 'root'@'%';
 alter user root@'%' identified by 'By9216446o6';
 flush privileges;
 ```
-#### 8.新建MySQL用户
+## 8.新建MySQL用户
 ```sql
 create user 'hadoop'@'%' identified by 'hadoop';  
 grant all on *.* to 'hadoop'@'%' with grant option;
 flush privileges;
 ```
 
-### 设置主从配置
-#### 原理 master:每产生磁盘变化就写进binlog日志 slave:转换成repaylog 
-#### 1.master配置文件
+# 设置主从配置
+## 原理 master:每产生磁盘变化就写进binlog日志 slave:转换成repaylog 
+## 1.master配置文件
 ```shell script
 server-id=102
 log-bin=mysql-bin
@@ -125,20 +125,20 @@ log-bin=mysql-bin
 # row(磁盘行数): insert,update,影响单行适合磁盘模式
 binlog-format=mixed
 ``` 
-#### 2.slave配置文件
+## 2.slave配置文件
 ```shell script
 server-id=201
 relay-log=mysql-relay
 ```
-#### 3.分别启动主从mysql
-#### 4.登录master,创建master用户
+## 3.分别启动主从mysql
+## 4.登录master,创建master用户
 ```sql
 create user 'master'@'localhost' identified by 'By9216446o6';
 grant all on *.* to 'master'@'localhost';
 update mysql.user set host = '%' where user = 'master';
 flush privileges;
 ```
-#### 5.登录slave
+## 5.登录slave
 ```sql
 change master to
 master_host='192.168.0.201',
@@ -147,7 +147,7 @@ master_password='By921644606',
 master_log_file='mysql-bin.000001',
 master_log_pos=***;
 ```
-#### 6.查看状态,常用命令
+## 6.查看状态,常用命令
 ```sql
 show slave status;
 reset slave;
@@ -155,22 +155,22 @@ start slave;
 stop slave;
 ```
 
-### 设置主主配置
-#### 1.master配置文件
+# 设置主主配置
+## 1.master配置文件
 ```shell script
 server-id=102
 log-bin=mysql-bin
 relay-log=mysql-relay
 binlog-format=mixed
 ```
-#### 2.slave配置文件
+## 2.slave配置文件
 ```shell script
 server-id=201
 log-bin=mysql-bin
 relay-log=mysql-relay
 binlog-format=mixed
 ```
-#### 3.两个服务器同时建立master帐号
+## 3.两个服务器同时建立master帐号
 ```sql
 create user 'master'@'localhost' identified by 'By9216446o6';
 grant all on *.* to 'master'@'localhost';
@@ -184,23 +184,23 @@ master_log_file='mysql-bin.000001',
 master_log_pos=***;
 ```
 
-#### 4.同时启动
+## 4.同时启动
 ```sql
 start slave;
 ```
 
-### 一些报错
-#### 主主复制,主键冲突问题
-##### 分别让2台服务器以奇数和双数自增
+# 一些报错
+## 主主复制,主键冲突问题
+### 分别让2台服务器以奇数和双数自增
 ```sql
 set global auto_increment__increment=2;   #每步增长2
 set global auto_increment_offset=1;     #从1开始增长,另外一台只需要修改这里为2
 ```
-#### MySQL 8.0.21 x64安装,发生系统错误 193.不是有效的Win32程序
+## MySQL 8.0.21 x64安装,发生系统错误 193.不是有效的Win32程序
 ```txt
 进入 mysql\bin目录下 查看 mysqld文件,是不是有一个为0kb的,删掉它
 ```
-#### 初始化数据库报错:bin/mysqld: error while loading shared libraries: libaio.so.1: cannot open shared object file: No such file or directory
+## 初始化数据库报错:bin/mysqld: error while loading shared libraries: libaio.so.1: cannot open shared object file: No such file or directory
 ```txt
 进入mysql-8.0.21/bin 目录执行,查看各个依赖项
 ldd mysql 
@@ -210,7 +210,7 @@ scp /usr/lib64/libtinfo.so.5 192.168.1.201:/usr/lib64/
 ll /usr/lib64/libtinfo.so.5.9
 ```
 
-### 范例配置文件,不要设置成UTF-8格式
+# 范例配置文件,不要设置成UTF-8格式
 ```shell script
 [mysqld]
 # skip-grant-tables
