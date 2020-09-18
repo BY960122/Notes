@@ -1,14 +1,10 @@
 # 下载地址
-```http
-https://downloads.mysql.com/archives/community/
-https://mirrors.cloud.tencent.com/mysql/downloads/MySQL-8.0/
-```
+- https://downloads.mysql.com/archives/community/
+- https://mirrors.cloud.tencent.com/mysql/downloads/MySQL-8.0/
 
 # MySQL集群安裝
-```http
-https://www.cnblogs.com/gomysql/p/3664783.html
-https://www.cnblogs.com/gomysql/
-```
+- https://www.cnblogs.com/gomysql/p/3664783.html
+- https://www.cnblogs.com/gomysql/
 
 # MySQL 8.0 + (windows安装)
 ## 1.配置环境变量 
@@ -22,7 +18,6 @@ mysqld --initialize --console (这里会产生密码)
 mysqld --install mysql
 net start mysql
 ```
-
 ## 5.进入mysql 修改密码(这是必须是第一步) 
 ```sql
 set global validate_password.length = 6;
@@ -183,7 +178,6 @@ master_password='By921644606',
 master_log_file='mysql-bin.000001',
 master_log_pos=***;
 ```
-
 ## 4.同时启动
 ```sql
 start slave;
@@ -248,54 +242,50 @@ default-storage-engine=INNODB
 # 默认使用“mysql_native_password”插件认证
 default_authentication_plugin=mysql_native_password
 
-#MySQL启动后又停止
-#my.ini配置文件存储格式必须为ANSI
-#bind-address = 127.0.0.1
-
-#[Err] 1055 Group by警告
+# [Err] 1055 Group by警告
 sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
 
-#[Err] 1148 导出受限
+# [Err] 1148 导出受限
 secure-file-priv="D:\"
 
 # [Err] 1148 (42000): The used command is not allowed with this MySQL version
 #这里需要mysqld 和 mysql 同时设置
 local-infile=1
 
-#[Err] 1418 创建函数,存储过程,触发器
+# [Err] 1418 创建函数,存储过程,触发器
 log-bin-trust-function-creators=1
 
-#切分ibdata1
+# 切分ibdata1
 innodb_file_per_table=1
 
-#设置时区
+# 设置时区
 default-time-zone='+08:00'
 
-#插入慢优化,配置前先备份旧配置,再到数据库查看相应默认值,一点点修改.
-#=1最安全,=2,系统崩溃时会丢失事物,=0裸奔,最快.有事物慎用
+# 插入慢优化,配置前先备份旧配置,再到数据库查看相应默认值,一点点修改.
+# =1最安全,=2,系统崩溃时会丢失事物,=0裸奔,最快.有事物慎用
 innodb_flush_log_at_trx_commit=1
-#插入缓冲区大小,默认8M
+# 插入缓冲区大小,默认8M
 bulk_insert_buffer_size=1024M
-#日志缓存,如果insert很大,建议调大,以节约磁盘I/O
+# 日志缓存,如果insert很大,建议调大,以节约磁盘I/O
 innodb_log_buffer_size=1024M
-#日志文件大小(innodb_log_file_size*innodb_log_files_in_group(default 2))*0.75=日志差值(show engine innodb status)
+# 日志文件大小(innodb_log_file_size*innodb_log_files_in_group(default 2))*0.75=日志差值(show engine innodb status)
 #innodb_log_file_size=1024M
-#主要缓存innodb表的索引，数据，插入数据时的缓冲
+# 主要缓存innodb表的索引，数据，插入数据时的缓冲
 innodb_buffer_pool_size=1024M
-#类似于innodb_buffer_pool_size,它的对象是myisam引擎
+# 类似于innodb_buffer_pool_size,它的对象是myisam引擎
 key_buffer_size=1024M
-#用于在表空间已满时的增量大小,默认4M,Mysql8.0配置不成功
-##innodb_authoextend_increment=256M
-#自动提交事物,关闭效率更高,如果用到事物建议默认为1
-#autocommit=1
+# 用于在表空间已满时的增量大小,默认4M,Mysql8.0配置不成功
+# innodb_authoextend_increment=256M
+# 自动提交事物,关闭效率更高,如果用到事物建议默认为1
+# autocommit=1
 
-#实时更新tables表信息,默认86400为一天
+# 实时更新tables表信息,默认86400为一天
 information_schema_stats_expiry=0
 
-#主从数据库配置
-#server-id=102
-#log-bin=mysql-bin
-#binlog-format=mixed
+# 主从数据库配置
+# server-id=102
+# log-bin=mysql-bin
+# binlog-format=mixed
 
 [mysql]
 
@@ -310,4 +300,4 @@ local-infile=1
 # 设置mysql客户端连接服务端时默认使用的端口和字符集
 port=3306
 default-character-set=utf8mb4
-```shell script
+```

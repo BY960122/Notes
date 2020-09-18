@@ -1,7 +1,5 @@
 # 下载地址
-```https
-https://www.mongodb.com/download-center#community
-```
+- https://www.mongodb.com/download-center#community
 
 # Windows安装
 ## 1.初始化数据目录,记得新建目录

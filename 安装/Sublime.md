@@ -1,7 +1,9 @@
-# Sublime破解
-```http
-https://longhujing.github.io/2019/12/14/Sublime-Text3-%E7%A0%B4%E8%A7%A3%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/
-https://hexed.it/
+# 下载 Sublime
+- https://www.sublimetext.com/3
+
+## Sublime破解
+- https://longhujing.github.io/2019/12/14/Sublime-Text3-%E7%A0%B4%E8%A7%A3%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/
+- https://hexed.it/
 ```
 ## 1.工具栏上找到Open file,上传 sublime_text.exe
 ## 2.按住Ctrl + f,搜索97 94 0D,修改为00 00 00
@@ -37,9 +39,9 @@ E627DDBA 960A2153 69A2D98A C87C0607
 1342224D 44D90641 33A3B9F2 46AADB8F
 ```
 
-# Sublime 编译 Java
-## 1.直接在安装路径下找到\Packages\Java.sublime-package文件
-## 2.用解压缩软件打开,找到JavaC.sublime-build文件,将 shell_cmd 中的javac改成javaRun,保存
+## Sublime 编译 Java
+### 1.直接在安装路径下找到\Packages\Java.sublime-package文件
+### 2.用解压缩软件打开,找到JavaC.sublime-build文件,将 shell_cmd 中的javac改成javaRun,保存
 ```json
 {
 	"shell_cmd": "javaRun \"$file\"",
@@ -49,7 +51,7 @@ E627DDBA 960A2153 69A2D98A C87C0607
 }
 # 打开后右键编译,再保存,或者
 ```
-## 3.在jdk安装路径下的bin目录中新建一个javaRun.bat批处理文件,内容如下：
+### 3.在jdk安装路径下的bin目录中新建一个javaRun.bat批处理文件,内容如下：
 ```sh
 	# Java8
 @ECHO OFF
@@ -77,24 +79,25 @@ if %ERRORLEVEL% GTR 0 (
 echo OFF
 )
 ```
-## 4.测试
+### 4.测试
 ```txt
 写一个 hello world程序
 ctrl+B 运行
 ```
-# Sublime 编译 Scala
-## 1.选择tools -> build system -> new build system
+
+## Sublime 编译 Scala
+### 1.选择tools -> build system -> new build system
 ```json
 {
 	"shell_cmd": "scala \"$file\"",
 	"selector": "source.scala"
 }
 ```
-## 2.保存文件名为: Scala.sublime-build
+### 2.保存文件名为: Scala.sublime-build
 
-# Sublime 个人配置
-## 1.点击菜单栏“Preferences”=> "Settings-User" 进入个人参数设置页面；
-## 2.在大括号"｛｝"里面插入下面代码：
+## Sublime 个人配置
+### 1.点击菜单栏“Preferences”=> "Settings-User" 进入个人参数设置页面；
+### 2.在大括号"｛｝"里面插入下面代码：
 ```json
 {
 	"update_check": false, // 不提示更新
@@ -102,7 +105,8 @@ ctrl+B 运行
 	"word_wrap": "false", // 数据不换行显示
 }
 ```
-# Sublime 快捷键
+
+## Sublime 快捷键
 ```sh
 # 删除行
 ctrl+shift+k
@@ -122,8 +126,9 @@ ctrl+p,输入@查找当前文件
 # 选中括号中的内容
 ctrl+shift+m
 ```
-# Sumlime 添加到右键快捷菜单
-## 注意文件编码设置为ANSI,内容里面有一个是文件,有一个是目录
+
+## Sumlime 添加到右键快捷菜单
+### 注意文件编码设置为ANSI,内容里面有一个是文件,有一个是目录
 ```sh
 # 把以下代码,复制到SublimeText3的安装目录,然后重命名为：sublime_addright.reg,然后双击就可以了
 
@@ -140,14 +145,12 @@ Windows Registry Editor Version 5.00
 [HKEY_CLASSES_ROOT\Directory\shell\SublimeText3\command]
 @="D:\Mysoft\SublimeText3\sublime_text.exe %1"
 ```
-# 一些实用的Package
-```http
-<!-- 离线下载 -->
-https://github.com/wbond/package_control
-https://packagecontrol.io/
-```
-## 按住 ctrl+shift+P 输入 install 选择 install package
+
+### 一些实用的Package
+- https://github.com/wbond/package_control
+- https://packagecontrol.io/
 ```txt
+## 按住 ctrl+shift+P 输入 install 选择 install package
 Chinese Localization
 Bracket Highlighter
 ConvertToUTF8

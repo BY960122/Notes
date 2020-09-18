@@ -1,4 +1,4 @@
-# 导入导出
+## 导入导出
 ```sql
 -- 导入文件
 -- 用navicat不能使用local关键字
@@ -35,7 +35,7 @@ mysqldump -u root -p -n -t -d -r --triggers=false database > database.sql
 log-bin-trust-function-creators=1
 ```
 
-# 常用命令
+## 常用命令
 ```sql
 -- 修改mysql提示符
 prompt \u@\h \d>
@@ -100,7 +100,7 @@ select group_concat(id) from partition_list;
 reset query cache;
 ```
 
-# 日期
+## 日期
 ```sql
 -- 当前日期和时间
 select now();
@@ -131,7 +131,7 @@ select date(concat_ws('-',year(now()),elt(quarter(now()),1,4,7,10),1));
 select last_day(makedate(year(now()),1) + interval quarter(now())*3-1 month);
 ```
 
-# 事件
+## 事件
 ```sql
 -- 创建事件
     -- 重点人员轨迹信息,每2小时跑一次
@@ -170,7 +170,7 @@ where event_schema = 'bingo_zntszs';
 drop event test;
 ```
 
-# 分区表
+## 分区表
 ```sql
 -- 创建分区表
 create table partition_list(

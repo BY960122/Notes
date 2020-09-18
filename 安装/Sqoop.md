@@ -1,8 +1,7 @@
 # 下载 Sqoop
-```http
-http://mirror.bit.edu.cn/apache/sqoop/
-http://archive.apache.org/dist/sqoop/
-```
+- http://mirror.bit.edu.cn/apache/sqoop/
+- http://archive.apache.org/dist/sqoop/
+
 ## 1.修改配置文件
 ### qoop-env.sh
 ```sh

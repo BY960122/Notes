@@ -1,8 +1,6 @@
 # Windows安装
 ## 1.下载地址
-```http
-https://github.com/MSOpenTech/redis/releases
-```
+- https://github.com/MSOpenTech/redis/releases
 ## 2.进入安装目录.注册成服务
 ```sh
 redis-server.exe --service-install redis.windows.conf 

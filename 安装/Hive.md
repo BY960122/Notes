@@ -1,7 +1,6 @@
 # 下载 Hive
-```http
-http://archive.apache.org/dist/hive/
-```
+- http://archive.apache.org/dist/hive/
+
 ## 1.安装Hadoop
 ## 2.修改配置文件
 ### hive-env.sh

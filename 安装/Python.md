@@ -1,8 +1,7 @@
 # 下载 Python
-```http
-https://www.python.org/ftp/python/
-https://tecadmin.net/install-python-3-7-on-ubuntu-linuxmint/
-```
+- https://www.python.org/ftp/python/
+- https://tecadmin.net/install-python-3-7-on-ubuntu-linuxmint/
+
 ## 1.依赖准备
 ```sh
 yum install -y zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel 
@@ -21,9 +20,7 @@ python3.8 --version
 python3 --version
 ```
 ## 4.离线安装包
-```http
-https://pypi.org/
-```
+- https://pypi.org/
 ```sh
 # Windows
 python -m pip install xxx.whl

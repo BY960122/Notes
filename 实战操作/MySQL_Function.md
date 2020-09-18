@@ -1,4 +1,3 @@
-# 函数
 ## 模仿spilt函数
 ```sql
 -- 用法
@@ -15,23 +14,23 @@ create definer=`root`@`%` function `f_split_pos`(
             declare splitlen int;
             declare rs varchar(200);
             declare tmppos int;
-    #注意:sqlserver 的所有变量要加@,mysql不用
+    ##注意:sqlserver 的所有变量要加@,mysql不用
             set tmppos = 0;
             if ifnull(pos,0) = 0 
                 then set pos = 1;
             end if;
         
             if s not like concat('%',split)
-            #sqlserver '%' + 'split' 
+            ##sqlserver '%' + 'split' 
                 then set s = concat(s,split);
-                #sqlserver s + split
+                ##sqlserver s + split
             end if;
         
             set splitlen = length(concat(split,'a')) - 1;
-            #sqlserver len(split + 'a')
+            ##sqlserver len(split + 'a')
         
             while instr(s,split) > 0 do
-            #sqlserver charindex(split,s)
+            ##sqlserver charindex(split,s)
                 set tmppos = tmppos + 1;
             
                 if tmppos = pos 
@@ -39,9 +38,9 @@ create definer=`root`@`%` function `f_split_pos`(
                 end if;
             
                 set s = stuff(s,1,instr(s,split) + splitlen - 1,'');
-                #mysql自定义stuff函数: replace(f_old,substring(f_old,f_start,f_length),f_replace);
-                #sqlserver stuff(s,1,instr(s,split) + splitlen - 1,'');
-                #注释: stuff(1要放入字符串,2开始位置,3删除的长度,4用什么来替换)
+                ##mysql自定义stuff函数: replace(f_old,substring(f_old,f_start,f_length),f_replace);
+                ##sqlserver stuff(s,1,instr(s,split) + splitlen - 1,'');
+                ##注释: stuff(1要放入字符串,2开始位置,3删除的长度,4用什么来替换)
             end while;
         return ifnull(rs,'-1');
     end
@@ -105,6 +104,7 @@ CREATE DEFINER=`root`@`%` FUNCTION `bingo`.`f_split_pos`(
         return ifnull(rs,'-1');
     end
 ```
+
 ## 模仿实现排名函数
 ```sql
 -- 数据准备

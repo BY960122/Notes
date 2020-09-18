@@ -1,13 +1,11 @@
 # 下载 CDH
-```http
-https://blog.csdn.net/wsdc0521/article/details/108366867
-https://docs.cloudera.com/documentation/enterprise/6/release-notes/topics/rg_requirements_supported_versions.html#cm_cdh_compatibility
+- https://blog.csdn.net/wsdc0521/article/details/108366867
+- https://docs.cloudera.com/documentation/enterprise/6/release-notes/topics/rg_requirements_supported_versions.html#cm_cdh_compatibility
+- https://archive.cloudera.com/cdh6/6.3.2/parcels/CDH-6.3.2-1.cdh6.3.2.p0.1605554-el7.parcel
+- https://archive.cloudera.com/cdh6/6.3.2/parcels/manifest.json
+- https://archive.cloudera.com/cm6/6.3.1/repo-as-tarball/cm6.3.1-redhat7.tar.gz
+- https://archive.cloudera.com/cm6/6.3.1/allkeys.asc
 
-https://archive.cloudera.com/cdh6/6.3.2/parcels/CDH-6.3.2-1.cdh6.3.2.p0.1605554-el7.parcel
-https://archive.cloudera.com/cdh6/6.3.2/parcels/manifest.json
-https://archive.cloudera.com/cm6/6.3.1/repo-as-tarball/cm6.3.1-redhat7.tar.gz
-https://archive.cloudera.com/cm6/6.3.1/allkeys.asc
-```
 ## 1.时间同步
 ```sh
 yum install -y chrony

@@ -1,12 +1,15 @@
-# 1.修改配置文件
-## hadoop-env.sh
+# 下载 Hadoop
+- http://archive.apache.org/dist/hadoop/
+
+## 1.修改配置文件
+### hadoop-env.sh
 ```shell script
 export JAVA_HOME=/opt/software/jdk1.8.0_241
 export HADOOP_HOME=/opt/software/hadoop-3.2.1
 export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
 export TEZ_HOME=/opt/software/tez-0.10.1
 ```
-## core-site.xml
+### core-site.xml
 ```xml
 <configuration>
         <!-- 指定hdfs的nameservice为ns1 -->
@@ -40,7 +43,7 @@ export TEZ_HOME=/opt/software/tez-0.10.1
         </property>
 </configuration>
 ```
-## hdfs-site.xml
+### hdfs-site.xml
 ```xml
 <configuration> 
         <!--指定hdfs的nameservice为ns1，需要和core-site.xml中的保持一致 -->
@@ -113,7 +116,7 @@ export TEZ_HOME=/opt/software/tez-0.10.1
         </property>
 </configuration>
 ```
-## mapred-site.xml
+### mapred-site.xml
 ```xml
 <configuration>
         <!-- 设置名称 -->
@@ -156,8 +159,7 @@ export TEZ_HOME=/opt/software/tez-0.10.1
         </property>
 </configuration>
 ```
-
-## yarn-site.xml
+### yarn-site.xml
 ```xml
 <configuration>
         <!-- 开启RM高可靠 -->
@@ -250,32 +252,31 @@ export TEZ_HOME=/opt/software/tez-0.10.1
         </property>
 </configuration>
 ```
-
-# 2.启动Zookeeper集群
+## 2.启动Zookeeper集群
 ```shell script
 zkServer.sh start
 zkServer.sh status
 ```
-# 3.在两个主节点上启动journalnode
-## 做这一步之前先删除所有节点/opt/software/hadoop-3.2.1/data目录,然后再创建一个文件夹,确保一致
+## 3.在两个主节点上启动journalnode
+### 做这一步之前先删除所有节点/opt/software/hadoop-3.2.1/data目录,然后再创建一个文件夹,确保一致
 ```shell script
 # hadoop-2.*
 hadoop-daemon.sh start journalnode
 # hadoop-3.*
 hdfs --daemon start journalnode
 ```
-# 4.在一台主节点格式化 HDFS
+## 4.在一台主节点格式化 HDFS
 ```shell script
 hdfs namenode -format
 # INFO common.Storage: Storage directory /opt/software/hadoop-3.2.1/data/dfs/name has been successfully formatted.
 scp -r /opt/software/hadoop-3.2.1/data/* 192.168.1.201:/opt/software/hadoop-3.2.1/data
 scp -r /opt/software/hadoop-3.2.1/data/* 192.168.1.202:/opt/software/hadoop-3.2.1/data
 ```
-# 5.格式化 Zookeeper
+## 5.格式化 Zookeeper
 ```shell script
 hdfs zkfc -formatZK
 ```
-# 6.启动集群
+## 6.启动集群
 ```shell script
 start-all.sh
 # 注意看2个节点的resourcemanager都启动没
@@ -284,30 +285,26 @@ yarn-daemon.sh start resourcemanager
     # hadoop 3
 yarn --daemon start resourcemanager
 ```
-# 7.一些其它信息
-## 启动namenode
+## 7.一些其它信息
+### 启动namenode
 ```shell script
 hdfs --daemon start namenode
 ```
-## 启动resourcemanager和nodemanager
+### 启动resourcemanager和nodemanager
 ```shell script
 start-yarn.sh
 ```
-## 查看namenode状态
+### 查看namenode状态
 ```shell script
 hdfs haadmin -getServiceState nn2
 ```
-## 启动历史日志
+### 启动历史日志
 ```shell script
 yarn --daemon start historyserver
 mapred --daemon start historyserver
 ```
-如果报错
- Call From by201/192.168.1.201 to by201:8485 failed on connection exception: java.net.ConnectException: Connection refused; For more details see:  http://wiki.apache.org/hadoop/ConnectionRefused
- 是因为前面没有启动 journalnode造成
-
-# 8.报错信息
-## Call From by201/192.168.1.201 to by201:8485 failed on connection exception
+## 8.报错信息
+### Call From by201/192.168.1.201 to by201:8485 failed on connection exception
 ```shell script
 hdfs --daemon start journalnode
 ```

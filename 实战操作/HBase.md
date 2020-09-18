@@ -1,4 +1,4 @@
-# 命名空间
+## 命名空间
 ```shell script
 # 创建命名空间
 create_namespace 'test'
@@ -14,7 +14,7 @@ list_namespace_tables 'hbase'
 drop_namespace 'test'
 ```
 
-# 表
+## 表
 ```shell script
 # 创建表
 create 'test:test_hbase','info'

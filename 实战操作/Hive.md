@@ -1,4 +1,4 @@
-# 建表语句
+## 建表语句
 ```sql
 -- Distribute By: 指定 map 输出结果怎么样划分后分配到各个 Reduce 上去,比如 Distribute By
 -- dealer_id: 就可以保证 dealer_id 字段相同的结果被分配到同一个 reduce 上去执行
@@ -33,7 +33,7 @@ OUTPUTFORMAT
   'org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat';
 ```
 
-# 常用操作
+## 常用操作
 ```sql
 -- 修改表名
 alter table dealerinfo rename to dealer_info;
@@ -71,7 +71,7 @@ alter index t3_index on t3_new rebuild;
 drop index if exists t3_index on t3_new;
 ```
 
-# 函数
+## 函数
 ```sql
 -- Hive编写自定义UDF函数上传
 add jar /opt/mysoft/hiveexample-1.0.jar;
@@ -85,14 +85,14 @@ create temporary function uaf as 'udf.UDFArrayFirst';
 select uaf(array(1,2,3)) from bingo.test_hive limit 1;
 ```
 
-# 动态分区
+## 动态分区
 ```shell script
 set hive.exec.dynamic.partition=true;  
 set hive.exec.dynamic.partition.mode=nonstrict; 
 set hive.exec.max.dynamic.partitions.pernode=1000;
 ```
 
-# 优化
+## 优化
 ```sql
 -- 排序
 select * from (

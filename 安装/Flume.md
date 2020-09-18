@@ -1,11 +1,9 @@
 # 下载 Flume
-```http
-http://archive.apache.org/dist/flume/
-```
+- http://archive.apache.org/dist/flume/
+
 # 集群版
-```
-https://zhangweisep.github.io/2018/10/26/Flume%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/
-```
+- https://zhangweisep.github.io/2018/10/26/Flume%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/
+
 ## 1.解压就能用
 ## 2.范例配置
 ### 获取端口数据

@@ -1,12 +1,12 @@
+# 下载地址
+- http://archive.apache.org/dist/spark/ 
+
 # Spark编译
-```http
-https://archive.apache.org/dist/spark/spark-3.0.1/spark-3.0.1.tgz
-http://spark.apache.org/docs/latest/building-spark.html#specifying-the-hadoop-version-and-enabling-yarn
-```
+- https://archive.apache.org/dist/spark/spark-3.0.1/spark-3.0.1.tgz
+- http://spark.apache.org/docs/latest/building-spark.html#specifying-the-hadoop-version-and-enabling-yarn
+
 ## 1.idea打开点进pom文件修改maven源
-```http
-https://maven.aliyun.com/repository/central
-```
+- https://maven.aliyun.com/repository/central
 ## 2.gerneral and update...
 ## 3.build project
 ```

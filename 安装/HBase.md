@@ -1,8 +1,7 @@
 # 下载 HBase,注意查看Hadoop兼容的版本
-```http
-http://hbase.apache.org/book.html#configuration
-http://archive.apache.org/dist/hbase/
-```
+- http://hbase.apache.org/book.html#configuration
+- http://archive.apache.org/dist/hbase/
+
 ## 1.修改配置文件：
 ### hbase-env.sh
 ```sh
