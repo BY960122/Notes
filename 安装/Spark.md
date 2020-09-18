@@ -53,9 +53,7 @@ sh /opt/software/spark-3.0.1-bin-hadoop3.2/sbin/start-all.sh
 sh /opt/software/spark-3.0.0-bin-hadoop3.2/sbin/stop-all.sh
 ```
 ## 4.web界面
-```http
-http://192.168.1.201:8081/
-```
+- http://192.168.1.201:8081/
 ## 5.测试
 ```shell script
 cd /opt/software/spark-3.0.0-bin-hadoop3.2/
@@ -68,9 +66,7 @@ cd /opt/software/spark-3.0.0-bin-hadoop3.2/
 
 ```
 ## 6.Spark整合进Hive
-```http
-https://www.bmc.com/blogs/using-spark-with-hive/
-```
+- https://www.bmc.com/blogs/using-spark-with-hive/
 ```shell script
 cp /opt/software/apache-hive-3.1.2-bin/conf/hive-site.xml /opt/software/spark-3.0.0-bin-hadoop3.2/conf/
 cp mysql-connector-java-8.0.18.jar /opt/software/spark-3.0.0-bin-hadoop3.2/jars/

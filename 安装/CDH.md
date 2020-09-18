@@ -151,6 +151,4 @@ systemctl status cloudera-scm-agent
 tail -f /var/log/cloudera-scm-agent/cloudera-scm-agent.log
 ```
 ## 9.Web页面
-```http
-http://by211:7180
-```
+- http://by211:7180

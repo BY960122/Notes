@@ -1,7 +1,9 @@
 ## windows 激活码
+
+- http://fastlinkvpn.vip/
+
 ```text
 win10专业版：PK6DJ-BWPFR-YGXH8-X7MPJ-R34QW
-http://fastlinkvpn.vip/
 ```
 
 ## 禁止U盘复制电脑文件

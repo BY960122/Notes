@@ -24,9 +24,7 @@ sqoop list-databases --connect jdbc:mysql://192.168.1.6/hive --username root --p
 ```
 
 # 阿里 DataX
-```http
-https://github.com/alibaba/DataX/blob/master/userGuid.md
-```
+- https://github.com/alibaba/DataX/blob/master/userGuid.md
 ## 1.范例配置
 ```json
 {
