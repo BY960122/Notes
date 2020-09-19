@@ -42,10 +42,9 @@ git commit -m "代码说明"
 git pull dev master
 git push dev master
 	# 如果另一用户此时pull报错,则需要
-git branch --set-upstream-to=dev/dev dev
+git push --set-upstream origin dev
 	# 或者强行覆盖
 git push --force by master
 # 查看状态
 git status
-
 ```
