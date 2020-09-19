@@ -45,6 +45,6 @@ git push dev master
 git push --set-upstream origin dev
 	# 或者强行覆盖
 git push --force by master
-# 查看状态
+# 查看状态111
 git status
 ```
