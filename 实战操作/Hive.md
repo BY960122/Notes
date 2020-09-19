@@ -86,7 +86,7 @@ select uaf(array(1,2,3)) from bingo.test_hive limit 1;
 ```
 
 ## 动态分区
-```shell script
+```sh
 set hive.exec.dynamic.partition=true;  
 set hive.exec.dynamic.partition.mode=nonstrict; 
 set hive.exec.max.dynamic.partitions.pernode=1000;

@@ -1,4 +1,4 @@
-# 下载地址
+# 下载 MySQL
 - https://downloads.mysql.com/archives/community/
 - https://mirrors.cloud.tencent.com/mysql/downloads/MySQL-8.0/
 
@@ -8,6 +8,9 @@
 
 # MySQL 8.0 + (windows安装)
 ## 1.配置环境变量 
+```sh
+echo $MYSQL_HOME
+```
 ## 2.配置my.ini 文件
 ## 3.进入安装目录下执行
 ```txt 
@@ -56,37 +59,41 @@ net start mysql
 ```
 
 # MySQL 8.0 + (Linux安装)
-## 1.查看可以安装哪些安装包
-```shell script
+## 1.配置环境变量 
+```sh
+echo $MYSQL_HOME
+```
+## 2.查看可以安装哪些安装包
+```sh
 yum repolist all | grep mysql
 rpm -pa |grep mysql
 rpm -pa |grep mariadb
 ```
-## 2.删除之前的
-```shell script
+## 3.删除之前的
+```sh
 yum remove ***
 rpm -ev ***
 ```
-## 3.安装前先添加mysql组,和mysql用户
-```shell script
+## 4.安装前先添加mysql组,和mysql用户
+```sh
 groupadd mysql
 useradd -r -g mysql mysql
 chown -R mysql:mysql /opt/software/mysql-8.0.21
 ```
-## 4.安装,这里记一下密码
-```shell script
+## 5.安装,这里记一下密码
+```sh
 bin/mysqld --initialize --user=mysql --basedir=/opt/software/mysql-8.0.21 --datadir=/opt/software/mysql-8.0.21/data
 ```
-## 5.然后记得检查下配置文件是否存在,没有的话手动添加
-```shell script
+## 6.然后记得检查下配置文件是否存在,没有的话手动添加
+```sh
 vim /etc/my.cnf
 
 [mysqld]
 basedir=/opt/software/mysql-8.0.21
 datadir=/opt/software/mysql-8.0.21/data
 ```
-## 6.添加服务并启动,重启记得先停止!!!
-```shell script
+## 7.添加服务并启动,重启记得先停止!!!
+```sh
 cd support-files/
 cp mysql.server /etc/init.d/mysql 
 chmod +x /etc/init.d/mysql
@@ -94,7 +101,7 @@ chkconfig --add mysql
 systemctl start mysql
 systemctl status mysql
 ```
-## 7.连接mysql
+## 8.连接mysql
 ```sql
 set global validate_password.length = 8;
 set global validate_password.policy = 0;
@@ -103,7 +110,7 @@ grant all on *.* to 'root'@'%';
 alter user root@'%' identified by 'By9216446o6';
 flush privileges;
 ```
-## 8.新建MySQL用户
+## 9.新建MySQL用户
 ```sql
 create user 'hadoop'@'%' identified by 'hadoop';  
 grant all on *.* to 'hadoop'@'%' with grant option;
@@ -113,15 +120,15 @@ flush privileges;
 # 设置主从配置
 ## 原理 master:每产生磁盘变化就写进binlog日志 slave:转换成repaylog 
 ## 1.master配置文件
-```shell script
+```sh
 server-id=102
 log-bin=mysql-bin
 # statemet(语句变化):影响很多行的情况适合用语句模式
 # row(磁盘行数): insert,update,影响单行适合磁盘模式
 binlog-format=mixed
-``` 
+```
 ## 2.slave配置文件
-```shell script
+```sh
 server-id=201
 relay-log=mysql-relay
 ```
@@ -152,14 +159,14 @@ stop slave;
 
 # 设置主主配置
 ## 1.master配置文件
-```shell script
+```sh
 server-id=102
 log-bin=mysql-bin
 relay-log=mysql-relay
 binlog-format=mixed
 ```
 ## 2.slave配置文件
-```shell script
+```sh
 server-id=201
 log-bin=mysql-bin
 relay-log=mysql-relay
@@ -205,7 +212,7 @@ ll /usr/lib64/libtinfo.so.5.9
 ```
 
 # 范例配置文件,不要设置成UTF-8格式
-```shell script
+```sh
 [mysqld]
 # skip-grant-tables
 # 设置3306端口

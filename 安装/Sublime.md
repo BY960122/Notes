@@ -6,7 +6,7 @@
 - https://hexed.it/
 ```
 ## 1.工具栏上找到Open file,上传 sublime_text.exe
-## 2.按住Ctrl + f,搜索97 94 0D,修改为00 00 00
+## 2.按住Ctrl + f,搜索97 94 0D,配置为00 00 00
 ## 3.点击工具栏上的Export导出到本机替换原来的 sublime_text.exe
 ## 4.打开sublime text3,输入激活码
 ```txt

@@ -44,7 +44,7 @@ vm.swappiness=0
 ```sh
 cd /usr/lib/tuned/
 grep "vm.swappiness" * -R
-然后将文件中的配置依次修改为0
+然后将文件中的配置依次配置为0
 
 scp /etc/sysctl.conf 192.168.1.212:/etc/
 scp /etc/sysctl.conf 192.168.1.213:/etc/
@@ -122,11 +122,11 @@ rpm -ivh cloudera-manager-server-6.3.1-1466458.el7.x86_64.rpm --nodeps --force
 # 从节点单独执行
 rpm -ivh cloudera-manager-agent-6.3.1-1466458.el7.x86_64.rpm --nodeps --force
 
-# 从节点上修改cm agent的配置,指向server节点为主节点
+# 从节点上配置cm agent的配置,指向server节点为主节点
 sed -i "s/server_host=localhost/server_host=192.168.1.211/g" /etc/cloudera-scm-agent/config.ini
 sed -i "s/use_tls=0/use_tls=1/g" /etc/cloudera-scm-agent/config.ini
 
-# 修改主节点的cm server配置:
+# 配置主节点的cm server配置:
 vim /etc/cloudera-scm-server/db.properties
 
 com.cloudera.cmf.db.type=mysql

@@ -1,11 +1,11 @@
 ## grep
-```shell script
+```sh
 ## 在目录或文件中查找内容关键字
 grep apache-hive-3.1.2-bin -rl /opt/software/
 ```
 
 ## sed
-```shell script
+```sh
 ## 替换文件指定字符,如果是 / 记得转义
 sed -i "s/\/mysoft/\/software/g" ~/.bash_profile 
 
@@ -14,7 +14,7 @@ sed -i "s/\/mysoft/\/software/g" `grep /mysoft -rl /opt/software/kafka_2.12-2.4.
 ```
 
 ## 正则
-```shell script
+```sh
 ## 匹配括号及其内容
 \(.+\)
 \([^\)]*\)
@@ -24,7 +24,7 @@ sed -i "s/\/mysoft/\/software/g" `grep /mysoft -rl /opt/software/kafka_2.12-2.4.
 ```
 
 ## 彩色字体
-```shell script
+```sh
 echo -e "\033[30m 黑色字 \033[0m"
 echo -e "\033[31m 红色字 \033[0m"
 echo -e "\033[32m 绿色字 \033[0m"
@@ -46,7 +46,7 @@ echo -e "\033[47;30m 白底黑字 \033[0m"
 
 ## 一些报错信息 
 ### $'\r': command not found
-```shell script
+```sh
 vim  **.sh
 : set ff = unix
 ```

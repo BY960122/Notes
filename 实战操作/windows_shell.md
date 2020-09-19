@@ -1,5 +1,5 @@
 ## 连接Ftp
-```shell script
+```sh
 echo off
 set ftpUser=wqy_1
 set ftpPass=wqy@123
@@ -37,7 +37,7 @@ del /s /Q E:\test\busy\
 ```
 
 ## 文件合并
-```shell script
+```sh
 @echo off
 set dest=D:\KLI\RAW_TO_ODS\ktr.txt
 set src=D:\KLI\RAW_TO_ODS\SJCK
@@ -53,11 +53,11 @@ type "%%i" >> %dest%
 ```
 
 ## 批量提取指定后缀的文件名
-```shell script
+```sh
 for /r D:\Schoolbags %%a in (*.pdf) do echo %%~na >>生成文件.txt
 ```
 
 ## 增量拷贝文件夹 /d 为增量
-```shell script
+```sh
 xcopy /s /e /h /r /k /y /d %src_dir% %target_dir%
 ```

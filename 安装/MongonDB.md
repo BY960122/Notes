@@ -1,17 +1,17 @@
-# 下载地址
+# 下载 MongoDB
 - https://www.mongodb.com/download-center#community
 
 # Windows安装
 ## 1.初始化数据目录,记得新建目录
-```shell script
+```sh
 mongod --dbpath D:\Mysoft\MongoDB\data
 ```
 ## 2.安装服务,记得用管理员
-```shell script
+```sh
 mongod.exe --logpath D:\Mysoft\MongoDB\log\mongodb.log --logappend --dbpath D:\Mysoft\MongoDB\data --directoryperdb --serviceName MongoDB --install
 ```
 ## 3.启动服务,停止服务
-```shell script
+```sh
 net start mongodb
 net stop mongodb
 ```

@@ -2,25 +2,30 @@
 - https://www.python.org/ftp/python/
 - https://tecadmin.net/install-python-3-7-on-ubuntu-linuxmint/
 
-## 1.依赖准备
+## 1.配置环境变量
+```sh
+echo $PYTHOME_HOME
+```
+## 2.依赖准备
 ```sh
 yum install -y zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel 
 yum install -y gcc,gcc-c++,tcl,zlib,zlib-devel,perl,libffi-devel,openssl-devel,openssl,ruby
 ```
-## 2.编译
+## 3.编译
 ```sh
 tar xzf Python-3.8.1.tgz
 cd python-3.8.1
 sudo ./configure --enable-optimizations --prefix=/usr/local/python3
 sudo make && make install
 ```
-## 3.检查
+## 4.检查
 ```sh
 python3.8 --version
 python3 --version
 ```
-## 4.离线安装包
+## 5.离线安装包
 - https://pypi.org/
+
 ```sh
 # Windows
 python -m pip install xxx.whl
@@ -31,7 +36,7 @@ tar -zxvf pip-19.2.3.tar.gz
 cd pip-19.2.3
 python3.8 setup.py install
 ```
-## 5.普通安装
+## 6.普通安装
 ```sh
 pip3 config set global.index-url https://mirrors.cloud.tencent.com/pypi/simple
 pip3 config set global.index-url https://mirrors.aliyun.com/pypi/simple/
@@ -40,7 +45,7 @@ pip3 install --upgrade pip
 python -m pip install -i https://mirrors.aliyun.com/pypi/simple/ --upgrade pip
 pip install -i https://mirrors.aliyun.com/pypi/simple/ you-get
 ```
-## 6.一些报错信息
+## 7.一些报错信息
 ### Can't connect to HTTPS URL because the SSL module is not available.
 ```sh
 wget https://www.openssl.org/source/openssl-1.1.1e.tar.gz

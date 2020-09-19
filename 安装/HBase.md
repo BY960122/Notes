@@ -2,7 +2,11 @@
 - http://hbase.apache.org/book.html#configuration
 - http://archive.apache.org/dist/hbase/
 
-## 1.修改配置文件：
+## 1.配置环境变量
+```sh
+echo $HBASE_HOME
+```
+## 2.配置配置文件：
 ### hbase-env.sh
 ```sh
 export JAVA_HOME=/opt/software/jdk1.8.0_241
@@ -26,7 +30,7 @@ export HBASE_MANAGES_ZK=false
 		<name>hbase.cluster.distributed</name>
 		<value>true</value>
 	</property>
-	<!--此参数是为了解决文件系统不支持 hsync 报错而造成启动失败的问题,,究其原因是因为二进制版本的 HBase 编译环境是 Hadoop2.x,而 Hadoop2.x 版本不支持 hsync-->
+	<!--解决文件系统不支持 hsync 报错而造成启动失败的问题,原因是二进制版本的 HBase 编译环境是 Hadoop2.x,而 Hadoop2.x 版本不支持 hsync-->
 	<property>
 		<name>hbase.unsafe.stream.capability.enforce</name>
 		<value>false</value>
@@ -50,6 +54,11 @@ export HBASE_MANAGES_ZK=false
 		<name>hbase.master.maxclockskew</name>
 		<value>180000</value>
 	</property>
+	<!--HADOOP_ORG.APACHE.HADOOP.HBASE.UTIL.GETJAVAPROPERTY_USER: bad substitution-->
+	<property>
+		<name>hbase.unsafe.stream.capability.enforce</name>
+		<value>false</value>
+	</property>
 </configuration>
 ```
 ### regionservers
@@ -57,7 +66,7 @@ export HBASE_MANAGES_ZK=false
 192.168.0.202
 192.168.0.203
 ```
-## 2.启动 Zookeeper,Hadoop,HBase
+## 3.启动 Zookeeper,Hadoop,HBase
 ```sh
 # Zookeeper
 zkServer.sh start
@@ -76,22 +85,22 @@ hbase-daemon.sh stop regionserver
 hbase-daemon.sh start master
 hbase-daemon.sh stop master
 ```
-## 3.进入 HBase
+## 4.进入 HBase
 ```sh
 hbase shell
 ```
-## 4.web界面
+## 5.web界面
 ```http
 <!-- 老版本端口是:60010 -->
 192.168.1.201:16010 
 ```
-## 5.搭建HA模式
+## 6.搭建HA模式
 ```sh
 # 原理,多启动几个 Master
 hbase-daemon.sh start hmaster
 hbase-daemon.sh start master
 ```
-## 6.一些报错信息
+## 7.一些报错信息
 ### org.apache.hadoop.hbase.PleaseHoldException: Master is initializing
 ```txt
 检查hbase-site.xml的配置 hbase.root.dir 别写错

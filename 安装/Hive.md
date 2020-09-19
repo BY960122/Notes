@@ -1,8 +1,12 @@
 # 下载 Hive
 - http://archive.apache.org/dist/hive/
 
-## 1.安装Hadoop
-## 2.修改配置文件
+## 1.配置环境变量
+```sh
+echo $HIVE_HOME
+```
+## 2.安装Hadoop
+## 3.配置配置文件
 ### hive-env.sh
 ```sh
 export JAVA_HOME=/opt/software/jdk1.8.0_241
@@ -83,11 +87,11 @@ export HADOOP_HOME=/opt/software/hadoop-3.2.1
     </property>
 </configuration>
 ```
-## 3.初始化 hive
+## 4.初始化 hive
 ```sh
 sh /opt/software/apache-hive-3.1.1-bin/bin/schematool -dbType mysql -initSchema
 ```
-## 4.HIVE 整合 Spark
+## 5.HIVE 整合 Spark
 ```http
 https://cwiki.apache.org/confluence/display/Hive/Hive+on+Spark%3A+Getting+Started
 ```
@@ -99,7 +103,7 @@ https://cwiki.apache.org/confluence/display/Hive/Hive+on+Spark%3A+Getting+Starte
         <value>spark://192.168.1.201:7077</value>
 </property>
 ```
-## 5.Hive 整合 Hbase
+## 6.Hive 整合 Hbase
 ### hive-site.xml
 ```xml
 <property> 
@@ -121,7 +125,7 @@ stored by 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'
 with serdeproperties ("hbase.columns.mapping" = ":key,info:name,info:age") 
 tblproperties ("hbase.table.name" = "test:test_hbase", "hbase.mapred.output.outputtable" = "test_hbase");
 ```
-## 6.HIVE整合Tez
+## 7.HIVE整合Tez
 ### (1).下载 protobuf-2.5.0
 ```http
 https://www.cnblogs.com/bianqi/p/7229437.html
@@ -151,7 +155,7 @@ https://github.com/apache/tez/tree/master
 ```
 ```sh
 chmod a+x /opt/software/apache-maven-3.6.3/bin/mvn
-# 顶层.pom文件 修改阿里云源
+# 顶层.pom文件 配置阿里云源
 # tez-ui这个模块,直接注释掉,费事费力容易报错
 mvn clean package install -Dhadoop.version=3.2.1 -DskipTests -Dmaven.javadoc.skip=true
 ```
@@ -206,7 +210,7 @@ scp /opt/software/hadoop-3.2.1/etc/hadoop/tez-site.xml 192.168.1.203:/opt/softwa
 scp /opt/software/hadoop-3.2.1/etc/hadoop/tez-site.xml 192.168.1.202:/opt/software/apache-hive-3.1.1-bin/conf/
 scp /opt/software/hadoop-3.2.1/etc/hadoop/tez-site.xml 192.168.1.203:/opt/software/apache-hive-3.1.1-bin/conf/
 ```
-### (8).修改配置
+### (8).配置配置
 #### hive-site.xml
 ```xml
 <property>
@@ -233,7 +237,7 @@ export CLASSPATH=$CLASSPATH:${TEZ_CONF_DIR}:${TEZ_HOME}/*:${TEZ_HOME}/lib/*
 hadoop jar /opt/software/tez-0.10.1/tez-examples-0.10.1-SNAPSHOT.jar orderedwordcount /data/test.txt /tez/output/
 hdfs dfs -ls /tez/output/
 ```
-## 7.启动 Hive
+## 8.启动 Hive
 ```sh
 hive
 
@@ -243,14 +247,14 @@ beeline -u jdbc:hive2://192.168.1.201:10000 -n root -p By921644606
 set hive.execution.engine=spark;
 set spark.driver.extraClassPath=/opt/software/apache-hive-3.1.1-bin/lib/hive-exec-3.1.2.jar;
 ```
-## 8.测试
+## 9.测试
 ```sql
 create table test_hive (id int,name string);
 insert into test_hive values (1,'a'),(2,'b'),(3,'c'),(4,'d'),(5,'e'),(6,'f'),(7,'g'),(8,'h'),(9,'i'),(10,'j'),(11,'k'),(12,'l'),(13,'m'),(14,'n'),
 (15,'o'),(16,'p'),(17,'q'),(18,'r'),(19,'s'),(20,'t'),(21,'u'),(22,'v'),(23,'w'),(24,'x'),(25,'y'),(26,'z');
 select row_number() over (partition by 1 order by id) from test_hive limit 7,7;
 ```
-## 9.一些报错信息
+## 10.一些报错信息
 ### java.lang.NoSuchMethodError: com.google.common.base.Preconditions.checkArgument(ZLjava/lang/String;Ljava/lang/Object;)V
 ```txt
 下载 guava-22.0.jar 替换 /opt/software/apache-hive-3.1.1-bin/lib/guava-19.0.jar
@@ -262,7 +266,7 @@ select row_number() over (partition by 1 order by id) from test_hive limit 7,7;
 ```
 ### Hive Schema version 3.1.0 does not match metastore's schema version 1.2.0 Metastore is not upgraded or corrupt)
 ```txt
-进入 MySQL元数据库 修改 version表对应值为 3.1.0
+进入 MySQL元数据库 配置 version表对应值为 3.1.0
 ```
 ### Caused by: java.lang.ClassNotFoundException: org.apache.spark.SparkConf
 ```sh

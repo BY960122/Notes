@@ -1,9 +1,17 @@
 # 下载 Hadoop
 - http://archive.apache.org/dist/hadoop/
 
-## 1.修改配置文件
+## 1.关闭防火墙
+## 2.配置主机名 Hostname
+## 3.配置免密码登录
+## 4.配置Java,Zookeeper
+## 5.配置环境变量
+```sh
+echo $HADOOP_HOME
+```
+## 6.配置配置文件
 ### hadoop-env.sh
-```shell script
+```sh
 export JAVA_HOME=/opt/software/jdk1.8.0_241
 export HADOOP_HOME=/opt/software/hadoop-3.2.1
 export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
@@ -252,32 +260,32 @@ export TEZ_HOME=/opt/software/tez-0.10.1
         </property>
 </configuration>
 ```
-## 2.启动Zookeeper集群
-```shell script
+## 7.启动Zookeeper集群
+```sh
 zkServer.sh start
 zkServer.sh status
 ```
-## 3.在两个主节点上启动journalnode
+## 8.在两个主节点上启动journalnode
 ### 做这一步之前先删除所有节点/opt/software/hadoop-3.2.1/data目录,然后再创建一个文件夹,确保一致
-```shell script
+```sh
 # hadoop-2.*
 hadoop-daemon.sh start journalnode
 # hadoop-3.*
 hdfs --daemon start journalnode
 ```
-## 4.在一台主节点格式化 HDFS
-```shell script
+## 9.在一台主节点格式化 HDFS
+```sh
 hdfs namenode -format
 # INFO common.Storage: Storage directory /opt/software/hadoop-3.2.1/data/dfs/name has been successfully formatted.
 scp -r /opt/software/hadoop-3.2.1/data/* 192.168.1.201:/opt/software/hadoop-3.2.1/data
 scp -r /opt/software/hadoop-3.2.1/data/* 192.168.1.202:/opt/software/hadoop-3.2.1/data
 ```
-## 5.格式化 Zookeeper
-```shell script
+## 10.格式化 Zookeeper
+```sh
 hdfs zkfc -formatZK
 ```
-## 6.启动集群
-```shell script
+## 11.启动集群
+```sh
 start-all.sh
 # 注意看2个节点的resourcemanager都启动没
     # hadoop 2
@@ -285,26 +293,26 @@ yarn-daemon.sh start resourcemanager
     # hadoop 3
 yarn --daemon start resourcemanager
 ```
-## 7.一些其它信息
+## 12.常用命令
 ### 启动namenode
-```shell script
+```sh
 hdfs --daemon start namenode
 ```
 ### 启动resourcemanager和nodemanager
-```shell script
+```sh
 start-yarn.sh
 ```
 ### 查看namenode状态
-```shell script
+```sh
 hdfs haadmin -getServiceState nn2
 ```
 ### 启动历史日志
-```shell script
+```sh
 yarn --daemon start historyserver
 mapred --daemon start historyserver
 ```
-## 8.报错信息
+## 13.一些报错信息
 ### Call From by201/192.168.1.201 to by201:8485 failed on connection exception
-```shell script
+```sh
 hdfs --daemon start journalnode
 ```

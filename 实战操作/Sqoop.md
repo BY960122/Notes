@@ -1,20 +1,20 @@
 ## 显示数据库
-```shell script
+```sh
 sqoop list-databases --connect jdbc:mysql://39.106.8.170:3306/ --username root --password vdata0708
 ```
 
 ## 显示数据库中的表
-```shell script
+```sh
 sqoop list-tables --connect jdbc:mysql://39.106.8.170:3306/ --username root --password vdata0708
 ```
 
 ## 执行sql并返回结果
-```shell script
+```sh
 sqoop eval --connect jdbc:mysql://192.168.1.6:3306/ecif_etl_test --driver com.mysql.cj.jdbc.Driver --username root --password By9216446o6 -e "SELECT client_id,client_majorcate FROM t_ods_bib_t_cm_clientinfo_hv" 
 ```
 
 ## MySQL中的表复制到hive
-```shell script
+```sh
 sqoop import --connect jdbc:mysql://192.168.1.6:3306/ecif_etl_test \
 --driver com.mysql.cj.jdbc.Driver --username root --password By9216446o6 \
 --table t_ods_bib_t_cm_clientinfo_hv --where 'oc_date = 20191201' \
@@ -40,7 +40,7 @@ hdfs dfs -rm -r /user/root/t_ods_bib_t_cm_clientinfo_hv
 ```
 
 ## MySQL中的查询导入到hive parquent格式的表
-```shell script
+```sh
 ## 注意:
 ## 1.decimal字段为空map,reduce阶段会报错,设置--columns参数,最好保证两边表结构一致,并严格限定默认值
 ## 2.parquent表无法覆盖,记得执行 hdfs dfs -rm -rf ....
@@ -65,7 +65,7 @@ sqoop import \
 ```
 
 ## MySQL导入数据到HDFS
-```shell script
+```sh
 sqoop import --connect jdbc:mysql://192.168.0.201/hive --username root --password 962464 --table table_name --columns *** --target-dir /data/ --delete-target-dir --fields-terminated-by '|' -m 1 --as-parquetfile 
 
     ## 可选参数
@@ -73,7 +73,7 @@ sqoop import --connect jdbc:mysql://192.168.0.201/hive --username root --passwor
 ```
 
 ## 导出数据到mysql关系型数据库
-```shell script
+```sh
 sqoop export --connect jdbc:mysql://39.106.8.170:3306/Demo \
 --username root --password vdata0708 --driver com.mysql.jdbc.Driver 
 --table studentdemo  
@@ -81,7 +81,7 @@ sqoop export --connect jdbc:mysql://39.106.8.170:3306/Demo \
 ```
 
 ## 将命令封装进sqoop脚本 myopt.opt 格式必须是一行一行的[参数or内容]
-```shell script
+```sh
 vim myopt.opt
 
 import 

@@ -1,6 +1,11 @@
-# Windows安装
-## 1.下载地址
+## 1.下载 Redis
 - https://github.com/MSOpenTech/redis/releases
+
+# Windows安装
+## 1.配置环境变量
+```sh
+echo $REDIS_HOME
+```
 ## 2.进入安装目录.注册成服务
 ```sh
 redis-server.exe --service-install redis.windows.conf 
@@ -17,14 +22,18 @@ redis-cli.exe -h 127.0.0.1 -p 6379
 ```
 
 # Linux安装
-## 1.安装 Python
-## 2.编译
+## 1.配置环境变量
+```sh
+echo $REDIS_HOME
+```
+## 2.安装 Python
+## 3.编译
 ```sh
 sudo yum install -y tcl,ruby
 cd redis-5.0.4
 make && make install
 ```
-## 3.修改配置文件,每个节点2个,不同的节点只需要修改ip
+## 4.修改配置文件,每个节点2个,不同的节点只需要修改ip
 ```sh
 # redis_backup.conf
 # redis.conf
@@ -50,19 +59,19 @@ requirepass xf_server
 cluster-enabled yes
 cluster-config-file nodes-6380.conf
 ```
-## 4.启动
+## 5.启动
 ```sh
 ./src/redis-server /opt/software/redis-5.0.8/redis.conf > log.txt 2>&1 &
 ./src/redis-server /opt/software/redis-5.0.8/redis_backup.conf > log_backup.txt 2>&1 &
 ```
-## 5.检验是否成功启动
+## 6.检验是否成功启动
 ```sh
 ps aux | grep redis | grep -v grep
 
 # 如果要删除redis进程
 ps aux | grep -w redis-server | grep -v grep | awk '{print $2}' | xargs kill
 ```
-## 6.连接已启动的redis实例
+## 7.连接已启动的redis实例
 ```sh
 # 客户端模式连接
 ./src/redis-cli -h 192.168.1.201 -p 6379 -a cqdsjb
@@ -71,7 +80,7 @@ auth "cqdsjb"
 # 集群模式连接
 ./src/redis-cli -h 192.168.1.201 -p 6379 -a xf_server -c 
 ```
-## 7.创建redis集群
+## 8.创建redis集群
 ### 须满足条件一: 6个redis实例均正常启动,并且可连接
 ### 须满足条件二: 所有redis均为空
 ```sh
@@ -87,7 +96,7 @@ auth "cqdsjb"
 # /opt/software/redis-5.0.4/ 会有2个文件
 # nodes-6379.conf nodes-6380.conf
 ```
-## 8.连接集群验证
+## 9.连接集群验证
 ```sh
 ./src/redis-cli -h 192.168.0.201 -p 6379 -a xf_server -c 
 

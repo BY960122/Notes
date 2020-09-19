@@ -2,7 +2,11 @@
 - http://mirror.bit.edu.cn/apache/sqoop/
 - http://archive.apache.org/dist/sqoop/
 
-## 1.修改配置文件
+## 1.配置环境变量
+```sh
+echo $SQOOP_HOME
+```
+## 2.配置配置文件
 ### qoop-env.sh
 ```sh
 export HADOOP_COMMON_HOME=/opt/software/hadoop-3.2.1
@@ -11,13 +15,13 @@ export HBASE_HOME=/opt/software/hbase-2.3.1
 export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
 export ZOOCFGDIR=/opt/software/apache-zookeeper-3.6.1-bin
 ```
-## 2.拷贝jar至sqoop/lib
+## 3.拷贝jar至sqoop/lib
 ```sh
 cp /opt/software/apache-hive-3.1.1-bin/lib/mysql-connector-java-8.0.18.jar /opt/software/sqoop-1.4.7.bin__hadoop-2.6.0/lib/
 cp /opt/software/apache-hive-3.1.1-bin/lib/* /opt/software/sqoop-1.4.7.bin__hadoop-2.6.0/lib/
 cp /opt/software/apache-hive-3.1.1-bin/conf/hive-site.xml /opt/software/sqoop-1.4.7.bin__hadoop-2.6.0/conf/
 ```
-## 3.验证
+## 4.验证
 ```sh
 sqoop version
 sqoop list-databases --connect jdbc:mysql://192.168.1.6/hive --username root --password By9216446o6
@@ -25,6 +29,7 @@ sqoop list-databases --connect jdbc:mysql://192.168.1.6/hive --username root --p
 
 # 阿里 DataX
 - https://github.com/alibaba/DataX/blob/master/userGuid.md
+
 ## 1.范例配置
 ```json
 {

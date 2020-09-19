@@ -2,99 +2,16 @@
 - http://archive.apache.org/dist/hadoop/
 
 ## 1.关闭防火墙
-```shell script
-systemctl stop firewalld.service
-systemctl disable firewalld.service
-```
-## 2.配置主机名  
-```shell script
-vim /etc/hosts
-192.168.1.201 by201
-192.168.1.211 by211
-192.168.1.212 by212
-```
+## 2.配置主机名 Hostname
 ## 3.配置免密码登录
-```shell script
-vim /etc/hosts
-
-192.168.1.211 by211
-192.168.1.212 by212
-192.168.1.213 by213
-
-ssh-keygen -t rsa  
-cd /root/.ssh  id_rsa(私钥) id_rsa.pub(公钥)
-
-ssh-copy-id -i /root/.ssh/id_rsa.pub root@192.168.1.201
-ssh-copy-id -i /root/.ssh/id_rsa.pub root@192.168.1.202
-ssh-copy-id -i /root/.ssh/id_rsa.pub root@192.168.1.203
-```
 ## 4.配置Java,Zookeeper
-```shell script
-cd /opt/software/apache-zookeeper-3.6.1-bin/conf/
-cp zoo.cfg.bak zoo.cfg
-vim zoo.cfg
-tickTime=2000
-initLimit=10
-syncLimit=5
-dataDir=/opt/software/apache-zookeeper-3.6.1-bin/zookeeper
-clientPort=2181
-server.1=192.168.1.201:2888:3888;2181
-server.2=192.168.1.202:2888:3888;2181
-server.3=192.168.1.203:2888:3888;2181
-
-scp -r /opt/software/apache-zookeeper-3.6.1-bin/ 192.168.1.201:/opt/software/
-scp -r /opt/software/apache-zookeeper-3.6.1-bin/ 192.168.1.202:/opt/software/
-
-# 每台机器唯一的 id 
-echo 1 > /opt/software/apache-zookeeper-3.6.1-bin/zookeeper/myid
+## 5.配置环境变量
+```sh
+echo $HADOOP_HOME
 ```
-## 5.修改环境变量
-```shell script
-vim ~/.bash_profile
-
-# Get the aliases and functions
-if [ -f ~/.bashrc ]; then
-        . ~/.bashrc
-fi
-
-# User specific environment and startup programs
-
-PATH=$PATH:$HOME/.local/bin:$HOME/bin
-
-export JAVA_HOME=/opt/software/jdk1.8.0_241
-export SCALA_HOME=/opt/software/scala-2.12.11
-export PYTHON_HOME=/usr/local/python3
-export MYSQL_HOME=/opt/software/mysql-8.0.21
-export HADOOP_HOME=/opt/software/hadoop-3.2.1
-export ZOOKEEPER_HOME=/opt/software/apache-zookeeper-3.6.1-bin
-export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
-export HBASE_HOME=/opt/software/hbase-2.3.1
-export SPARK_HOME=/opt/software/spark-3.0.1-bin-hadoop3.2
-export KAFKA_HOME=/opt/software/kafka_2.12-2.4.1
-export ELASTICSEARCH_HOME=/opt/software/elasticsearch-7.6.1
-export STORM_HOME=/opt/software/apache-storm-2.2.0
-export FLINK_HOME=/opt/software/flink-1.11.1
-export SQOOP_HOME=/opt/software/sqoop-1.4.7.bin__hadoop-2.6.0
-
-# hadoop 3.0才需要配置
-export HDFS_NAMENODE_USER=root
-export HDFS_DATANODE_USER=root
-export HDFS_JOURNALNODE_USER=root
-export HDFS_SECONDARYNAMENODE_USER=root
-export HDFS_ZKFC_USER=root
-export YARN_RESOURCEMANAGER_USER=root
-export YARN_NODEMANAGER_USER=root
-
-PATH=$PATH:$HOME/bin:$JAVA_HOME/bin:$PYTHON_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$ZOOKEEPER_HOME/bin:$HIVE_HOME/bin:$HIVE_HOME/lib:$HBAS
-E_HOME/bin:$HBASE_HOME/lib:$SCALA_HOME/bin:$SPARK_HOME/bin:$KAFKA_HOME/bin:$SQOOP_HOME/bin:$ELASTICSEARCH_HOME/bin:$STORM_HOME/bin:$FLINK_HOME/bin
-
-export PATH
-
-source ~/.bash_profile
-```
-## 6.修改配置文件
+## 6.配置配置文件
 ### hadoop-env.sh 
-```shell script
+```sh
 export JAVA_HOME=/opt/software/jdk1.8.0_241
 export HADOOP_HOME=/opt/software/hadoop-3.2.1
 export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
@@ -215,28 +132,28 @@ export TEZ_HOME=/opt/software/tez-0.10.1
 </property>
 ```
 ### slaves
-```shell script
+```sh
 by211
 by212
 by213
 ```
 ## 7.格式化主节点NameNode
-```shell script
+```sh
 hdfs namenode -format
 
 scp -r /opt/software/hadoop-3.2.1/ 192.168.1.202:/opt/software/hadoop-3.2.1/
 scp -r /opt/software/hadoop-3.2.1/ 192.168.1.203:/opt/software/hadoop-3.2.1/
 ```
 ## 8.主节点启动
-```shell script
+```sh
 sh /opt/software/hadoop-3.2.1/sbin/start-all.sh
 ```
 ## 9.验证hadoop服务是否正常启动：打印HDFS的报告
-```shell script
+```sh
 hdfs dfsadmin -report  
 ```
 ## 10.测试.随便写一个文本上传
-```shell script
+```sh
 hdfs dfs -put /home/test.txt /data/
 hadoop jar /opt/software/hadoop-3.2.1/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.2.1.jar wordcount /data/test.txt /out/test1
 ```

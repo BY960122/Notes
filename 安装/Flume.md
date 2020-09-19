@@ -4,8 +4,12 @@
 # 集群版
 - https://zhangweisep.github.io/2018/10/26/Flume%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/
 
-## 1.解压就能用
-## 2.范例配置
+## 1.配置环境变量
+```sh
+echo $FlUME_HOME
+```
+## 2.解压就能用
+## 3.范例配置
 ### 获取端口数据
 ```sh
 vim port.conf

@@ -2,7 +2,7 @@
 - https://cwiki.apache.org/confluence/display/KAFKA/
 
 ## 启动kafka服务节点
-```shell script
+```sh
 nohup /opt/soft/kafka_2.12-1.0.0/bin/kafka-server-start.sh /opt/soft/kafka_2.12-1.0.0/config/server.properties >> /opt/soft/kafka_2.12-1.0.0/logs/server.logs 2>&1 &
 
 ## 终止kafka相关进程
@@ -10,17 +10,17 @@ jps | grep -e SupportedKafka | awk '{print $1}' | xargs kill -9
 ```
 
 ## 生产者吞吐量测试
-```shell script
+```sh
 bin/kafka-producer-perf-test.sh --num-records 100000 --topic test --producer-props bootstrap.servers=192.168.0.201:9092,192.168.0.212:9092,192.168.0.211:9092 --throughput 5000 --record-size 102400
 ```
 
 ## 消费者吞吐量测试
-```shell script
+```sh
 /bin/kafka-consumer-perf-test.sh --topoc test --messages 100000 --num-fetch-threads 10 --threads 10 --broker-list 192.168.0.201:9092,192.168.0.212:9092,192.168.0.211:9092 --group perf-consumer-30108
 ```
 
 ## Topic
-```shell script
+```sh
 ## 创建topic
 ## 注意: zookeeper写一个也可以
 kafka-topics.sh --create --topic bingo --replication-factor 3 --partitions 3 --zookeeper by201:2181
@@ -82,7 +82,7 @@ java -jar /data01/.version/kafkaShell/countOffset/countOffset.jar /data01/.versi
 ```
 
 ## 程序操作
-```shell script
+```sh
 ## 安装Kafka包
 pip3 search kafka 
     kafka(1.3.5)
@@ -120,7 +120,7 @@ for message in consumer:
 
 ## 一些报错信息
 ### Kafka重启命令行报错:Port already in use:9999(Bind failed)
-```shell script
+```sh
 vim bin/kafka-run-class.sh
 
 ##Changed JMX port use
