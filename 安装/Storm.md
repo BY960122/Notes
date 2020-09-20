@@ -31,15 +31,20 @@ scp storm.yaml 192.168.1.203:/opt/software/apache-storm-2.2.0/conf/
 ```
 ## 3.启动
 ```sh
-# 如果python报错,把storm和storm.py最上面改成python3
-# 所有节点启动: logviewe
+# 如果python报错,把storm和storm.py最上面改成python3,以及 PYTHON="/usr/bin/env python3"
+# 所有节点启动: logviewer
+mkdir /opt/software/apache-storm-2.2.0/logs
+touch /opt/software/apache-storm-2.2.0/logs/logviewer.log
+
 nohup storm logviewer > /opt/software/apache-storm-2.2.0/logs/logviewer.log 2>&1 &
 nohup storm supervisor > /opt/software/apache-storm-2.2.0/logs/supervisor.log 2>&1 &
 
 # 所有主节点启动: nimbus
+touch /opt/software/apache-storm-2.2.0/logs/nimbus.log
 nohup storm nimbus > /opt/software/apache-storm-2.2.0/logs/nimbus.log 2>&1 &
 
 # 选一个主节点启动: ui
+touch /opt/software/apache-storm-2.2.0/logs/ui.log
 nohup storm ui > /opt/software/apache-storm-2.2.0/logs/ui.log 2>&1 &
 
 ```

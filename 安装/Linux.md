@@ -1,6 +1,31 @@
 # 下载地址
 - https://mirrors.aliyun.com/centos/
 
+## 修改网卡配置
+```sh
+vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
+
+# centos 7
+systemctl restart network
+# centos 8
+systemctl restart NetworkManager
+ip addr
+ipconfig
+```
+### 网络地址转换(NAT)模式
+```sh
+ONBOOT=yes
+```
+### 桥接网卡模式
+```sh
+BOOTPROTO=static
+ONBOOT=yes
+IPADDR=192.168.1.201
+NETMASK=255.255.255.0
+GETEWAY=192.168.1.1
+DNS1=192.168.1.1
+```
+
 ## 修改主机名 Hostname
 ```sh
 vim /etc/hostname
@@ -15,30 +40,26 @@ vim /etc/sysconfig/network
 hostname=by201
 ```
 
-## 修改网卡配置 - 网络地址转换(NAT)模式
+## ssh免密码登录配置
 ```sh
-vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
-ONBOOT=yes
+vim /etc/hosts
 
-systemctl restart network
-ip addr
-ipconfig
-```
+192.168.1.201 by201
+192.168.1.202 by202
+192.168.1.203 by203
 
-## 修改网卡配置 - 桥接网卡模式
-```sh
-BOOTPROTO=static
-ONBOOT=yes
-IPADDR=192.168.1.201
-NETMASK=255.255.255.0
-GETEWAY=192.168.1.1
-DNS1=192.168.1.1
+ssh-keygen -t rsa  
+cd /root/.ssh  id_rsa(私钥) id_rsa.pub(公钥)
+
+ssh-copy-id -i /root/.ssh/id_rsa.pub root@192.168.1.201
+ssh-copy-id -i /root/.ssh/id_rsa.pub root@192.168.1.202
+ssh-copy-id -i /root/.ssh/id_rsa.pub root@192.168.1.203
 ```
 
 ## Centos7修改repo源配置
 ```
-vim /etc/yum.repos.d/CentOS-Base.repo
-[base]
+vi /etc/yum.repos.d/CentOS-Base.repo
+[BaseOS]
 name=CentOS-$releasever - Base - mirrors.aliyun.com
 failovermethod=priority
 baseurl=http://mirrors.aliyun.com/centos/$releasever/os/$basearch/
@@ -54,7 +75,7 @@ gpgkey=http://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-7
 ```sh
 cd /etc/yum.repos.d/
 
-[Base]
+[BaseOS]
 name=CentOS-$releasever - Base - mirrors.aliyun.com
 failovermethod=priority
 baseurl=https://mirrors.aliyun.com/centos/$releasever/BaseOS/$basearch/os/
@@ -108,7 +129,7 @@ gpgkey=https://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-Official
 ```sh
 sudo dhclient
 yum -y update
-yum install -y vim net-tools lsof tree ntp npm nodejs git zip mlocate httpd createrepo iptables iptables-services tar chrony
+yum install -y vim net-tools lsof tree npm nodejs git zip mlocate httpd createrepo iptables iptables-services tar chrony
 ```
 
 ## 防火墙,iptables安装
@@ -142,22 +163,6 @@ vim /etc/sysconfig/iptables
 service iptables save
 systemctl enable iptables.service
 systemctl start iptables.service
-```
-
-## ssh免密码登录配置
-```sh
-vim /etc/hosts
-
-192.168.1.201 by201
-192.168.1.202 by202
-192.168.1.203 by203
-
-ssh-keygen -t rsa  
-cd /root/.ssh  id_rsa(私钥) id_rsa.pub(公钥)
-
-ssh-copy-id -i /root/.ssh/id_rsa.pub root@192.168.1.201
-ssh-copy-id -i /root/.ssh/id_rsa.pub root@192.168.1.202
-ssh-copy-id -i /root/.ssh/id_rsa.pub root@192.168.1.203
 ```
 
 ## 创建本地云源repo压缩包

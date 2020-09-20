@@ -66,8 +66,8 @@ echo $MYSQL_HOME
 ## 2.查看可以安装哪些安装包
 ```sh
 yum repolist all | grep mysql
-rpm -pa |grep mysql
-rpm -pa |grep mariadb
+rpm -pa | grep mysql
+rpm -pa | grep mariadb
 ```
 ## 3.删除之前的
 ```sh
@@ -80,8 +80,11 @@ groupadd mysql
 useradd -r -g mysql mysql
 chown -R mysql:mysql /opt/software/mysql-8.0.21
 ```
-## 5.安装,这里记一下密码
+## 5.安装
 ```sh
+xz -d mysql-8.0.21-linux-glibc2.12-x86_64.tar.xz
+tar -vxf mysql-8.0.21-linux-glibc2.12-x86_64.tar -C mysql-8.0.21
+
 bin/mysqld --initialize --user=mysql --basedir=/opt/software/mysql-8.0.21 --datadir=/opt/software/mysql-8.0.21/data
 ```
 ## 6.然后记得检查下配置文件是否存在,没有的话手动添加
@@ -202,12 +205,12 @@ set global auto_increment_offset=1;     #从1开始增长,另外一台只需要�
 进入 mysql\bin目录下 查看 mysqld文件,是不是有一个为0kb的,删掉它
 ```
 ## 初始化数据库报错:bin/mysqld: error while loading shared libraries: libaio.so.1: cannot open shared object file: No such file or directory
-```txt
-进入mysql-8.0.21/bin 目录执行,查看各个依赖项
+```sh
+# 进入mysql-8.0.21/bin 目录执行,查看各个依赖项
 ldd mysql 
-从别的电脑复制一个过来
+# 从别的电脑复制一个过来
 scp /usr/lib64/libtinfo.so.5 192.168.1.201:/usr/lib64/
-再查看
+# 再查看
 ll /usr/lib64/libtinfo.so.5.9
 ```
 

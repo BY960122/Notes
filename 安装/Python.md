@@ -9,11 +9,11 @@ echo $PYTHOME_HOME
 ## 2.依赖准备
 ```sh
 yum install -y zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel 
-yum install -y gcc,gcc-c++,tcl,zlib,zlib-devel,perl,libffi-devel,openssl-devel,openssl,ruby
+yum install -y gcc gcc-c++ tcl zlib zlib-devel perl libffi-devel openssl-devel openssl ruby
 ```
 ## 3.编译
 ```sh
-tar xzf Python-3.8.1.tgz
+tar zvxf Python-3.8.1.tgz -C python-3.8.1
 cd python-3.8.1
 sudo ./configure --enable-optimizations --prefix=/usr/local/python3
 sudo make && make install

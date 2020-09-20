@@ -17,7 +17,7 @@
 ### (2).上传前面编译好的整个目录
 ### (3).执行脚本
 ```sh
-sh /opt/spark-3.0.0/dev/make-distribution.sh --name hadoop3.2-without-hive --tgz "-Phadoop-3.2,yarn,hadoop-provided,orc-provided,parquet-provided"
+sh /opt/spark-3.0.1/dev/make-distribution.sh --name hadoop3.2-without-hive --tgz "-Phadoop-3.2,yarn,hadoop-provided,orc-provided,parquet-provided"
 ```
 
 # Spark安装
@@ -28,10 +28,10 @@ echo $SPARK_HOME
 ## 2.配置配置文件
 ### spark-env.sh
 ```sh
-export JAVA_HOME=/opt/software/jdk1.8.0_241
+export JAVA_HOME=/opt/software/jdk1.8.0_261
 export LD_LIBRARY_PATH=/opt/software/hadoop-3.2.1/lib/native
 export SPARK_LIBRARY_PATH=/opt/software/spark-3.0.1-bin-hadoop3.2/jars
-export SPARK_CLASSPATH=/opt/software/spark-3.0.0-bin-hadoop3.2
+export SPARK_CLASSPATH=/opt/software/spark-3.0.1-bin-hadoop3.2
 export SCALA_HOME=/opt/software/scala-2.12.11
 export HADOOP_HOME=/opt/software/hadoop-3.2.1
 export HADOOP_CONF_DIR=/opt/software/hadoop-3.2.1/etc/hadoop
@@ -59,14 +59,14 @@ zkServer.sh start
 start-all.sh 
 sh /opt/software/spark-3.0.1-bin-hadoop3.2/sbin/start-all.sh
 
-sh /opt/software/spark-3.0.0-bin-hadoop3.2/sbin/stop-all.sh
+sh /opt/software/spark-3.0.1-bin-hadoop3.2/sbin/stop-all.sh
 ```
 ## 4.web界面
 - http://192.168.1.201:8081/
 
 ## 5.测试
 ```sh
-cd /opt/software/spark-3.0.0-bin-hadoop3.2/
+cd /opt/software/spark-3.0.1-bin-hadoop3.2/
 # 本地模式提交测试
 ./bin/run-example SparkPi 10
 
@@ -79,8 +79,8 @@ cd /opt/software/spark-3.0.0-bin-hadoop3.2/
 - https://www.bmc.com/blogs/using-spark-with-hive/
 
 ```sh
-cp /opt/software/apache-hive-3.1.2-bin/conf/hive-site.xml /opt/software/spark-3.0.0-bin-hadoop3.2/conf/
-cp mysql-connector-java-8.0.18.jar /opt/software/spark-3.0.0-bin-hadoop3.2/jars/
+cp /opt/software/apache-hive-3.1.2-bin/conf/hive-site.xml /opt/software/spark-3.0.1-bin-hadoop3.2/conf/
+cp mysql-connector-java-8.0.18.jar /opt/software/spark-3.0.1-bin-hadoop3.2/jars/
 ```
 ### 开启Hive的MetaStore服务
 ```sh

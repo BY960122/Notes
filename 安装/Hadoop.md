@@ -12,10 +12,10 @@ echo $HADOOP_HOME
 ## 6.配置配置文件
 ### hadoop-env.sh 
 ```sh
-export JAVA_HOME=/opt/software/jdk1.8.0_241
+export JAVA_HOME=/opt/software/jdk1.8.0_261
 export HADOOP_HOME=/opt/software/hadoop-3.2.1
 export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
-export TEZ_HOME=/opt/software/tez-0.10.1
+# export TEZ_HOME=/opt/software/tez-0.10.1
 ```
 ### hdfs-site.xml
 ```xml
@@ -42,9 +42,17 @@ export TEZ_HOME=/opt/software/tez-0.10.1
         <name>fs.defaultFS</name>
         <value>hdfs://192.168.1.201:9000</value>
 </property>
-<!--HDFS数据保存在Linux的哪个目录，默认值是Linux的tmp目录-->
+<!-- 指定hadoop目录 -->
 <property>
         <name>hadoop.tmp.dir</name>
+        <value>/opt/software/hadoop-3.2.1/data/tmp</value>
+</property>
+<property> 
+        <name>dfs.namenode.name.dir</name>
+        <value>/opt/software/hadoop-3.2.1/data/name</value>
+</property>
+<property>
+        <name>dfs.dataname.data.dir</name> 
         <value>/opt/software/hadoop-3.2.1/data</value>
 </property>
 <!-- 这样可以远程登录Hive -->
@@ -131,11 +139,11 @@ export TEZ_HOME=/opt/software/tez-0.10.1
         <description>Ratio between virtual memory to physical memory when setting memory limits for containers</description>
 </property>
 ```
-### slaves
+### workers,slaves
 ```sh
-by211
-by212
-by213
+by201
+by202
+by203
 ```
 ## 7.格式化主节点NameNode
 ```sh

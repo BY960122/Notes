@@ -106,21 +106,20 @@ C:\Windows\SystemApps\ShellExperienceHost_cw5n1h2txyewy
 ```
 
 ## 数据恢复
-```http request
-https://www.delihuifu.com
-```
+- https://www.delihuifu.com
 
 ## 干掉进程
 ```http request
 taskkill /F /IM ShellExperienceHost.exe
 ```
 
-## Onenote代码高亮
-```http request
-https://github.com/elvirbrk/NoteHighlight2016/releases
-```
-
-## Onenote markdown与发放
-```http request
-https://www.onenotegem.com/a/addins/gem-for-onenote.html
+## 软件卸载后,右键菜单仍然存在
+### Open as OneNote Notebook
+```txt
+打开注册表 
+windows + R 输入: regedit
+找到路径
+计算机\HKEY_CLASSES_ROOT\Directory\shell\Open as OneNote Notebook
+一般存在的路径
+HKEY_CLASSES_ROOT*\shell
 ```

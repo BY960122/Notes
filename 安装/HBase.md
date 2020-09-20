@@ -9,7 +9,7 @@ echo $HBASE_HOME
 ## 2.配置配置文件：
 ### hbase-env.sh
 ```sh
-export JAVA_HOME=/opt/software/jdk1.8.0_241
+export JAVA_HOME=/opt/software/jdk1.8.0_261
 export HBASE_MANAGES_ZK=false
 ```
 ### hbase-site.xml
@@ -63,8 +63,8 @@ export HBASE_MANAGES_ZK=false
 ```
 ### regionservers
 ```sh
-192.168.0.202
-192.168.0.203
+192.168.1.202
+192.168.1.203
 ```
 ## 3.启动 Zookeeper,Hadoop,HBase
 ```sh

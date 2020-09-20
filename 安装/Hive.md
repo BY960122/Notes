@@ -9,36 +9,39 @@ echo $HIVE_HOME
 ## 3.配置配置文件
 ### hive-env.sh
 ```sh
-export JAVA_HOME=/opt/software/jdk1.8.0_241
+export JAVA_HOME=/opt/software/jdk1.8.0_261
 export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
 export HADOOP_HOME=/opt/software/hadoop-3.2.1
 ```
 ### hive-site.xml
 ```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
 <configuration>
     <property>
-            <name>javax.jdo.option.ConnectionURL</name>
-            <value>jdbc:mysql://192.168.1.203:3306/hive?createDatabaseIfNotExist=true&amp;useSSL=false</value>
+        <name>javax.jdo.option.ConnectionURL</name>
+        <value>jdbc:mysql://192.168.1.6:3306/hive?createDatabaseIfNotExist=true&amp;useSSL=false</value>
     </property>
     <property>
-            <name>javax.jdo.option.ConnectionDriverName</name>
-            <value>com.mysql.cj.jdbc.Driver</value>
+        <name>javax.jdo.option.ConnectionDriverName</name>
+        <value>com.mysql.cj.jdbc.Driver</value>
     </property>
     <property>
-            <name>javax.jdo.option.ConnectionUserName</name>
-            <value>root</value>
+        <name>javax.jdo.option.ConnectionUserName</name>
+        <value>root</value>
     </property>
     <property>
-            <name>javax.jdo.option.ConnectionPassword</name>
-            <value>By921644606</value>
+        <name>javax.jdo.option.ConnectionPassword</name>
+        <value>By9216446o6</value>
     </property>
     <property>
-            <name>datanucleus.connectionPoolingType</name>
-            <value>dbcp</value>
-            <description>
-              Expects one of [bonecp, dbcp, hikaricp, none].
-              Specify connection pool library for datanucleus
-            </description>
+        <name>datanucleus.connectionPoolingType</name>
+        <value>dbcp</value>
+        <description>
+          Expects one of [bonecp, dbcp, hikaricp, none].
+          Specify connection pool library for datanucleus
+        </description>
     </property>
     <property>
         <name>hive.server2.thrift.port</name>
@@ -57,10 +60,10 @@ export HADOOP_HOME=/opt/software/hadoop-3.2.1
         <value>NONE</value>
     </property>
     <!-- Hive整合 Tez -->
-    <property>
+    <!-- <property>
         <name>hive.tez.container.size</name>
         <value>1024</value>
-    </property>
+    </property> -->
     <!-- Hive整合 Spark -->
     <property>
         <name>spark.master</name>
@@ -68,17 +71,17 @@ export HADOOP_HOME=/opt/software/hadoop-3.2.1
     </property>
     <property>
         <name>spark.home</name>
-        <value>/opt/software/spark-3.0.0-bin-hadoop3.2</value>
+        <value>/opt/software/spark-3.0.1-bin-hadoop3.2</value>
     </property>
     <!-- spark.yarn.jars         hdfs://192.168.1.202:9870/spark_jars/* -->
     <!-- # hdfs dfs -put /opt/software/spark-3.0.0-bin-hadoop3.2/jars/* /spark_jars/ -->
     <property>
-            <name>spark.yarn.jars</name>
-            <value>hdfs://192.168.1.202:9870/spark_jars/*</value>
+        <name>spark.yarn.jars</name>
+        <value>hdfs://192.168.1.202:9870/spark_jars/*</value>
     </property>
     <property>
-            <name>hive.enable.spark.execution.engine</name>
-            <value>true</value>
+        <name>hive.enable.spark.execution.engine</name>
+        <value>true</value>
     </property>
     <!-- Hive整合 HBase -->
     <property> 
@@ -174,32 +177,32 @@ hadoop fs -put /opt/software/tez-0.10.1-SNAPSHOT.tar.gz /tez
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
     <property>
-            <name>tez.lib.uris</name>
-            <value>${fs.defaultFS}/tez/tez-0.10.1-SNAPSHOT,${fs.defaultFS}/tez/tez-0.10.1-SNAPSHOT/lib</value>
+        <name>tez.lib.uris</name>
+        <value>${fs.defaultFS}/tez/tez-0.10.1-SNAPSHOT,${fs.defaultFS}/tez/tez-0.10.1-SNAPSHOT/lib</value>
     </property>
     <property>
-            <name>tez.lib.uris.classpath</name>
-            <value>${fs.defaultFS}/tez/tez-0.10.1-SNAPSHOT,${fs.defaultFS}/tez/tez-0.10.1-SNAPSHOT/lib</value>
+        <name>tez.lib.uris.classpath</name>
+        <value>${fs.defaultFS}/tez/tez-0.10.1-SNAPSHOT,${fs.defaultFS}/tez/tez-0.10.1-SNAPSHOT/lib</value>
     </property>
     <property>
-            <name>tez.use.cluster.hadoop-libs</name>
-            <value>true</value>
+        <name>tez.use.cluster.hadoop-libs</name>
+        <value>true</value>
     </property>
     <property>
-            <name>tez.am.resource.memory.mb</name>
-            <value>2048</value>
+        <name>tez.am.resource.memory.mb</name>
+        <value>2048</value>
     </property>
     <property>
-            <name>tez.am.resource.cpu.vcores</name>
-            <value>2</value>
+        <name>tez.am.resource.cpu.vcores</name>
+        <value>2</value>
     </property>
     <property>
-            <name>tez.task.resource.memory.mb</name>
-            <value>2048</value>
+        <name>tez.task.resource.memory.mb</name>
+        <value>2048</value>
     </property>
     <property>
-            <name>tez.task.resource.cpu.vcores</name>
-            <value>2</value>
+        <name>tez.task.resource.cpu.vcores</name>
+        <value>2</value>
     </property>
 </configuration>
 ```
@@ -256,8 +259,9 @@ select row_number() over (partition by 1 order by id) from test_hive limit 7,7;
 ```
 ## 10.一些报错信息
 ### java.lang.NoSuchMethodError: com.google.common.base.Preconditions.checkArgument(ZLjava/lang/String;Ljava/lang/Object;)V
-```txt
-下载 guava-22.0.jar 替换 /opt/software/apache-hive-3.1.1-bin/lib/guava-19.0.jar
+```sh
+# guava 版本过低,用 Hadoop 的
+rm -rf /opt/software/apache-hive-3.1.1-bin/lib/guava-19.0.jar
 ```
 ### java.lang.NoClassDefFoundError：org.apache.hadoop.hive.conf.HiveVariableSource
 ```sh
