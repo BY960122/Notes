@@ -44,7 +44,21 @@ echo -e "\033[46;37m 天蓝底白字 \033[0m"
 echo -e "\033[47;30m 白底黑字 \033[0m"
 ```
 
+## 常用命令
+```sh
+# 查看端口占用
+lsof -i:8088
+# 只下载包不安装
+	# 包括依赖
+yum install -y --downloadonly --downloaddir=/opt/ lsof
+yum reinstall -y --downloadonly --downloaddir=/opt/ lsof
+	# 不包括依赖
+yum install -y yum-utils
+yumdownloader lsof
+```
+
 ## 一些报错信息 
+
 ### $'\r': command not found
 ```sh
 vim  **.sh
