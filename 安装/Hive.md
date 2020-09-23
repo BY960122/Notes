@@ -60,10 +60,10 @@ export HADOOP_HOME=/opt/software/hadoop-3.2.1
         <value>NONE</value>
     </property>
     <!-- Hive整合 Tez -->
-    <!-- <property>
+    <property>
         <name>hive.tez.container.size</name>
         <value>1024</value>
-    </property> -->
+    </property>
     <!-- Hive整合 Spark -->
     <property>
         <name>spark.master</name>
@@ -166,8 +166,9 @@ mvn clean package install -Dhadoop.version=3.2.1 -DskipTests -Dmaven.javadoc.ski
 mkdir /opt/software/tez-0.10.0
 tar -zxvf /opt/software/tez-0.10.0-minimal.tar.gz -C /opt/software/tez-0.10.0
 ```
-### (6) 解压 tez-0.10.0-minimal.tar.gz 到集群各个节点,配置环境变量
+### (6) 解压 tez-0.10.0.tar.gz 到集群各个节点,配置环境变量
 ```sh
+echo $TEZ_HOME
 hadoop fs -mkdir /tez 
 hadoop fs -put /opt/software/tez-0.10.0.tar.gz /tez
 ```
