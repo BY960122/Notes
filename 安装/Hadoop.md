@@ -168,7 +168,10 @@ hadoop jar /opt/software/hadoop-3.2.1/share/hadoop/mapreduce/hadoop-mapreduce-ex
 ## 11.一些参考信息
 ### HDFS管理界面 
 - 192.168.1.201:50070
+
 ### SecondaryNamenode管理界面
+
 - 192.168.1.201:50090
+
 ### YARN管理界面
 - 192.168.1.201:8088

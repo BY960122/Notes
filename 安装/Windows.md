@@ -36,7 +36,7 @@ END
 另存为.cmd所有文件，以管理员方式运行
 ```
 
-## Win10家庭版添加组策略
+## Win10家庭版添加组策略 gpedit.msc
 ```sh
 @echo off
 pushd "%~dp0"
@@ -122,4 +122,20 @@ windows + R 输入: regedit
 计算机\HKEY_CLASSES_ROOT\Directory\shell\Open as OneNote Notebook
 一般存在的路径
 HKEY_CLASSES_ROOT*\shell
+```
+
+## 提高 Github 访问速度
+- https://www.ipaddress.com/
+依次搜索下面3个网址,填入hosts文件
+- github.com
+- github.global.ssl.fastly.net
+- codeload.github.com
+
+```sh
+192.30.253.113  github.com
+151.101.25.194 github.global.ssl.fastly.net
+192.30.253.121 codeload.github.com
+
+# cmd 刷新
+ipconfig /flushdns
 ```

@@ -130,14 +130,14 @@ tblproperties ("hbase.table.name" = "test:test_hbase", "hbase.mapred.output.outp
 ```
 ## 7.HIVE整合Tez
 ### (1).下载 protobuf-2.5.0
-```http
-https://www.cnblogs.com/bianqi/p/7229437.html
-https://github.com/protocolbuffers/protobuf/tags
-```
+
+- https://www.cnblogs.com/bianqi/p/7229437.html
+- https://github.com/protocolbuffers/protobuf/tags
+
 ### (2).下载 googletest1.5.0
-```http
-https://github.com/google/googletest
-```
+
+- https://github.com/google/googletest
+
 ```sh
 # 解压 更名放在 protobuf-2.5.0 目录下
 mv googletest-release-1.5.0 gtest
@@ -152,25 +152,24 @@ make install
 protoc --version
 ```
 ### (4).编译 Tez
-```http
-https://blog.csdn.net/Hello_Java2018/article/details/106036782
-https://github.com/apache/tez/tree/master
-```
+- https://blog.csdn.net/Hello_Java2018/article/details/106036782
+- https://github.com/apache/tez/tree/master
+
 ```sh
 chmod a+x /opt/software/apache-maven-3.6.3/bin/mvn
 # 顶层.pom文件 配置阿里云源
 # tez-ui这个模块,直接注释掉,费事费力容易报错
 mvn clean package install -Dhadoop.version=3.2.1 -DskipTests -Dmaven.javadoc.skip=true
 ```
-### (5).将tez安装包拷贝到集群,并解压tar包,注意解压的是 minimal
+### (5) 解压 tez-0.10.0-minimal.tar.gz 到集群各个节点,配置环境变量
 ```sh
-mkdir /opt/software/tez-0.10.1
-tar -zxvf /opt/software/tez-0.10.1-SNAPSHOT-minimal.tar.gz -C /opt/software/tez-0.10.1
+mkdir /opt/software/tez-0.10.0
+tar -zxvf /opt/software/tez-0.10.0-minimal.tar.gz -C /opt/software/tez-0.10.0
 ```
-### (6).上传tez依赖到 HDFS ,不带minimal的那个
+### (6) 解压 tez-0.10.0-minimal.tar.gz 到集群各个节点,配置环境变量
 ```sh
-hadoop fs -mkdir /tez
-hadoop fs -put /opt/software/tez-0.10.1-SNAPSHOT.tar.gz /tez
+hadoop fs -mkdir /tez 
+hadoop fs -put /opt/software/tez-0.10.0.tar.gz /tez
 ```
 ### (7).新建 tez-site.xml ,放在 Hadoop,Hive配置目录下
 ```xml
@@ -178,11 +177,11 @@ hadoop fs -put /opt/software/tez-0.10.1-SNAPSHOT.tar.gz /tez
 <configuration>
     <property>
         <name>tez.lib.uris</name>
-        <value>${fs.defaultFS}/tez/tez-0.10.1-SNAPSHOT,${fs.defaultFS}/tez/tez-0.10.1-SNAPSHOT/lib</value>
+        <value>${fs.defaultFS}/tez/tez-0.10.0,${fs.defaultFS}/tez/tez-0.10.0/lib</value>
     </property>
     <property>
         <name>tez.lib.uris.classpath</name>
-        <value>${fs.defaultFS}/tez/tez-0.10.1-SNAPSHOT,${fs.defaultFS}/tez/tez-0.10.1-SNAPSHOT/lib</value>
+        <value>${fs.defaultFS}/tez/tez-0.10.0,${fs.defaultFS}/tez/tez-0.10.0/lib</value>
     </property>
     <property>
         <name>tez.use.cluster.hadoop-libs</name>
@@ -223,21 +222,21 @@ scp /opt/software/hadoop-3.2.1/etc/hadoop/tez-site.xml 192.168.1.203:/opt/softwa
 ```
 #### hive-env.sh
 ```sh
-export TEZ_HOME=/opt/software/tez-0.10.1
-export TEZ_CONF_DIR=/opt/software/tez-0.10.1
+export TEZ_HOME=/opt/software/tez-0.10.0
+export TEZ_CONF_DIR=/opt/software/tez-0.10.0
 export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:${TEZ_CONF_DIR}:${TEZ_HOME}/*:${TEZ_HOME}/lib/*
 export CLASSPATH=$CLASSPATH:${TEZ_CONF_DIR}:${TEZ_HOME}/*:${TEZ_HOME}/lib/*
 ```
 #### hadoop-env.sh
 ```sh
-export TEZ_HOME=/opt/software/tez-0.10.1
-export TEZ_CONF_DIR=/opt/software/tez-0.10.1
+export TEZ_HOME=/opt/software/tez-0.10.0
+export TEZ_CONF_DIR=/opt/software/tez-0.10.0
 export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:${TEZ_CONF_DIR}:${TEZ_HOME}/*:${TEZ_HOME}/lib/*
 export CLASSPATH=$CLASSPATH:${TEZ_CONF_DIR}:${TEZ_HOME}/*:${TEZ_HOME}/lib/*
 ```
 ### (9).测试
 ```sh
-hadoop jar /opt/software/tez-0.10.1/tez-examples-0.10.1-SNAPSHOT.jar orderedwordcount /data/test.txt /tez/output/
+hadoop jar /opt/software/tez-0.10.0/tez-examples-0.10.0.jar orderedwordcount /data/test.txt /tez/output/
 hdfs dfs -ls /tez/output/
 ```
 ## 8.启动 Hive

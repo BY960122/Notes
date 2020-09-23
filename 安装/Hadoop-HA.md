@@ -304,22 +304,25 @@ yarn-daemon.sh start resourcemanager
 yarn --daemon start resourcemanager
 ```
 ## 12.常用命令
-### 启动namenode
 ```sh
+# 启动namenode
 hdfs --daemon start namenode
-```
-### 启动 resourcemanager 和 nodemanager
-```sh
+
+# 启动 resourcemanager 和 nodemanager
 start-yarn.sh
-```
-### 查看namenode状态
-```sh
+
+# 查看 namenode 状态
 hdfs haadmin -getServiceState nn2
-```
-### 启动历史日志
-```sh
+
+# 启动历史日志
 yarn --daemon start historyserver
 mapred --daemon start historyserver
+
+# 查看作业列表
+yarn application -list 
+
+# kill 作业
+yarn application -kill application_1600865572447_0003
 ```
 ## 13.一些报错信息
 ### Call From by201/192.168.1.201 to by201:8485 failed on connection exception
