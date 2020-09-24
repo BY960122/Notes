@@ -19,7 +19,7 @@ win10专业版：PK6DJ-BWPFR-YGXH8-X7MPJ-R34QW
 这里的0代表时间，比如100，那么我们点击之后100秒才会启动关机程序
 ```
 
-## win10完全删除OneDrive
+## 完全删除OneDrive
 ```sh
 编辑文本文档，拷贝以下内容
 
@@ -36,7 +36,7 @@ END
 另存为.cmd所有文件，以管理员方式运行
 ```
 
-## Win10家庭版添加组策略 gpedit.msc
+## 家庭版添加组策略 gpedit.msc
 ```sh
 @echo off
 pushd "%~dp0"
@@ -68,7 +68,7 @@ start explorer
 Pause
 ```
 
-## win10删除此电脑下的文件夹
+## 删除此电脑下的文件夹
 ```sh
 新建文本文档
 Windows Registry Editor Version 5.00
@@ -92,14 +92,14 @@ Windows Registry Editor Version 5.00
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}]
 ```
 
-## Win10安装msi时2503，2502错误及其解决
+## 安装msi时2503，2502错误及其解决
 ```sh
 管理员方式运行cmd,然后执行
 
 msiexec /package "D:\Mysoft\Navicat_12.1\sqlncli_x64.msi"
 ```
 
-## Windows右下角图标无法点开
+## 右下角图标无法点开
 ```sh
 ## 可能是误删了一个目录
 C:\Windows\SystemApps\ShellExperienceHost_cw5n1h2txyewy
@@ -115,14 +115,10 @@ taskkill /F /IM ShellExperienceHost.exe
 
 ## 软件卸载后,右键菜单仍然存在
 ### Open as OneNote Notebook
-```txt
-打开注册表 
-windows + R 输入: regedit
-找到路径
-计算机\HKEY_CLASSES_ROOT\Directory\shell\Open as OneNote Notebook
-一般存在的路径
-HKEY_CLASSES_ROOT*\shell
-```
+> windows + R 输入: regedit
+> 定位到 HKEY_CLASSES_ROOT\Directory\shell\Open as OneNote Notebook
+> 还可能存在于
+> HKEY_CLASSES_ROOT*\shell
 
 ## 提高 Github 访问速度
 - https://www.ipaddress.com/
@@ -132,10 +128,15 @@ HKEY_CLASSES_ROOT*\shell
 - codeload.github.com
 
 ```sh
-192.30.253.113  github.com
+192.30.253.113 github.com
 151.101.25.194 github.global.ssl.fastly.net
 192.30.253.121 codeload.github.com
 
 # cmd 刷新
 ipconfig /flushdns
 ```
+
+## 完全删除病毒库
+> windows + R 输入: regedit
+> 1.定位到 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SecurityHealthService,右侧找到 start 并双击将 数值数据 由2更改为4
+> 2.定位到 HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender , 右侧添加 DisableAntiSpyware (CWD32) 设置值为 1
