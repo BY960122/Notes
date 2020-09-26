@@ -207,9 +207,17 @@ source ~/.bash_profile
 ## Centos 8 过期的一些包
 ### unzip 改为 zip
 ### ntpdate 改为 chrony
+
+## 一些报错信息
 ### 解除挂载报错:target is busy
 ```sh
 yum install psmisc
 fuser -mv /iso ## 把下面的进程kill掉
 ```
-
+### Virtualbox未关机就关闭电脑,无法启动,unmount and run xfs_repair
+```sh
+ls -l /dev/mapper
+xfs_repair /dev/mapper/cl_muban-root
+# 如果报错 The filesystem has valuable metadata change in a log ...
+xfs_repair -L /dev/mapper/cl_muban-root
+```

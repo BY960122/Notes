@@ -227,16 +227,18 @@ echo "Time consuming `time_consuming` seconds"
 ```
 
 ## es-restart
+- https://www.cnblogs.com/sparkdev/p/6842805.html
+
 ```sh
 ##! /bin/bash
 startTime=`date +%s`
 
 ## es集群IP信息列表
-ip_list=(daases62 daases63 daases64 daases65 daases66 daases67 daases133 daases140 daases148 daases149 daases150 daases151 daases242 daases244 daases245 daases246 )
+ip_list=(by203 by202 by201)
 ## 节点启动位置列表
-addr_list=(/data1/elasticsearch_9200 /data2/elasticsearch_9400 /data3/elasticsearch_9600)
+addr_list=(/opt/software/elasticsearch-7.9.1)
 ## 节点列表
-port_list=(9200 9400 9600)
+port_list=(9200)
 ## 节点进程id
 pid=""
 ## 当前健康节点
@@ -247,11 +249,13 @@ time_consuming(){
 }
 ## 获取IP下所有es节点进程
 get_pid(){
-    ssh ${1} "ps -ef | grep elasticsearch | grep -w 'elasticsearch' | grep -v 'grep'" | grep ${2} | awk '{print $2}'
+    ssh ${1} "ps -ef | grep elasticsearch | grep -w 'elasticsearch' | grep -v 'grep'" | grep elasticsearch-7.9.1/jdk | awk '{print $2}'
 }
 ## 获取es集群健康节点数量
 es_colony_health(){
-    curl -sX get http://admin:bingo_20181025@77.1.22.65:9200/_cat/health?v | awk '{print $5}' | sed -n '2p'
+    # curl -sX GET http://192.168.1.203:9200/_cluster/health?pretty | awk '{print $5}' | sed -n '2p'
+    curl -sX GET http://${1}:9200/_cat/health?v | awk '{print $5}' | sed -n '2p'
+    #curl -sX GET http://${1}:9200/_cat/health?v | awk '{print $5}' | sed -n '2p'
 }
 
 echo "[Currently available nodes] `es_colony_health`"
@@ -268,17 +272,118 @@ do
         ssh ${ip} "kill -9 ${pid}"
         ## 2.启动节点
         number=`expr ${port:1:1} / 2 - 1`
-        echo "[Prepare start ${ip}:${port} node] ssh ${ip} "su - daases -c sh ${addr_list[${number}]}/bin/elasticsearch –d""
-        ssh ${ip} "su - daases -c 'sh ${addr_list[${number}]}/bin/elasticsearch –d'"
+        echo "add_list下标: ${number}"
+        echo "[Prepare start ${ip}:${port} node] ssh ${ip} -t "su elasticsearch -c sh ${addr_list[${number}]}/bin/elasticsearch –d""
+        ssh ${ip} -t "su elasticsearch -c '/opt/software/elasticsearch-7.9.1/bin/elasticsearch -d'"
         ## 3.该节点注册进集群再重启下一个节点
-        health_nodes=`es_colony_health`
-        while [[ ! ${health_nodes} == 48 ]]; 
+        health_nodes=`es_colony_health ${ip}`
+        while [[ ${health_nodes} -lt 3 ]]; 
         do
-            health_nodes=`es_colony_health`
-            echo "[Currently available nodes ${health_nodes} ] Waiting to start ${ip}:${port} sleep 30 seconds"
-            sleep 30
+            health_nodes=`es_colony_health ${ip}`
+            echo "[Currently available nodes ${health_nodes} ] Waiting to start ${ip}:${port} sleep 3 seconds"
+            sleep 3
         done
         echo "[Start Success ${ip}:${port}] Prepare enter the next node"
+    done
+done
+
+echo "[Process exectute success^_^] time consuming `time_consuming` seconds"
+```
+
+## es-start_all
+- https://www.cnblogs.com/sparkdev/p/6842805.html
+
+```sh
+##! /bin/bash
+startTime=`date +%s`
+
+## es集群IP信息列表
+ip_list=(by201 by202 by203)
+## 节点启动位置列表
+addr_list=(/opt/software/elasticsearch-7.9.1)
+## 节点列表
+port_list=(9200)
+## 节点进程id
+pid=""
+## 当前健康节点
+health_nodes=""
+## 耗时
+time_consuming(){
+    expr `date +%s` - ${startTime}
+}
+## 获取IP下所有es节点进程
+get_pid(){
+    ssh ${1} "ps -ef | grep elasticsearch | grep -w 'elasticsearch' | grep -v 'grep'" | grep elasticsearch-7.9.1/jdk | awk '{print $2}'
+}
+## 获取es集群健康节点数量
+es_colony_health(){
+    curl -sX GET http://${1}:9200/_cat/health?v | awk '{print $5}' | sed -n '2p'
+}
+
+echo "[Currently available nodes] `es_colony_health`"
+## 第一层循环遍历集群IP
+for ip in ${ip_list[*]}; 
+do
+    echo "[Enter IP] ${ip}"
+    ## 第二层循环遍历节点
+    for port in ${port_list[*]}; 
+    do
+        ## 1.Kill节点
+        pid=`get_pid ${ip}`
+        echo "[Prepare kill ${ip}:${port} node] ssh ${ip} "kill -9 ${pid}""
+        ssh ${ip} "kill -9 ${pid}"
+        ## 2.启动节点
+        number=`expr ${port:1:1} / 2 - 1`
+        echo "[Prepare start ${ip}:${port} node] ssh ${ip} -t "su elasticsearch -c /opt/software/elasticsearch-7.9.1/bin/elasticsearch -d""
+        ssh ${ip} -t "su elasticsearch -c '/opt/software/elasticsearch-7.9.1/bin/elasticsearch -d'"
+        while [[ ! `get_pid ${ip}` ]]; 
+        do
+            echo "[pid `get_pid ${ip}`] Waiting to start ${ip}:${port} sleep 3 seconds"
+            sleep 3
+        done
+        echo "[Start Success ${ip}:${port}] pid : ${pid}"
+    done
+done
+sleep 9
+echo "[Currently available nodes `es_colony_health by201` ]"
+
+echo "[Process exectute success^_^] time consuming `time_consuming` seconds"
+```
+
+## es-stop_all
+- https://www.cnblogs.com/sparkdev/p/6842805.html
+
+```sh
+##! /bin/bash
+startTime=`date +%s`
+
+## es集群IP信息列表
+ip_list=(by201 by202 by203)
+## 节点列表
+port_list=(9200)
+## 节点进程id
+pid=""
+## 耗时
+time_consuming(){
+    expr `date +%s` - ${startTime}
+}
+## 获取IP下所有es节点进程
+get_pid(){
+    ssh ${1} "ps -ef | grep elasticsearch | grep -w 'elasticsearch' | grep -v 'grep'" | grep elasticsearch-7.9.1/jdk | awk '{print $2}'
+}
+
+echo "[Currently available nodes] `es_colony_health`"
+## 第一层循环遍历集群IP
+for ip in ${ip_list[*]}; 
+do
+    echo "[Enter IP] ${ip}"
+    ## 第二层循环遍历节点
+    for port in ${port_list[*]}; 
+    do
+        ## 1.Kill节点
+        pid=`get_pid ${ip}`
+        echo "[Prepare kill ${ip}:${port} node] ssh ${ip} "kill -9 ${pid}""
+        ssh ${ip} "kill -9 ${pid}"
     done
 done
 

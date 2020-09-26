@@ -61,6 +61,10 @@ yumdownloader lsof
 
 ### $'\r': command not found
 ```sh
-vim  **.sh
+vim  ecif_etl_data_import.sh
 : set ff = unix
+# 或者 
+yum -y install dos2unix
+dos2unix ecif_etl_data_import.sh
+
 ```

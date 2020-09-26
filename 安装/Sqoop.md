@@ -17,7 +17,7 @@ export ZOOCFGDIR=/opt/software/apache-zookeeper-3.6.1-bin
 ```
 ## 3.拷贝jar至sqoop/lib
 ```sh
-cp /opt/software/apache-hive-3.1.1-bin/lib/mysql-connector-java-8.0.18.jar /opt/software/sqoop-1.4.7.bin__hadoop-2.6.0/lib/
+cp /opt/software/apache-hive-3.1.1-bin/lib/mysql-connector-java-8.0.21.jar /opt/software/sqoop-1.4.7.bin__hadoop-2.6.0/lib/
 cp /opt/software/apache-hive-3.1.1-bin/lib/* /opt/software/sqoop-1.4.7.bin__hadoop-2.6.0/lib/
 cp /opt/software/apache-hive-3.1.1-bin/conf/hive-site.xml /opt/software/sqoop-1.4.7.bin__hadoop-2.6.0/conf/
 ```
