@@ -1,6 +1,7 @@
 # 目录
 > 安装
 - [CDH.md](./安装/CDH.md)
+- [Elasticsearch.md](./安装/Elasticsearch.md)
 - [Flume.md](./安装/Flume.md)
 - [Hadoop-HA.md](./安装/Hadoop-HA.md)
 - [Hadoop.md](./安装/Hadoop.md)
