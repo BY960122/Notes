@@ -5,7 +5,7 @@
 
 ## 1.配置环境变量
 ```sh
-echo $HADOOP_HOME
+echo $ELASTICSEARCH
 ```
 ## 2.创建用户
 ```sh
