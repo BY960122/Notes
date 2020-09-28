@@ -192,7 +192,7 @@ done
 echo "Time consuming `time_consuming` seconds"
 ```
 
-## elasticsearch-stop-all
+## es-stop-all.sh
 ```sh
 ##!/bin/bash
 
@@ -226,7 +226,7 @@ done
 echo "Time consuming `time_consuming` seconds"
 ```
 
-## es-restart
+## es-restart.sh
 - https://www.cnblogs.com/sparkdev/p/6842805.html
 
 ```sh
@@ -249,7 +249,7 @@ time_consuming(){
 }
 ## 获取IP下所有es节点进程
 get_pid(){
-    ssh ${1} "ps -ef | grep elasticsearch | grep -w 'elasticsearch' | grep -v 'grep'" | grep elasticsearch-7.9.1/jdk | awk '{print $2}'
+    ssh ${1} "ps -ef | grep elasticsearch | grep -w 'elasticsearch' | grep -v 'grep'" | grep bootstrap.Elasticsearch | awk '{print $2}'
 }
 ## 获取es集群健康节点数量
 es_colony_health(){
@@ -290,7 +290,7 @@ done
 echo "[Process exectute success^_^] time consuming `time_consuming` seconds"
 ```
 
-## es-start_all
+## es-start-all.sh
 - https://www.cnblogs.com/sparkdev/p/6842805.html
 
 ```sh
@@ -313,7 +313,7 @@ time_consuming(){
 }
 ## 获取IP下所有es节点进程
 get_pid(){
-    ssh ${1} "ps -ef | grep elasticsearch | grep -w 'elasticsearch' | grep -v 'grep'" | grep elasticsearch-7.9.1/jdk | awk '{print $2}'
+    ssh ${1} "ps -ef | grep elasticsearch | grep -w 'elasticsearch' | grep -v 'grep'" | grep bootstrap.Elasticsearch | awk '{print $2}'
 }
 ## 获取es集群健康节点数量
 es_colony_health(){
@@ -346,46 +346,6 @@ do
 done
 sleep 9
 echo "[Currently available nodes `es_colony_health by201` ]"
-
-echo "[Process exectute success^_^] time consuming `time_consuming` seconds"
-```
-
-## es-stop_all
-- https://www.cnblogs.com/sparkdev/p/6842805.html
-
-```sh
-##! /bin/bash
-startTime=`date +%s`
-
-## es集群IP信息列表
-ip_list=(by201 by202 by203)
-## 节点列表
-port_list=(9200)
-## 节点进程id
-pid=""
-## 耗时
-time_consuming(){
-    expr `date +%s` - ${startTime}
-}
-## 获取IP下所有es节点进程
-get_pid(){
-    ssh ${1} "ps -ef | grep elasticsearch | grep -w 'elasticsearch' | grep -v 'grep'" | grep elasticsearch-7.9.1/jdk | awk '{print $2}'
-}
-
-echo "[Currently available nodes] `es_colony_health`"
-## 第一层循环遍历集群IP
-for ip in ${ip_list[*]}; 
-do
-    echo "[Enter IP] ${ip}"
-    ## 第二层循环遍历节点
-    for port in ${port_list[*]}; 
-    do
-        ## 1.Kill节点
-        pid=`get_pid ${ip}`
-        echo "[Prepare kill ${ip}:${port} node] ssh ${ip} "kill -9 ${pid}""
-        ssh ${ip} "kill -9 ${pid}"
-    done
-done
 
 echo "[Process exectute success^_^] time consuming `time_consuming` seconds"
 ```

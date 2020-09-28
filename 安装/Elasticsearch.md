@@ -20,7 +20,7 @@ vm.max_map_count=655300
 # 生效
 sysctl -p
 ```
-### elasticsearch.yml
+### config/elasticsearch.yml
 ```sh
 # 集群名称
 cluster.name: elasticsearch-cluster
@@ -37,6 +37,22 @@ cluster.initial_master_nodes: ["elasticsearch-203"]
 # 设置es允许跨域访问
 http.cors.enabled: true
 http.cors.allow-origin: "*"
+```
+### config/jvm.options
+```sh
+# -XX:+UseConcMarkSweepGC 
+-XX:+UseG1GC 
+
+scp /opt/software/elasticsearch-7.9.1/config/* 192.168.1.202:/opt/software/elasticsearch-7.9.1/config/
+scp /opt/software/elasticsearch-7.9.1/config/* 192.168.1.203:/opt/software/elasticsearch-7.9.1/config/
+```
+### bin/elasticsearch-env
+```sh
+# 看到java路径都改成
+JAVA="/opt/software/jdk-11.0.1/bin/java"
+
+scp elasticsearch-env 192.168.1.202:/opt/software/elasticsearch-7.9.1/bin/
+scp elasticsearch-env 192.168.1.203:/opt/software/elasticsearch-7.9.1/bin/
 ```
 ## 4.启动
 ```sh
@@ -58,4 +74,27 @@ curl 'http://192.168.1.201:9200/_cluster/health?pretty'
 ```sh
 # 修改 elasticsearch-env 122 行
 #   done < <(env) 改为  done <<< 'env'
+```
+
+# 下载 Kibana
+- https://www.elastic.co/cn/downloads/past-releases
+
+## 1.修改配置文件
+### kibana.yml 
+```sh
+server.host: "0.0.0.0"
+elasticsearch.hosts: "http://192.168.1.203:9200"
+```
+## 2.启动
+```sh
+sh elasticsearch 
+./kibana
+```
+## 3.web界面
+- 192.168.1.201:5601
+
+## 4.一些报错信息
+### libnss3.so: cannot open shared object file: No such file or directory
+```sh
+yum install -y nss.x86_64
 ```
