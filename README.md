@@ -36,5 +36,5 @@
 - [MySQL_Function.md](./实战操作/MySQL_Function.md)
 - [MySQL_Procedure.md](./实战操作/MySQL_Procedure.md)
 - [Sqoop.md](./实战操作/Sqoop.md)
-- [windows_shell.md](./实战操作/windows_shell.md)
+- [Windows_Shell.md](./实战操作/Windows_Shell.md)
 
