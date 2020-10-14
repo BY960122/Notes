@@ -27,8 +27,12 @@ incr 'test:test_hbase','1','info:sex'
 describe 'hbase:namespace'
 # 查表数据
 scan 'hbase:namespace'
+	# 限制条数
 scan 'hbase:namespace' , {LIMIT => 3}
+	# 指定列族
 scan 'test:test_hbase',{COLUMNS => ['info:name','info:age'], LIMIT =>2,STARTROW => '1'}
+	# 模糊查
+scan 'table_name' , {STARTROW => '3513' , LIMIT => 3}
 # 查表,指定列族
 get 'test:test_hbase','1'
 # 查看表是否存在
