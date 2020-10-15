@@ -25,8 +25,10 @@
 - [随机.md](./读书笔记/随记.md)
 
 > 实战操作
-- [Hive.md](./实战操作/Hive.md)
+- [Elasticsearch.md](./实战操作/Elasticsearch.md)
+- [git.md](./实战操作/git.md)
 - [HBase.md](./实战操作/HBase.md)
+- [Hive.md](./实战操作/Hive.md)
 - [IDEA.md](./实战操作/IDEA.md)
 - [Kakfa.md](Flink.md)
 - [Linux.md](./实战操作/Linux.md)
