@@ -26,7 +26,7 @@
 
 > 实战操作
 - [Elasticsearch.md](./实战操作/Elasticsearch.md)
-- [git.md](./实战操作/git.md)
+- [Git.md](./实战操作/Git.md)
 - [HBase.md](./实战操作/HBase.md)
 - [Hive.md](./实战操作/Hive.md)
 - [IDEA.md](./实战操作/IDEA.md)

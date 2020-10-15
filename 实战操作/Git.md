@@ -1,4 +1,4 @@
-# 下载 git
+# 下载 Git
 - https://git-scm.com/downloads
 
 ## 常用命令
