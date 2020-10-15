@@ -1,4 +1,4 @@
-# 性能调优
+# 性能调优 
 ## 索引 merge 最大线程数
 > 先通过 GET \_nodes/{node}/hot_threads 查看线程栈,查看是哪个线程占用 cpu 高
 > > 如果是 elasticsearch[{node}][search][T#10] 则是查询导致的
