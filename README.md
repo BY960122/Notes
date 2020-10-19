@@ -22,7 +22,7 @@
 - [Windows.md](./安装/Windows.md)
 
 > 读书笔记
-- [随机.md](./读书笔记/随记.md)
+- [随记.md](./读书笔记/随记.md)
 
 > 实战操作
 - [Elasticsearch.md](./实战操作/Elasticsearch.md)

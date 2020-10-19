@@ -40,11 +40,12 @@ indices.memory.index_buffer_size=1024
 > 在提高数据安全性的同时当然也降低了一点性能,如果你不在意这点可能性,还是希望性能优先,可以设置如下参数
 ```json
 {
-"index.translog": {
-    "sync_interval": "120s", 
-    "durability": "async",       
-    "flush_threshold_size":"1g"
-}}
+  "index.translog": {
+      "sync_interval": "120s", 
+      "durability": "async",       
+      "flush_threshold_size":"1g"
+  }
+}
 ```
 
 ## 优化es的线程池 

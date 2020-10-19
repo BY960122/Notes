@@ -35,6 +35,8 @@ OUTPUTFORMAT
 
 ## 常用操作
 ```sql
+-- 修复表,hdfs有文件,但是meta表没有
+msck repair table ecifdb.t_s008_bib_t_cm_clientinfo;
 -- 修改表名
 alter table dealerinfo rename to dealer_info;
 -- 添加列
@@ -115,4 +117,12 @@ from (
 select name,concat_ws(',',collect_list(favor)) as favor_list from student_favors group by name;
 -- 列转行
 select name,favorlist,favor from student_favors_2 view explode(split(favorlist,',') table1 as favor;
+```
+
+## 奇异bug
+```sh
+# 用tez运算后的表,无法用mr查到,例如 union all 之后,tez会多存一级目录 HIVE_UNION_SUBDIR..
+# 原因: mr不会递归查询该目录,tez会
+# 建议: 将此参数添加进hive-site,允许mr递归读取目录
+set mapred.input.dir.recursive=true;
 ```

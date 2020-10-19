@@ -57,6 +57,9 @@ truncate 'test:test_hbase'
 alter 'test:test_hbase',NAME =>'info',VERSIONS =>3
 # 删除表列族
 alter 'test:test_hbase',{NAME => 'delete',NAME => 'info'}
+# 克隆表
+snapshot 'sourceTable', 'sourceTable-snapshot'
+clone_snapshot 'sourceTable-snapshot', 'newTable'
 # Hive外部表印射
 drop table if exists test_hbase;
 create external table test_hbase(key string,name string, age int) 

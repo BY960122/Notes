@@ -64,6 +64,11 @@ export HADOOP_HOME=/opt/software/hadoop-3.2.1
         <name>hive.tez.container.size</name>
         <value>1024</value>
     </property>
+    <!-- 允许 hive 递归读取子目录 -->
+    <property>
+        <name>mapred.input.dir.recursive</name>
+        <value>true</value>
+    </property>
     <!-- Hive整合 Spark -->
     <property>
         <name>spark.master</name>
