@@ -166,3 +166,13 @@ https://github.com/steveloughran/winutils
     <version>1.10.1</version>
 </dependency>
 ```
+
+### NoSuchMethodError:org.apache.hadoop.hbase.security.token.TokenUtil.addTokenForJob
+```xml
+<dependency>
+    <groupId>org.apache.hive</groupId>
+    <artifactId>hive-hbase-handler</artifactId>
+    <version>2.0.0</version>
+    <!--            <version>1.2.1</version>-->
+</dependency>
+```

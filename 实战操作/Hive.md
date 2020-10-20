@@ -71,6 +71,22 @@ show formatted index on t3_new;
 alter index t3_index on t3_new rebuild; 
 -- 删除索引 
 drop index if exists t3_index on t3_new;
+
+-- 行转列
+select 
+  max(sno)
+  ,name
+  ,concat_ws(',', collect_set(depart)) as depart 
+from students_info
+group by name;
+
+-- 列转行
+select 
+  sno
+  , name
+  , add_depart
+from students_info si 
+lateral view explode(split(si.depart,','))  b as add_depart;
 ```
 
 ## 函数
