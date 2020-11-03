@@ -176,3 +176,10 @@ https://github.com/steveloughran/winutils
     <!--            <version>1.2.1</version>-->
 </dependency>
 ```
+
+### idea跑spark,最后无法删除临时目录
+```sh
+# log4j 配置
+log4j.logger.org.apache.spark.util.ShutdownHookManager=OFF
+log4j.logger.org.apache.spark.SparkEnv=ERROR
+```

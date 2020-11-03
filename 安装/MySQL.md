@@ -256,7 +256,7 @@ default_authentication_plugin=mysql_native_password
 sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
 
 # [Err] 1148 导出受限
-secure-file-priv="D:\"
+secure-file-priv="D:\\"
 
 # [Err] 1148 (42000): The used command is not allowed with this MySQL version
 #这里需要mysqld 和 mysql 同时设置
@@ -267,9 +267,6 @@ log-bin-trust-function-creators=1
 
 # 切分ibdata1
 innodb_file_per_table=1
-
-# 设置时区
-default-time-zone='+08:00'
 
 # 插入慢优化,配置前先备份旧配置,再到数据库查看相应默认值,一点点修改.
 # =1最安全,=2,系统崩溃时会丢失事物,=0裸奔,最快.有事物慎用

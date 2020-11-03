@@ -1,3 +1,231 @@
+# 基本操作
+```sh
+# 查询所有节点
+curl -XGET localhost:9200/_cat/nodes?v
+GET localhost:9200/_cat/nodes?v
+
+# 查询所有的索引配置
+curl -XGET localhost:9200/_settings/_all?pretty
+GET localhost:9200/_settings/_all
+
+# 创建索引 ?pretty 输出格式化
+curl -XPUT localhost:9200/test1?pretty
+PUT localhost:9200/test1
+
+# 插入数据 
+curl -XPUT 'localhost:9200/test1/_doc/1?pretty' -d '
+{
+  "name": "John Doe"
+}'
+
+POST localhost:9200/test1/_doc/1?pretty
+Content-Type: application/json
+
+{
+  "name": "John Doe"
+}
+
+# 查询指定索引
+curl -XGET localhost:9200/test1/_doc/1?pretty
+GET localhost:9200/test1/_doc/1?pretty
+
+curl -XGET localhost:9200/test1/_search?q=*&pretty
+GET localhost:9200/test1/_search?q=*&pretty
+
+curl -XGET localhost:9200/test1?pretty
+GET localhost:9200/test1
+
+# 查询所有索引
+curl -XGET localhost:9200/_cat/indices?v
+GET localhost:9200/_cat/indices?v
+
+# 删除索引
+curl -XDELETE localhost:9200/test2?pretty
+DELETE localhost:9200/test2?pretty
+
+# 更新数据
+# 第一种: 覆盖,小心操作
+curl -XPUT localhost:9200/test1/_doc/1?pretty' -d 
+{
+  "name": "YH"
+}'
+
+# 第二种: 更新
+POST localhost:9200/test1/_update/1
+Content-Type: application/json
+
+{
+  "doc": {
+    "age": 99
+  }
+}
+
+# 删除数据
+curl -XDELETE localhost:9200/test1/_doc/2?pretty
+DELETE localhost:9200/test1/_doc/2?pretty
+
+# 匹配
+curl -XPOST localhost:9200/bank/_search?pretty -d '
+{
+  "query": {
+    "match_all": {}
+  },
+  "size": 1,
+  "sort": {
+    "balance": {
+      "order": "desc"
+    }
+  }
+}'
+
+POST localhost:9200/test1/_search?pretty
+Content-Type: application/json
+
+{
+  "query": {
+    "match_all": {}
+  },
+  "size": 1,
+  "sort": {
+    "balance": {
+      "order": "desc"
+    }
+  }
+}
+
+## 一些常用匹配
+### 等值匹配: 返回 account_number 等于 20 的所有数据
+{
+  "query": {
+    "match": {
+      "account_number": 20
+    }
+  }
+}
+
+### 短语匹配: like %**%
+{
+  "query": {
+    "match_phrase": {
+      "address": "mill lane"
+    }
+  }
+}
+
+### 返回交集: and ,可选  must_not
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "address": "mill"
+          }
+        },
+        {
+          "match": {
+            "address": "lane"
+          }
+        }
+      ]
+    }
+  }
+}
+
+### 返回并集: or
+{
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "match": {
+            "address": "mill"
+          }
+        },
+        {
+          "match": {
+            "address": "lane"
+          }
+        }
+      ]
+    }
+  }
+}
+
+### 交叉使用
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "age": "40"
+          }
+        }
+      ],
+      "must_not": [
+        {
+          "match": {
+            "state": "ID"
+          }
+        }
+      ]
+    }
+  }
+}
+
+### 范围匹配
+{
+  "query": {
+    "bool": {
+      "must": {
+        "match_all": {}
+      },
+      "filter": {
+        "range": {
+          "balance": {
+            "gte": 20000,
+            "lte": 30000
+          }
+        }
+      }
+    }
+  }
+}
+
+### 按 state 字段分组
+{
+  "size": 0,
+  "aggs": {
+    "group_by_state": {
+      "terms": {
+        "field": "state"
+      }
+    }
+  }
+}
+
+### select state,avg(balance) from ** group by state
+{
+  "size": 0,
+  "aggs": {
+    "group_by_state": {
+      "terms": {
+        "field": "state"
+      },
+      "aggs": {
+        "average_balance": {
+          "avg": {
+            "field": "balance"
+          }
+        }
+      }
+    }
+  }
+}
+
+```
+
 # 性能调优 
 - https://www.elastic.co/guide/en/elasticsearch/reference/current
 
@@ -17,12 +245,13 @@ index.merge.scheduler.max_thread_count = 1
 > 索引的 refresh 会产生一个新的 lucene 段, 这会导致频繁的合并行为,如果业务需求对实时性要求没那么高,可以将此参数调大,实际调优告诉我,该参数确实很给力,cpu 使用率直线下降
 ```sh
 # 默认是 1 , 改为 -1s  这样就是不刷新
-curl -XPUT 'http://localhost:9200/twitter/' -d '{
-    "settings" : {
-        "index" : {
-         "refresh_interval":"60s"
-        }
+curl -XPUT 'http://localhost:9200/twitter/' -d '
+{
+  "settings": {
+    "index": {
+      "refresh_interval": "60s"
     }
+  }
 }'
 ```
 
@@ -41,9 +270,9 @@ indices.memory.index_buffer_size=1024
 ```json
 {
   "index.translog": {
-      "sync_interval": "120s", 
-      "durability": "async",       
-      "flush_threshold_size":"1g"
+    "sync_interval": "120s",
+    "durability": "async",
+    "flush_threshold_size": "1g"
   }
 }
 ```
