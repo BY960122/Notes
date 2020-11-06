@@ -31,6 +31,17 @@ STORED AS INPUTFORMAT
   'org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat' 
 OUTPUTFORMAT 
   'org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat';
+
+-- 或者
+create table (
+...
+)
+COMMENT '客户基本信息'
+partitioned by (part_init_date string)
+row format delimited fields terminated by '\001'
+stored as parquet
+-- location '/user/hive/warehouse/ods/ods_ecif/t_ods_ecif_analysis_detail/'
+;
 ```
 
 ## 常用操作
