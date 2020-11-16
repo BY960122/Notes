@@ -9,7 +9,7 @@ curl -XGET localhost:9200/_settings/_all?pretty
 # 创建索引 ?pretty 输出格式化
 curl -XPUT localhost:9200/test1?pretty
 
-# 插入数据 
+# 插入数据 或者在在后面加上 _create
 curl -XPUT 'localhost:9200/test1/_doc/1?pretty' -d '
 {
   "name": "John Doe"
@@ -30,6 +30,15 @@ curl -XGET localhost:9200/test1/_search?q=*&pretty
 # 查询所有索引
 curl -XGET localhost:9200/_cat/indices?v
 
+- 查询多条文档: https://wiki.jikexueyuan.com/project/elasticsearch-definitive-guide-cn/030_Data/50_Mget.html
+
+# 检查索引是否存在
+curl -i -XHEAD localhost:9200/test1/_doc/123
+
+# 存储的信息都在 _source字段里,查询特定字段,或只查_source的内容
+curl -XGET localhost:9200/test1/_doc/1?_source=title,text
+curl -XGET localhost:9200/test1/_doc/1?_source
+
 # 删除索引
 curl -XDELETE localhost:9200/test2?pretty
 
@@ -40,7 +49,12 @@ curl -XPUT localhost:9200/test1/_doc/1?pretty' -d
   "name": "YH"
 }'
 
-# 第二种: 更新
+# 特别注意: 只在特定版本下生效
+curl -XPUT localhost:9200/test1/_doc/1?version=1
+
+# 第二种: 更新  
+# 设置重试参数: retry_on_conflict=5 
+# 超时时间: timeout=10ms 需要注意的是timeout不会停止执行查询,它仅仅告诉你目前顺利返回结果的节点然后关闭连接。在后台,其他分片可能依旧执行查询,尽管结果已经被发送
 POST localhost:9200/test1/_update/1
 Content-Type: application/json
 
