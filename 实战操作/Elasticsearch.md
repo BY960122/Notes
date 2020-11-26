@@ -31,6 +31,8 @@ curl -XGET localhost:9200/test1/_search?q=*&pretty
 curl -XGET localhost:9200/_cat/indices?v
 
 - 查询多条文档: https://wiki.jikexueyuan.com/project/elasticsearch-definitive-guide-cn/030_Data/50_Mget.html
+# 查询字段类型
+curl -XGET localhost:9200/test1/_doc/_mapping
 
 # 检查索引是否存在
 curl -i -XHEAD localhost:9200/test1/_doc/123
@@ -53,8 +55,6 @@ curl -XPUT localhost:9200/test1/_doc/1?pretty' -d
 curl -XPUT localhost:9200/test1/_doc/1?version=1
 
 # 第二种: 更新  
-# 设置重试参数: retry_on_conflict=5 
-# 超时时间: timeout=10ms 需要注意的是timeout不会停止执行查询,它仅仅告诉你目前顺利返回结果的节点然后关闭连接。在后台,其他分片可能依旧执行查询,尽管结果已经被发送
 POST localhost:9200/test1/_update/1
 Content-Type: application/json
 
@@ -95,6 +95,12 @@ Content-Type: application/json
     }
   }
 }
+
+## 一些常用参数
+# 设置重试参数: ?retry_on_conflict=5 
+# 超时时间: ?timeout=10ms 需要注意的是timeout不会停止执行查询,它仅仅告诉你目前顺利返回结果的节点然后关闭连接。在后台,其他分片可能依旧执行查询,尽管结果已经被发送
+# 分页: ?size=5&from=5
+# 报错原因: ?explain
 
 ## 一些常用匹配
 ### 等值匹配: 返回 account_number 等于 20 的所有数据

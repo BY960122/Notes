@@ -131,6 +131,45 @@ select date(concat_ws('-',year(now()),elt(quarter(now()),1,4,7,10),1));
 select last_day(makedate(year(now()),1) + interval quarter(now())*3-1 month);
 ```
 
+## 经纬度
+```sql
+-- 找到距离纬度:78.3232,经度:65.3234坐标0.4公里里范围内最近的20个位置
+select  
+  id
+  ,(6371 * acos(
+  			cos(radians(78.3232)) 
+  			* cos(radians(数据库纬度字段)) 
+  			* cos(radians(数据库经度字段) - radians(65.3234)) 
+  			+ sin(radians(78.3232)) 
+  			* sin(radians(数据库纬度字段)))) as distance
+from tb_hotel 
+having distance < 0.4 
+order by distance 
+limit 0 , 20;
+
+-- http://www.arubin.org/files/geo_search.pdf
+select 
+    3956 * 2 * asin(
+                sqrt(
+                    power(sin((@orig_lat - abs(dest.lat)) * pi() / 180 / 2), 2) 
+                    + cos(@orig_lat * pi() / 180) 
+                    * cos(abs(dest.lat) * pi() / 180) 
+                    * power(sin((@orig_lon - dest.lon) * pi() / 180 / 2), 2))) as distance 
+from hotels dest
+having distance < @dist order by distance limit 10;
+
+select 
+    3956 * 2 * asin(
+                sqrt(
+                    power(sin((orig.lat - dest.lat) * pi() / 180 / 2), 2) 
+                    + cos(orig.lat * pi() / 180) 
+                    * cos(dest.lat * pi() / 180) 
+                    * power(sin((orig.lon -dest.lon) * pi() / 180 / 2), 2))) as distance 
+from hotels dest order by distance limit 10;
+
+
+```
+
 ## 事件
 ```sql
 -- 创建事件
