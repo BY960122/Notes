@@ -64,5 +64,5 @@ xcopy /s /e /h /r /k /y /d %src_dir% %target_dir%
 
 ## 快速关机
 ```sh
-shutdown.exe \s \f \t 0
+shutdown.exe /s /t 0
 ```
