@@ -61,3 +61,8 @@ for /r D:\Schoolbags %%a in (*.pdf) do echo %%~na >>生成文件.txt
 ```sh
 xcopy /s /e /h /r /k /y /d %src_dir% %target_dir%
 ```
+
+## 快速关机
+```sh
+shutdown.exe \s \f \t 0
+```
