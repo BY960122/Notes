@@ -38,6 +38,6 @@
 - [MySQL_Function.md](./实战操作/MySQL_Function.md)
 - [MySQL_Procedure.md](./实战操作/MySQL_Procedure.md)
 - [Sqoop.md](./实战操作/Sqoop.md)
-- [Windows_Shell.md](./实战操作/Windows_Shell.md)
+- [Windows_Bat.md](./实战操作/Windows_Bat.md)
 - [大数据基本概念.md](./实战操作/大数据基本概念.md)
 
