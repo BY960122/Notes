@@ -92,6 +92,8 @@ select substr('mysql',-1);
 select substr('mysql',3);
 -- 列转行
 select group_concat(id) from partition_list;
+-- 去除换行符回车符
+update table_name set field_name = replace(replace(field_name,char(10),''),char(13),'');
 
 -- 清除查询缓存
 -- 要开启才行
