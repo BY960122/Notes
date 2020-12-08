@@ -202,6 +202,21 @@ Content-Type: application/json
   }
 }
 
+{
+  "query": {
+    "constant_score": {
+      "filter": {
+        "range": {
+          "price": {
+            "gte": 20,
+            "lt": 40
+          }
+        }
+      }
+    }
+  }
+}
+
 ### 按 state 字段分组
 {
   "size": 0,
