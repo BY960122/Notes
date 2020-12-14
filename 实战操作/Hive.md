@@ -152,4 +152,17 @@ select name,favorlist,favor from student_favors_2 view explode(split(favorlist,'
 # 原因: mr不会递归查询该目录,tez会
 # 建议: 将此参数添加进hive-site,允许mr递归读取目录
 set mapred.input.dir.recursive=true;
+
+# hive执行结果moveTask操作失败: Unable to move source hdfs ... to destination hdfs ... 
+# 解释:hive的查询结果在在进行move操作时,需要进行文件权限的授权,多个文件的授权是并发进行的,hive中该源码是在一个线程池中执行的
+# ,该操作在多线程时线程同步有问题的该异常,这是hive的一个bug,目前截止目前的最新版本Apache Hive 2.1.1还没有修复该问题
+<property>
+    <name>hive.warehouse.subdir.inherit.perms</name>
+    <value>true</value>
+    <description>
+      Set this to false if the table directories should be created
+      with the permissions derived from dfs umask instead of
+      inheriting the permission of the warehouse or database directory.
+    </description>
+</property>
 ```

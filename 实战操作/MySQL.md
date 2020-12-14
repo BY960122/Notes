@@ -90,7 +90,7 @@ select replace('??my?sql???','?','');
 select substr('mysql',1,2);
 select substr('mysql',-1);
 select substr('mysql',3);
--- 列转行
+-- 行转列
 select group_concat(id) from partition_list;
 -- 去除换行符回车符
 update table_name set field_name = replace(replace(field_name,char(10),''),char(13),'');

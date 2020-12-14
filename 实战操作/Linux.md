@@ -21,6 +21,10 @@ sed -i "s/\/mysoft/\/software/g" `grep /mysoft -rl /opt/software/kafka_2.12-2.4.
 
 ## 匹配换行符
 \s+$
+
+## 匹配空格及其之后的内容
+\ [^\s].*
+[\ ].*
 ```
 
 ## 彩色字体

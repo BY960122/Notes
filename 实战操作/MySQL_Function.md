@@ -149,7 +149,7 @@ select
 from (
     select 
     age,
-    @currank := if(@preage = age, @currank, @incrank) as my_rank, -- 如果 age 不变,排名不变,否则 把递增的值 赋值 给当前排名
+    (@currank := if(@preage = age, @currank, @incrank)) as my_rank, -- 如果 age 不变,排名不变,否则 把递增的值 赋值 给当前排名
     @incrank := @incrank + 1, -- 不管条件,只管自增
     @preage := age -- 每一次都要把 age 赋值一次
     from players p, 
