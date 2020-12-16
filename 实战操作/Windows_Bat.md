@@ -59,7 +59,11 @@ for /r D:\Schoolbags %%a in (*.pdf) do echo %%~na >>生成文件.txt
 
 ## 增量拷贝文件夹 /d 为增量
 ```sh
-xcopy /s /e /h /r /k /y /d %src_dir% %target_dir%
+@echo off
+set target_dir=C:\mysoft\Apache-maven-3.6.3\mvnRespo
+set src_dir=\\tsclient\D\Mysoft\apache-maven-3.6.3\mvnRespo
+xcopy /S /E /H /R /K /Y /D %src_dir% %target_dir%
+pause
 ```
 
 ## 快速关机
