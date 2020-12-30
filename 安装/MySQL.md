@@ -239,6 +239,15 @@ default-time_zone = '+8:00'
 # 开启导入文件命令 load data
 local_infile=ON
 
+# 实时更新tables表信息,默认86400为一天
+information_schema_stats_expiry=0
+
+# [Err] 1418 创建函数,存储过程,触发器
+log-bin-trust-function-creators=1
+
+# 开启binlog,预防回滚
+binlog-format = row
+
 # 服务端使用的字符集默认为utf8mb4
 # 设置为 False, 在客户端字符集和服务端字符集不同的时候将拒绝连接到服务端执行任何操作
 character-set-client-handshake = FALSE  
@@ -262,9 +271,6 @@ secure-file-priv="D:\\"
 #这里需要mysqld 和 mysql 同时设置
 local-infile=1
 
-# [Err] 1418 创建函数,存储过程,触发器
-log-bin-trust-function-creators=1
-
 # 切分ibdata1
 innodb_file_per_table=1
 
@@ -285,9 +291,6 @@ key_buffer_size=1024M
 # innodb_authoextend_increment=256M
 # 自动提交事物,关闭效率更高,如果用到事物建议默认为1
 # autocommit=1
-
-# 实时更新tables表信息,默认86400为一天
-information_schema_stats_expiry=0
 
 # 主从数据库配置
 # server-id=102
