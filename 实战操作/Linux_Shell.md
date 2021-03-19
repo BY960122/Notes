@@ -1,3 +1,6 @@
+# 注意
+> 如果是windows 编写的,注意报错: $'\r':command not found, 请先转义一下: dos2unix 文件名
+
 ## hdfs_sql_ftp
 ```sh
 ##! /bin/bash
