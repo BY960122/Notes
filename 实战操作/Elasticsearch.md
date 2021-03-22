@@ -7,15 +7,15 @@ curl -XGET localhost:9200/_cat/nodes?v
 curl -XGET localhost:9200/_settings/_all?pretty
 
 # 创建索引 ?pretty 输出格式化
-curl -XPUT localhost:9200/test1?pretty
+curl -XPUT localhost:9200/index_name?pretty
 
 # 插入数据 或者在在后面加上 _create
-curl -XPUT 'localhost:9200/test1/_doc/1?pretty' -d '
+curl -XPUT 'localhost:9200/index_name/_doc/1?pretty' -d '
 {
   "name": "John Doe"
 }'
 
-PUT localhost:9200/test1/_doc/1?pretty
+PUT localhost:9200/index_name/_doc/1?pretty
 Content-Type: application/json
 
 {
@@ -23,39 +23,40 @@ Content-Type: application/json
 }
 
 # 查询指定索引
-curl -XGET localhost:9200/test1?pretty
-curl -XGET localhost:9200/test1/_doc/1?pretty
-curl -XGET localhost:9200/test1/_search?q=*&pretty
+curl -XGET localhost:9200/index_name?pretty
+curl -XGET localhost:9200/index_name/_doc/1?pretty
+curl -XGET localhost:9200/index_name/_search?q=*&pretty
 
 # 查询所有索引
 curl -XGET localhost:9200/_cat/indices?v
 
 - 查询多条文档: https://wiki.jikexueyuan.com/project/elasticsearch-definitive-guide-cn/030_Data/50_Mget.html
+
 # 查询字段类型
-curl -XGET localhost:9200/test1/_doc/_mapping
+curl -XGET localhost:9200/index_name/_doc/_mapping
 
 # 检查索引是否存在
-curl -i -XHEAD localhost:9200/test1/_doc/123
+curl -i -XHEAD localhost:9200/index_name/_doc/123
 
 # 存储的信息都在 _source字段里,查询特定字段,或只查_source的内容
-curl -XGET localhost:9200/test1/_doc/1?_source=title,text
-curl -XGET localhost:9200/test1/_doc/1?_source
+curl -XGET localhost:9200/index_name/_doc/1?_source=title,text
+curl -XGET localhost:9200/index_name/_doc/1?_source
 
 # 删除索引
-curl -XDELETE localhost:9200/test2?pretty
+curl -XDELETE localhost:9200/new_index_name?pretty
 
 # 更新数据
 # 第一种: 覆盖,小心操作
-curl -XPUT localhost:9200/test1/_doc/1?pretty' -d 
+curl -XPUT localhost:9200/index_name/_doc/1?pretty' -d 
 {
   "name": "YH"
 }'
 
 # 特别注意: 只在特定版本下生效
-curl -XPUT localhost:9200/test1/_doc/1?version=1
+curl -XPUT localhost:9200/index_name/_doc/1?version=1
 
 # 第二种: 更新  
-POST localhost:9200/test1/_update/1
+POST localhost:9200/index_name/_update/1
 Content-Type: application/json
 
 {
@@ -64,11 +65,59 @@ Content-Type: application/json
   }
 }
 
-# 删除数据
-curl -XDELETE localhost:9200/test1/_doc/2?pretty
+# 删除某条数据
+curl -XDELETE localhost:9200/index_name/_doc/2?pretty
+
+# 清空数据
+POST localhost:9200/index_name/_doc/_delete_by_query?refresh&slices=5&pretty
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+### 新建索引并设置字段映射
+PUT localhost:9200/new_index_name
+Content-Type: application/json
+
+{
+  "mappings": {
+    "properties": {
+      "field_1": {
+        "type": "float"
+      },
+      "field_2": {
+        "type": "text"
+      },
+      "field_3": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      }
+    }
+  }
+}
+
+# 往相同结构的索引插入数据
+POST localhost:9200/_reindex
+Content-Type: application/json
+
+{
+  "source": {
+    "index": "new_index_name"
+  },
+  "dest": {
+    "index": "index_name"
+  }
+}
+
 
 # 匹配
-curl -XPOST localhost:9200/bank/_search?pretty -d '
+curl -XPOST localhost:9200/index_name/_search?pretty -d '
 {
   "query": {
     "match_all": {}
@@ -81,7 +130,7 @@ curl -XPOST localhost:9200/bank/_search?pretty -d '
   }
 }'
 
-POST localhost:9200/test1/_search?pretty
+POST localhost:9200/index_name/_search?pretty
 Content-Type: application/json
 
 {
@@ -269,7 +318,7 @@ index.merge.scheduler.max_thread_count = 1
 > 索引的 refresh 会产生一个新的 lucene 段, 这会导致频繁的合并行为,如果业务需求对实时性要求没那么高,可以将此参数调大,实际调优告诉我,该参数确实很给力,cpu 使用率直线下降
 ```sh
 # 默认是 1 , 改为 -1s  这样就是不刷新
-curl -XPUT 'http://localhost:9200/twitter/_settings' -d '
+curl -XPUT 'http://localhost:9200/index_name/_settings' -d '
 {
   "settings": {
     "index": {
