@@ -31,6 +31,7 @@ curl -XGET localhost:9200/test1/_search?q=*&pretty
 curl -XGET localhost:9200/_cat/indices?v
 
 - 查询多条文档: https://wiki.jikexueyuan.com/project/elasticsearch-definitive-guide-cn/030_Data/50_Mget.html
+
 # 查询字段类型
 curl -XGET localhost:9200/test1/_doc/_mapping
 
@@ -64,8 +65,56 @@ Content-Type: application/json
   }
 }
 
-# 删除数据
+# 删除某条数据
 curl -XDELETE localhost:9200/test1/_doc/2?pretty
+
+# 清空数据
+POST localhost:9200/test1/_doc/_delete_by_query?refresh&slices=5&pretty
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+### 新建索引并设置字段映射
+PUT localhost:9200/test2
+Content-Type: application/json
+
+{
+  "mappings": {
+    "properties": {
+      "cred_right_flag": {
+        "type": "float"
+      },
+      "fst_becom_plat_mem_dt": {
+        "type": "text"
+      },
+      "fst_open_cred_right_dt": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      }
+    }
+  }
+}
+
+# 往相同结构的索引插入数据
+POST localhost:9200/_reindex
+Content-Type: application/json
+
+{
+  "source": {
+    "index": "xzt_group_tag_all_es_reverse_index_new"
+  },
+  "dest": {
+    "index": "xzt_group_tag_all_es_reverse_index"
+  }
+}
+
 
 # 匹配
 curl -XPOST localhost:9200/bank/_search?pretty -d '
