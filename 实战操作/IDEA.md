@@ -16,6 +16,7 @@ https://github.com/steveloughran/winutils
 ```xml
 <!-- 用maven helper插件查看 All Dependencies,把log4j,log4j-extras全部排除 -->
 <!-- log4j2-->
+<dependencys>
 <dependency>
     <groupId>org.apache.logging.log4j</groupId>
     <artifactId>log4j-core</artifactId>
@@ -43,6 +44,7 @@ https://github.com/steveloughran/winutils
     <artifactId>log4j-slf4j-impl</artifactId>
     <version>${log4j2.version}</version>
 </dependency>
+</dependencys>
 ```
 ### java.lang.NoSuchMethodError: io.netty.bootstrap.Bootstrap.config()Lio/netty/bootstrap/BootstrapConfig;
 ```xml
@@ -54,6 +56,7 @@ https://github.com/steveloughran/winutils
 ```
 ### com.fasterxml.jackson.databind.JsonMappingException: Scala module 2.10.0 requires Jackson Databind version >= 2.10.0 and < 2.11.0
 ```xml
+<dependencys>
 <dependency>
     <groupId>com.fasterxml.jackson.module</groupId>
     <artifactId>jackson-module-scala_2.11</artifactId>
@@ -74,6 +77,7 @@ https://github.com/steveloughran/winutils
     <artifactId>jackson-annotations</artifactId>
     <version>2.11.1</version>
 </dependency>
+</dependencys>
 ```
 ### Unable to instantiate SparkSession with Hive support because Hive classes are not found
 ```xml
@@ -85,6 +89,7 @@ https://github.com/steveloughran/winutils
 ```
 ### Scala module 2.10.0 requires Jackson Databind version >= 2.10.0 and < 2.11.0-->
 ```xml
+<dependencys>
 <dependency>
     <groupId>com.fasterxml.jackson.module</groupId>
     <artifactId>jackson-module-scala_2.12</artifactId>
@@ -105,6 +110,7 @@ https://github.com/steveloughran/winutils
     <artifactId>jackson-annotations</artifactId>
     <version>2.11.1</version>
 </dependency>
+</dependencys>
 ```
 ### java.lang.NoSuchMethodError: io.netty.bootstrap.Bootstrap.config()Lio/netty/bootstrap/BootstrapConfig
 ```xml
@@ -124,6 +130,7 @@ https://github.com/steveloughran/winutils
 ```
 ### com.google.common.util.concurrent.MoreExecutors.sameThreadExecutor()Lcom/google/common/util/concurrent/ListeningExecutorService
 ```xml
+<dependencys>
 <dependency>
     <groupId>org.apache.curator</groupId>
     <artifactId>curator-client</artifactId>
@@ -139,6 +146,7 @@ https://github.com/steveloughran/winutils
     <artifactId>curator-framework</artifactId>
     <version>4.3.0</version>
 </dependency>
+</dependencys>
 ```
 ### Spark3.0 read.json报错: error reading Scala signature of org.apache.spark.sql.package: unsafe symbol Unstable (child of package annotation) in runtime reflection universe
 ```xml
@@ -182,4 +190,81 @@ https://github.com/steveloughran/winutils
 # log4j 配置
 log4j.logger.org.apache.spark.util.ShutdownHookManager=OFF
 log4j.logger.org.apache.spark.SparkEnv=ERROR
+```
+
+### maven插件1: 将依赖复制到一个目录下
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-dependency-plugin</artifactId>
+    <executions>
+        <execution>
+            <id>copy-dependencies</id>
+            <phase>package</phase>
+            <goals>
+                <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+                <outputDirectory>${project.build.directory}/lib</outputDirectory>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
+
+### maven插件2: 打包
+```xml
+<plugin>
+    <artifactId>maven-assembly-plugin</artifactId>
+    <configuration>
+        <!--                    这部分可有可无,加上的话则直接生成可运行jar包-->
+        <archive>
+            <manifest>
+                <mainClass>main.SpringStartMain</mainClass>
+            </manifest>
+        </archive>
+        <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+        </descriptorRefs>
+    </configuration>
+</plugin>
+```
+
+### maven插件3: 打包
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-shade-plugin</artifactId>
+    <version>3.2.1</version>
+    <executions>
+        <execution>
+            <phase>package</phase>
+            <goals>
+                <goal>shade</goal>
+            </goals>
+            <configuration>
+                <!--                            <artifactSet>-->
+                <!--                                <excludes>-->
+                <!--                                    <exclude>junit:junit</exclude>-->
+                <!--                                    <exclude>log4j:log4j:jar:</exclude>-->
+                <!--                                </excludes>-->
+                <!--                            </artifactSet>-->
+                <transformers>
+                    <transformer
+                            implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                        <resource>META-INF/spring.handlers</resource>
+                    </transformer>
+                    <transformer
+                            implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                        <resource>META-INF/spring.schemas</resource>
+                    </transformer>
+                    <transformer
+                            implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                        <mainClass>main.SpringStartMain</mainClass>
+                    </transformer>
+                </transformers>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
 ```
