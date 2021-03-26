@@ -230,7 +230,7 @@ log4j.logger.org.apache.spark.SparkEnv=ERROR
 </plugin>
 ```
 
-### maven插件3: 打包
+### maven插件3: 打包,能防止报错 Configuration problem: Unable to locate Spring NamespaceHandler for XML schema namespace [http://www.springframework.org/schema/context]
 ```xml
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
