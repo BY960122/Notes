@@ -118,7 +118,7 @@ taskkill /F /IM ShellExperienceHost.exe
 > windows + R 输入: regedit
 > 定位到 HKEY_CLASSES_ROOT\Directory\shell\Open as OneNote Notebook
 > 还可能存在于
-> HKEY_CLASSES_ROOT*\shell
+> HKEY_CLASSES_ROOT\*\shell
 
 ## 提高 Github 访问速度
 - https://www.ipaddress.com/

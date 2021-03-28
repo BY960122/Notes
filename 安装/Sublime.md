@@ -25,7 +25,6 @@ E36B85CC 84991F19 7575D828 470A92AB
 ------ END LICENSE ------
 
 或者
-
 ZYNGA INC.
 50 User License
 EA7E-811825
@@ -37,11 +36,42 @@ EA7E-811825
 E627DDBA 960A2153 69A2D98A C87C0607
 45DC6049 8C04EC29 D18DFA40 442C680B
 1342224D 44D90641 33A3B9F2 46AADB8F
+
+或者
+----- BEGIN LICENSE -----
+Member J2TeaM
+Single User License
+EA7E-1011316
+D7DA350E 1B8B0760 972F8B60 F3E64036
+B9B4E234 F356F38F 0AD1E3B7 0E9C5FAD
+FA0A2ABE 25F65BD8 D51458E5 3923CE80
+87428428 79079A01 AA69F319 A1AF29A4
+A684C2DC 0B1583D4 19CBD290 217618CD
+5653E0A0 BACE3948 BB2EE45E 422D2C87
+DD9AF44B 99C49590 D2DBDEE1 75860FD2
+8C8BB2AD B2ECE5A4 EFC08AF2 25A9B864
+------ END LICENSE ------
+
+或者
+----- BEGIN LICENSE -----
+冰忆Dylan
+Single User License
+EA7E-1237771-449146
+8D868314 CF0BD70A C2234109 8352472B
+D402DC48 9343C0D9 A8FE5B04 F46EAF67
+37D5EC5B B9C40D48 37676A66 C2F10A94
+BF312826 506D03B5 38618843 E1321390
+1021FD9F 6187D594 7D1BDDE3 33596953
+B0E9EE92 A3E521F8 35B01A50 8E1CC4A8
+D10B8F67 D20C3AF7 DF34875C 98AD9301
+AAFFE843 9C563CFC 77C63DC1 FD3DF1D3
+------ END LICENSE ------
 ```
 
 ## Sublime 编译 Java
 ### 1.直接在安装路径下找到\Packages\Java.sublime-package文件
 ### 2.用解压缩软件打开,找到JavaC.sublime-build文件,将 shell_cmd 中的javac改成javaRun,保存
+### 3. 打开后右键编译,再保存,或者
 ```json
 {
 	"shell_cmd": "javaRun \"$file\"",
@@ -49,7 +79,6 @@ E627DDBA 960A2153 69A2D98A C87C0607
 	"selector": "source.java",
     "encoding":"cp936"
 }
-# 打开后右键编译,再保存,或者
 ```
 ### 3.在jdk安装路径下的bin目录中新建一个javaRun.bat批处理文件,内容如下：
 ```sh
@@ -100,9 +129,9 @@ ctrl+B 运行
 ### 2.在大括号"｛｝"里面插入下面代码：
 ```json
 {
-	"update_check": false, // 不提示更新
-	"remeber_open_files":false, // 忘记上次打开的目录
-	"word_wrap": "false", // 数据不换行显示
+	"update_check": false,
+	"remeber_open_files":false, 
+	"word_wrap": "false"
 }
 ```
 

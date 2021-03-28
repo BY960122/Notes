@@ -23,6 +23,7 @@
 
 > 读书笔记
 - [随记.md](./读书笔记/随记.md)
+- [逗比.md](./读书笔记/逗比.md)
 
 > 实战操作
 - [Elasticsearch.md](./实战操作/Elasticsearch.md)
