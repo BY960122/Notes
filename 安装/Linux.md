@@ -2,7 +2,7 @@
 - https://mirrors.aliyun.com/centos/
 
 ## 修改网卡配置
-```sh
+```shell script
 vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
 
 # centos 7
@@ -13,11 +13,11 @@ ip addr
 ipconfig
 ```
 ### 网络地址转换(NAT)模式
-```sh
+```shell script
 ONBOOT=yes
 ```
 ### 桥接网卡模式
-```sh
+```shell script
 BOOTPROTO=static
 ONBOOT=yes
 IPADDR=192.168.1.201
@@ -27,7 +27,7 @@ DNS1=192.168.1.1
 ```
 
 ## 修改主机名 Hostname
-```sh
+```shell script
 vim /etc/hostname
 by201
 
@@ -41,7 +41,7 @@ hostname=by201
 ```
 
 ## ssh免密码登录配置
-```sh
+```shell script
 vim /etc/hosts
 
 192.168.1.201 by201
@@ -72,7 +72,7 @@ gpgkey=http://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-7
 ```
 
 ## Centos8修改repo源配置
-```sh
+```shell script
 cd /etc/yum.repos.d/
 
 [BaseOS]
@@ -126,7 +126,7 @@ gpgkey=https://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-Official
 ```
 
 ## 测试
-```sh
+```shell script
 sudo dhclient
 yum -y update
 yum install -y vim net-tools lsof tree npm nodejs git zip mlocate httpd createrepo iptables iptables-services tar chrony
@@ -137,17 +137,17 @@ yum install -y vim net-tools lsof tree npm nodejs git zip mlocate httpd createre
 https://www.cnblogs.com/kreo/p/4368811.html
 ```
 ### 1.安装 iptables
-```sh
+```shell script
 yum install -y iptables iptables-services
 ```
 ### 2.禁用 firewalld
-```sh
+```shell script
 systemctl status firewalld
 systemctl stop firewalld
 systemctl mask firewalld
 ```
 ### 3.设置开放端口,必须写在黄色上面
-```sh
+```shell script
 vim /etc/sysconfig/iptables 
 -A INPUT -p tcp --dport 21 -j ACCEPT
 -A INPUT -p tcp --dport 22 -j ACCEPT
@@ -168,7 +168,7 @@ systemctl start iptables.service
 ## 创建本地云源repo压缩包
 ### 1.上传Centos镜像
 ### 2.挂载到一个目录
-```sh
+```shell script
 mkdir /iso
 mount Centos** /iso
 ```
@@ -180,7 +180,7 @@ createrepo /var/www/html/openstack
 
 ## 一些报错信息
 ### 配置Windows ftp linux 报错:200 PORT command successful. Consider using PASV.425 Failed to establish connection.
-```sh
+```shell script
 vim /etc/vsftpd/vsftpd.conf
 pasv_enable=YES
 pasv_min_port=6000
@@ -193,13 +193,13 @@ vim /etc/selinux/config
 SELINUX=disabled
 ```
 ### ping baidu.com 出现 connect: network is unreachable
-```sh
+```shell script
 sudo dhclient
 sudo systemctl stop dhcpcd
 sudo systemctl start dhcpcd
 ```
 ### 所有命令都无法使用
-```sh
+```shell script
 export PATH=/bin:/usr/bin:$PATH
 source ~/.bash_profile 
 ```
@@ -210,12 +210,12 @@ source ~/.bash_profile
 
 ## 一些报错信息
 ### 解除挂载报错:target is busy
-```sh
+```shell script
 yum install psmisc
 fuser -mv /iso ## 把下面的进程kill掉
 ```
 ### Virtualbox未关机就关闭电脑,无法启动,unmount and run xfs_repair
-```sh
+```shell script
 ls -l /dev/mapper
 xfs_repair /dev/mapper/cl_muban-root
 # 如果报错 The filesystem has valuable metadata change in a log ...

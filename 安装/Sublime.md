@@ -81,7 +81,7 @@ AAFFE843 9C563CFC 77C63DC1 FD3DF1D3
 }
 ```
 ### 3.在jdk安装路径下的bin目录中新建一个javaRun.bat批处理文件,内容如下：
-```sh
+```shell script
 	# Java8
 @ECHO OFF
 cd %~dp1
@@ -136,7 +136,7 @@ ctrl+B 运行
 ```
 
 ## Sublime 快捷键
-```sh
+```shell script
 # 删除行
 ctrl+shift+k
 # 复制行
@@ -158,7 +158,7 @@ ctrl+shift+m
 
 ## Sumlime 添加到右键快捷菜单
 ### 注意文件编码设置为ANSI,内容里面有一个是文件,有一个是目录
-```sh
+```shell script
 # 把以下代码,复制到SublimeText3的安装目录,然后重命名为：sublime_addright.reg,然后双击就可以了
 
 Windows Registry Editor Version 5.00

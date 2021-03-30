@@ -1,5 +1,5 @@
 ## 导入导出
-```sql
+```mysql based
 -- 导入文件
 -- 用navicat不能使用local关键字
     -- replace 取代,覆盖
@@ -36,9 +36,9 @@ log-bin-trust-function-creators=1
 ```
 
 ## 常用命令
-```sql
+```mysql
 -- 修改mysql提示符
-prompt \u@\h \d>
+# prompt \u@\h \d>
 -- 查看存储过程
 -- mysql 5.x
 select `name` from mysql.proc where db = 'your_db_name' and `type` = 'procedure';
@@ -103,7 +103,7 @@ reset query cache;
 ```
 
 ## 日期
-```sql
+```mysql
 -- 当前日期和时间
 select now();
 -- 当前日期,时间
@@ -134,7 +134,7 @@ select last_day(makedate(year(now()),1) + interval quarter(now())*3-1 month);
 ```
 
 ## 经纬度
-```sql
+```mysql
 -- 找到距离纬度:78.3232,经度:65.3234坐标0.4公里里范围内最近的20个位置
 select  
   id
@@ -173,7 +173,7 @@ from hotels dest order by distance limit 10;
 ```
 
 ## 事件
-```sql
+```mysql based
 -- 创建事件
     -- 重点人员轨迹信息,每2小时跑一次
 create event if not exists event_zdryyj 
@@ -212,7 +212,7 @@ drop event test;
 ```
 
 ## 分区表
-```sql
+```mysql based
 -- 创建分区表
 create table partition_list(
 id int,

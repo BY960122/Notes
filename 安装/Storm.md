@@ -2,12 +2,12 @@
 - http://archive.apache.org/dist/storm/
 
 ## 1.配置环境变量,安装 Zookeeper
-```sh
+```shell script
 echo $STORM_HOME
 ```
 ## 2.配置配置文件
 ### storm.yaml
-```sh
+```shell script
 # 注意: yaml文件格式,属性必须顶格写,缩进只能使用空格,一定不能使用制表符
 ui.port: 8082
 storm.zookeeper.servers:
@@ -30,7 +30,7 @@ scp storm.yaml 192.168.1.202:/opt/software/apache-storm-2.2.0/conf/
 scp storm.yaml 192.168.1.203:/opt/software/apache-storm-2.2.0/conf/
 ```
 ## 3.启动
-```sh
+```shell script
 # 如果python报错,把storm和storm.py最上面改成python3,以及 PYTHON="/usr/bin/env python3"
 # 所有节点启动: logviewer
 mkdir /opt/software/apache-storm-2.2.0/logs
@@ -52,11 +52,11 @@ nohup storm ui > /opt/software/apache-storm-2.2.0/logs/ui.log 2>&1 &
 - http://192.168.1.201:8082/
 
 ## 5.测试,运行本地jar包
-```sh
+```shell script
 storm jar stormSum.jar by.StormExample.ClusterStormTopology
 ```
 ## 6.查看进程
-```sh
+```shell script
 storm list
 # 也可以在页面找kill按钮
 storm kill ClusterStormTopology

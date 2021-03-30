@@ -2,7 +2,7 @@
 - https://git-scm.com/downloads
 
 ## 常用命令
-```sh
+```shell script
 git config --global user.name ByDylan-YH
 git config --global user.email 921644606@qq.com
 git config --global user.password By9216446o6

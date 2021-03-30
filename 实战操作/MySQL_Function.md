@@ -1,11 +1,11 @@
 ## 模仿spilt函数
-```sql
+```mysql
 -- 用法
 select f_split_pos('//1//2//3//4//5//6//7//8//9//','//',3);
 -- 返回:3
 ```
 ### 第一版,弊端:没有考虑开头也可能有分隔符,不用担心传入的pos参数有问题
-```sql
+```mysql
 create definer=`root`@`%` function `f_split_pos`(
     `s` varchar(2000),
     `split` varchar(10),
@@ -46,7 +46,7 @@ create definer=`root`@`%` function `f_split_pos`(
     end
 ```
 ### 第二版,弊端:还是要遍历,假如长度有100个单位,取第99个,那就要遍历99次
-```sql
+```mysql
 create definer=`root`@`%` function `bingo`.`f_split_pos`(
     `s` blob, -- aa/bb/cc/dd
     `split` varchar(10), -- / 
@@ -81,7 +81,7 @@ create definer=`root`@`%` function `bingo`.`f_split_pos`(
     end
 ```
 ### 第三版,直接截取需要的位置,不用循环,性能大大提升
-```sql
+```mysql
 CREATE DEFINER=`root`@`%` FUNCTION `bingo`.`f_split_pos`(
     `s` blob, 
     `split` varchar(10), 
@@ -106,7 +106,7 @@ CREATE DEFINER=`root`@`%` FUNCTION `bingo`.`f_split_pos`(
 ```
 
 ## 模仿实现排名函数
-```sql
+```mysql
 -- 数据准备
 drop table if exists players;
 create table players (
@@ -115,7 +115,7 @@ age int not null
 insert into players values (10),(10),(11),(11),(12),(12),(12),(12),(13),(13),(20),(21),(22);
 ```
 ### 1.实现 row_number
-```sql
+```mysql
 -- 思路:从 1 开始递增即是排名
 -- 变量 @currank : 当前排名
 select 
@@ -126,7 +126,7 @@ from players p,
 order by age;
 ```
 ### 2.实现 dense_rank
-```sql
+```mysql
 -- 思路:把上一行 age 存起来,每次都判断,如果相等排名不变,否则排名 + 1
 -- 变量 @currank : 当前排名
 -- 变量 @preage : 上一行 age 存起来
@@ -138,7 +138,7 @@ from players p, (select @currank :=0, @preage := null) r
 order by age;
 ```
 ### 3.实现 rank 
-```sql
+```mysql
 -- 思路:把上一行 age 存起来,每次都判断,如果相等排名不变,否则排名 + 1,不同的是:因为排名要跳过,所以排名需要第三个变量再存起来
 -- 变量 @currank : 当前排名
 -- 变量 @preage : 上一行 age 存起来
@@ -158,7 +158,7 @@ from (
 ) s;
 ```
 ### 4.合并版
-```sql
+```mysql
 -- 实现 rank 过程中的变量 @incrank 包装一下可以当成 row_numer ,dense_rank 必须单独弄个变量,不然都会乱掉
 select 
     age,
@@ -178,7 +178,7 @@ from (
 ) s;
 ```
 ### 5.mysql 8.0 版本已实现
-```sql
+```mysql
 select 
     age,
     row_number() over(order by age) as my_row_number,

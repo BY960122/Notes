@@ -1,5 +1,5 @@
 ## 建表语句
-```sql
+```hiveql
 -- Distribute By: 指定 map 输出结果怎么样划分后分配到各个 Reduce 上去,比如 Distribute By
 -- dealer_id: 就可以保证 dealer_id 字段相同的结果被分配到同一个 reduce 上去执行
 -- Sort By:是在每个 reduce 中进行排序,是一个局部排序
@@ -16,8 +16,10 @@ row format delimited fields terminated by '|'
 stored as textfile;
 
 -- 创建parquent的表
-create table (
-...
+create table table_name(
+companyId INT comment '公司 ID',
+userid INT comment '销售 ID',
+originalstring STRING comment 'url'
 )
 COMMENT '客户基本信息'
 PARTITIONED BY ( 
@@ -33,8 +35,10 @@ OUTPUTFORMAT
   'org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat';
 
 -- 或者
-create table (
-...
+create table table_name(
+companyId INT comment '公司 ID',
+userid INT comment '销售 ID',
+originalstring STRING comment 'url'
 )
 COMMENT '客户基本信息'
 partitioned by (part_init_date string)
@@ -45,7 +49,7 @@ stored as parquet
 ```
 
 ## 常用操作
-```sql
+```hiveql
 -- 修复表,hdfs有文件,但是meta表没有
 msck repair table ecifdb.t_s008_bib_t_cm_clientinfo;
 -- 修改表名
@@ -72,7 +76,7 @@ insert overwrite local directory '/home/hadoop/dealer_info.bak2016-08-22' select
     -- 覆盖分区
 insert overwrite table dealer_leads PARTITION (dt='2016-08-31') select * from dealer_leads_tmp;
     -- 导出分区
-export table dealer_action_log partition (dt='2016-08-19') to '/user/hive/action_log.export'
+export table dealer_action_log partition (dt='2016-08-19') to '/user/hive/action_log.export';
 
 -- 创建索引 
 create index t3_index on table t3_new(stu_name) as 'org.apache.hadoop.hive.ql.index.compact.CompactIndexHandler' with deferred rebuild in table t3_index_table; 
@@ -101,7 +105,7 @@ lateral view explode(split(si.depart,','))  b as add_depart;
 ```
 
 ## 函数
-```sql
+```hiveql
 -- Hive编写自定义UDF函数上传
 add jar /opt/mysoft/hiveexample-1.0.jar;
 create temporary function myupper as 'udf.MyUpper';
@@ -115,14 +119,14 @@ select uaf(array(1,2,3)) from bingo.test_hive limit 1;
 ```
 
 ## 动态分区
-```sh
+```shell script
 set hive.exec.dynamic.partition=true;  
 set hive.exec.dynamic.partition.mode=nonstrict; 
 set hive.exec.max.dynamic.partitions.pernode=1000;
 ```
 
 ## 优化
-```sql
+```hiveql
 -- 排序
 select * from (
     select 
@@ -147,7 +151,7 @@ select name,favorlist,favor from student_favors_2 view explode(split(favorlist,'
 ```
 
 ## 奇异bug
-```sh
+```shell script
 # 用tez运算后的表,无法用mr查到,例如 union all 之后,tez会多存一级目录 HIVE_UNION_SUBDIR..
 # 原因: mr不会递归查询该目录,tez会
 # 建议: 将此参数添加进hive-site,允许mr递归读取目录

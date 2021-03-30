@@ -3,7 +3,7 @@
 
 ## 1.配置配置文件
 ### zoo.cfg
-```sh
+```shell script
 tickTime=2000
 initLimit=10
 syncLimit=5

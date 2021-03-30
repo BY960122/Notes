@@ -4,24 +4,24 @@
 - https://www.elastic.co/cn/downloads/past-releases/elasticsearch-7-9-1
 
 ## 1.配置环境变量
-```sh
+```shell script
 echo $ELASTICSEARCH
 ```
 ## 2.创建用户
-```sh
+```shell script
 tar -zvxf elasticsearch-7.9.1-linux-x86_64.tar.gz
 useradd -d /home/elasticsearch -m elasticsearch
 chown -R elasticsearch:elasticsearch /opt/software/elasticsearch-7.9.1
 ```
 ## 3.修改配置文件
 ### /etc/sysctl.conf
-```sh
+```shell script
 vm.max_map_count=655300
 # 生效
 sysctl -p
 ```
 ### config/elasticsearch.yml
-```sh
+```shell script
 # 集群名称
 cluster.name: elasticsearch-cluster
 # 节点名称 - 对应修改
@@ -39,7 +39,7 @@ http.cors.enabled: true
 http.cors.allow-origin: "*"
 ```
 ### config/jvm.options
-```sh
+```shell script
 # -XX:+UseConcMarkSweepGC 
 -XX:+UseG1GC 
 
@@ -47,7 +47,7 @@ scp /opt/software/elasticsearch-7.9.1/config/* 192.168.1.202:/opt/software/elast
 scp /opt/software/elasticsearch-7.9.1/config/* 192.168.1.203:/opt/software/elasticsearch-7.9.1/config/
 ```
 ### bin/elasticsearch-env
-```sh
+```shell script
 # 看到java路径都改成
 JAVA="/opt/software/jdk-11.0.1/bin/java"
 
@@ -55,7 +55,7 @@ scp elasticsearch-env 192.168.1.202:/opt/software/elasticsearch-7.9.1/bin/
 scp elasticsearch-env 192.168.1.203:/opt/software/elasticsearch-7.9.1/bin/
 ```
 ## 4.启动
-```sh
+```shell script
 su - elasticsearch
 # 前台启动
 bin/elasticsearch
@@ -65,13 +65,13 @@ bin/elasticsearch
 ## 5.web界面
 - http://192.168.1.201:9200
 
-```sh
+```shell script
 # 查看运行情况：
 curl 'http://192.168.1.201:9200/_cluster/health?pretty'
 ```
 ## 6.一些报错信息
 ### elasticsearch-env: line 122: syntax error near unexpected token <'
-```sh
+```shell script
 # 修改 elasticsearch-env 122 行
 #   done < <(env) 改为  done <<< 'env'
 ```
@@ -81,12 +81,12 @@ curl 'http://192.168.1.201:9200/_cluster/health?pretty'
 
 ## 1.修改配置文件
 ### kibana.yml 
-```sh
+```shell script
 server.host: "0.0.0.0"
 elasticsearch.hosts: "http://192.168.1.203:9200"
 ```
 ## 2.启动
-```sh
+```shell script
 sh elasticsearch 
 ./kibana
 ```
@@ -95,6 +95,6 @@ sh elasticsearch
 
 ## 4.一些报错信息
 ### libnss3.so: cannot open shared object file: No such file or directory
-```sh
+```shell script
 yum install -y nss.x86_64
 ```

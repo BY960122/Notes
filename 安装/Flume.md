@@ -5,13 +5,13 @@
 - https://zhangweisep.github.io/2018/10/26/Flume%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/
 
 ## 1.配置环境变量
-```sh
+```shell script
 echo $FlUME_HOME
 ```
 ## 2.解压就能用
 ## 3.范例配置
 ### 获取端口数据
-```sh
+```shell script
 vim port.conf
 
 agent.sources = s1
@@ -35,7 +35,7 @@ bin/flume-ng agent --name agent -f port.conf -Dflume.root.logger=INFO,console
 telnet localhost 5678
 ```
 ### 命令行
-```sh
+```shell script
 vim exec.conf
 
 ....
@@ -50,7 +50,7 @@ bin/flume-ng agent --name agent -f exec.conf -Dflume.root.logger=INFO,console
 ```
 
 ### 获取磁盘文件的内容
-```sh
+```shell script
 vim spooldir.conf
 
 ....
@@ -65,7 +65,7 @@ bin/flume-ng agent --name agent -f spooldir.conf -Dflume.root.logger=INFO,consol
 ```
 
 ### 接收http的get和post请求
-```sh
+```shell script
 vim http.conf
 
 ....
@@ -81,7 +81,7 @@ bin/flume-ng agent --name agent -f http.conf -Dflume.root.logger=INFO,console
 curl -XPOST localhost:5679 -d'[{"headers":"{"k1":"v1","k2":"v2"}","body":"hello world"}]'
 ```
 ### 监听avro端口,并从外部avro客户端接收数据
-```sh
+```shell script
 vim avro.conf
 
 ....
@@ -99,7 +99,7 @@ bin/flume-ng agent --name agent -f avro.conf -Dflume.root.logger=INFO,console
 bin/flume-ng avro-client -H localhost -p 5680 -F /home/by/test.txt 
 ```
 ### 监听avro端口,并从外部端口接收数据
-```sh
+```shell script
 vim avrosink.conf
 
 ....

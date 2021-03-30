@@ -1,4 +1,4 @@
-```sql
+```mysql
 create definer=`mysql16`@`%` procedure `cq_datamap`.`update_datasource_grid`()
 begin
     declare id varchar(100);
@@ -7,7 +7,6 @@ begin
     declare done int default 0;
     
     -- 移动
-    declare is_found integer default 1;
     declare yd cursor for  
     select 
         code,

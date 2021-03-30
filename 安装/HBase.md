@@ -3,12 +3,12 @@
 - http://archive.apache.org/dist/hbase/
 
 ## 1.配置环境变量
-```sh
+```shell script
 echo $HBASE_HOME
 ```
 ## 2.配置配置文件：
 ### hbase-env.sh
-```sh
+```shell script
 export JAVA_HOME=/opt/software/jdk1.8.0_261
 export HBASE_MANAGES_ZK=false
 ```
@@ -62,12 +62,12 @@ export HBASE_MANAGES_ZK=false
 </configuration>
 ```
 ### regionservers
-```sh
+```shell script
 192.168.1.202
 192.168.1.203
 ```
 ## 3.启动 Zookeeper,Hadoop,HBase
-```sh
+```shell script
 # Zookeeper
 zkServer.sh start
 zkServer.sh status
@@ -86,7 +86,7 @@ hbase-daemon.sh start master
 hbase-daemon.sh stop master
 ```
 ## 4.进入 HBase
-```sh
+```shell script
 hbase shell
 ```
 ## 5.web界面
@@ -95,7 +95,7 @@ hbase shell
 192.168.1.201:16010 
 ```
 ## 6.搭建HA模式
-```sh
+```shell script
 # 原理,多启动几个 Master
 hbase-daemon.sh start hmaster
 hbase-daemon.sh start master

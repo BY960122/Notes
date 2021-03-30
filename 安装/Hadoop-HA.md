@@ -6,12 +6,12 @@
 ## 3.配置免密码登录
 ## 4.配置Java,Zookeeper
 ## 5.配置环境变量
-```sh
+```shell script
 echo $HADOOP_HOME
 ```
 ## 6.配置配置文件
 ### hadoop-env.sh
-```sh
+```shell script
 export JAVA_HOME=/opt/software/jdk1.8.0_261
 export HADOOP_HOME=/opt/software/hadoop-3.2.1
 export HADOOP_CONF_DIR=/opt/software/hadoop-3.2.1/etc/hadoop
@@ -273,12 +273,12 @@ export CLASSPATH=$CLASSPATH:${TEZ_CONF_DIR}:${TEZ_HOME}/*:${TEZ_HOME}/lib/*
 </configuration>
 ```
 ## 7.启动Zookeeper集群
-```sh
+```shell script
 zkServer.sh start
 zkServer.sh status
 ```
 ## 8.在两个主节点上启动journalnode
-```sh
+```shell script
 # 做这一步之前先删除所有节点/opt/software/hadoop-3.2.1/data目录,然后再创建一个文件夹,确保一致
 rm -rf /opt/software/hadoop-3.2.1/journal
 rm -rf /opt/software/hadoop-3.2.1/data
@@ -288,18 +288,18 @@ hadoop-daemon.sh start journalnode
 hdfs --daemon start journalnode
 ```
 ## 9.在一台主节点格式化 HDFS
-```sh
+```shell script
 hdfs namenode -format
 # INFO common.Storage: Storage directory /opt/software/hadoop-3.2.1/data/dfs/name has been successfully formatted.
 scp -r /opt/software/hadoop-3.2.1/data 192.168.1.202:/opt/software/hadoop-3.2.1/
 scp -r /opt/software/hadoop-3.2.1/data 192.168.1.203:/opt/software/hadoop-3.2.1/
 ```
 ## 10.格式化 Zookeeper
-```sh
+```shell script
 hdfs zkfc -formatZK
 ```
 ## 11.启动集群
-```sh
+```shell script
 start-all.sh
 # 注意看2个节点的resourcemanager都启动没
     # hadoop 2
@@ -308,7 +308,7 @@ yarn-daemon.sh start resourcemanager
 yarn --daemon start resourcemanager
 ```
 ## 12.常用命令
-```sh
+```shell script
 # 启动namenode
 hdfs --daemon start namenode
 
@@ -330,6 +330,6 @@ yarn application -kill application_1600865572447_0003
 ```
 ## 13.一些报错信息
 ### Call From by201/192.168.1.201 to by201:8485 failed on connection exception
-```sh
+```shell script
 hdfs --daemon start journalnode
 ```

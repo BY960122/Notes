@@ -7,7 +7,7 @@
 - https://archive.cloudera.com/cm6/6.3.1/allkeys.asc
 
 ## 1.时间同步
-```sh
+```shell script
 yum install -y chrony
 vim /etc/chrony.conf
 
@@ -28,20 +28,20 @@ systemctl enable chronyd.service
 timedatectl set-timezone Asia/Shanghai
 ```
 ## 2.http,createrepo
-```sh
+```shell script
 yum install -y httpd createrepo
 systemctl start httpd
 systemctl status httpd
 systemctl enable httpd
 ```
 ### rhel6配置
-```sh
+```shell script
 vim /etc/sysctl.conf
 
 vm.swappiness=0
 ```
 ### rhel7配置
-```sh
+```shell script
 cd /usr/lib/tuned/
 grep "vm.swappiness" * -R
 然后将文件中的配置依次配置为0
@@ -52,7 +52,7 @@ scp -r /usr/lib/tuned/* 192.168.1.212:/usr/lib/tuned/
 scp -r /usr/lib/tuned/* 192.168.1.213:/usr/lib/tuned/
 ```
 ## 3.所有节点用透明页
-```sh
+```shell script
 vim /etc/rc.local 
 追加
 echo never > /sys/kernel/mm/transparent_hugepage/defrag
@@ -75,14 +75,14 @@ flush privileges;
 select host,user from user;
 ```
 ## 5.配置 MySQL 驱动
-```sh
+```shell script
 # 必须是这个路径...
 cp /opt/mysql-connector-java.jar /usr/share/java/
 scp /opt/mysql-connector-java.jar 192.168.1.212:/usr/share/java/
 scp /opt/mysql-connector-java.jar 192.168.1.213:/usr/share/java/
 ```
 ## 6.部署离线parcel源
-```sh
+```shell script
 mkdir -p /var/www/html/cdh6_parcel
 mv /opt/CDH* /var/www/html/cdh6_parcel
 mv /opt/manifest.json /var/www/html/cdh6_parcel
@@ -92,7 +92,7 @@ mv /opt/manifest.json /var/www/html/cdh6_parcel
 http://by211/cdh6_parcel/
 ```
 ## 7.安装CM
-```sh
+```shell script
 mkdir /opt/software/cloudera-manager
 tar -zvxf /opt/cm6.3.1-redhat7.tar.gz -C /opt/software/cloudera-manager
 
@@ -137,7 +137,7 @@ com.cloudera.cmf.db.password=By9216446o6
 com.cloudera.cmf.db.setupType=EXTERNAL
 ```
 ## 8.启动
-```sh
+```shell script
 # 主节点启动server
 systemctl start cloudera-scm-server
 systemctl status cloudera-scm-server

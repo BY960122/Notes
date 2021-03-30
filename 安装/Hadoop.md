@@ -6,12 +6,12 @@
 ## 3.配置免密码登录
 ## 4.配置Java,Zookeeper
 ## 5.配置环境变量
-```sh
+```shell script
 echo $HADOOP_HOME
 ```
 ## 6.配置配置文件
 ### hadoop-env.sh 
-```sh
+```shell script
 export JAVA_HOME=/opt/software/jdk1.8.0_261
 export HADOOP_HOME=/opt/software/hadoop-3.2.1
 export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
@@ -19,6 +19,7 @@ export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
 ```
 ### hdfs-site.xml
 ```xml
+<propertys>
 <!--表示数据块的冗余度，默认：3-->
 <property>
         <name>dfs.replication</name>
@@ -34,9 +35,11 @@ export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
         <name>dfs.namenode.http-address</name>
         <value>192.168.1.201:50070</value>
 </property>
+</propertys>
 ```
 ### core-site.xml
 ```xml
+<propertys>
 <!--配置NameNode地址,9000是RPC通信端口-->
 <property>
         <name>fs.defaultFS</name>
@@ -64,10 +67,12 @@ export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
         <name>hadoop.proxyuser.root.hosts</name>
         <value>*</value>
 </property>
+</propertys>
 ```
 ### mapred-site.xml
 ```xml
 <!--MR程序运行的框架-->
+<propertys>
 <property>
         <name>mapreduce.framework.name</name>
         <value>yarn</value>
@@ -105,10 +110,12 @@ export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
         <name>mapreduce.reduce.env</name>
         <value>HADOOP_MAPRED_HOME=$HADOOP_HOME</value>
 </property>
+</propertys>
 ```
 ### yarn-site.xml
 ```xml
 <!--Yarn的主节点RM的位置-->
+<propertys>
 <property>
         <name>yarn.resourcemanager.hostname</name>
         <value>192.168.1.201</value>
@@ -138,30 +145,31 @@ export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
         <value>4</value>
         <description>Ratio between virtual memory to physical memory when setting memory limits for containers</description>
 </property>
+</propertys>
 ```
 ### workers,slaves
-```sh
+```shell script
 by201
 by202
 by203
 ```
 ## 7.格式化主节点NameNode
-```sh
+```shell script
 hdfs namenode -format
 
 scp -r /opt/software/hadoop-3.2.1/ 192.168.1.202:/opt/software/hadoop-3.2.1/
 scp -r /opt/software/hadoop-3.2.1/ 192.168.1.203:/opt/software/hadoop-3.2.1/
 ```
 ## 8.主节点启动
-```sh
+```shell script
 sh /opt/software/hadoop-3.2.1/sbin/start-all.sh
 ```
 ## 9.验证hadoop服务是否正常启动：打印HDFS的报告
-```sh
+```shell script
 hdfs dfsadmin -report  
 ```
 ## 10.测试.随便写一个文本上传
-```sh
+```shell script
 hdfs dfs -put /home/test.txt /data/
 hadoop jar /opt/software/hadoop-3.2.1/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.2.1.jar wordcount /data/test.txt /out/test1
 ```

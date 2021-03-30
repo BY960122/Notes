@@ -2,13 +2,13 @@
 - http://archive.apache.org/dist/hive/
 
 ## 1.配置环境变量
-```sh
+```shell script
 echo $HIVE_HOME
 ```
 ## 2.安装Hadoop
 ## 3.配置配置文件
 ### hive-env.sh
-```sh
+```shell script
 export JAVA_HOME=/opt/software/jdk1.8.0_261
 export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
 export HADOOP_HOME=/opt/software/hadoop-3.2.1
@@ -96,7 +96,7 @@ export HADOOP_HOME=/opt/software/hadoop-3.2.1
 </configuration>
 ```
 ## 4.初始化 hive
-```sh
+```shell script
 sh /opt/software/apache-hive-3.1.1-bin/bin/schematool -dbType mysql -initSchema
 ```
 ## 5.HIVE 整合 Spark
@@ -119,13 +119,13 @@ https://cwiki.apache.org/confluence/display/Hive/Hive+on+Spark%3A+Getting+Starte
         <value>192.168.1.201,192.168.1.202,192.168.1.203</value> 
 </property>
 ```
-```sh
+```shell script
 scp /opt/software/apache-hive-3.1.1-bin/conf/hive-site.xml 192.168.1.202:/opt/software/apache-hive-3.1.1-bin/conf/
 scp /opt/software/apache-hive-3.1.1-bin/conf/hive-site.xml 192.168.1.203:/opt/software/apache-hive-3.1.1-bin/conf/
 scp /opt/software/apache-hive-3.1.1-bin/conf/hive-site.xml 192.168.1.202:/opt/software/spark-3.0.0-bin-hadoop3.2/conf/
 scp /opt/software/apache-hive-3.1.1-bin/conf/hive-site.xml 192.168.1.203:/opt/software/spark-3.0.0-bin-hadoop3.2/conf/
 ```
-```sql
+```hiveql
 -- 在hive创建外部表印射hbase
 drop table if exists test_hbase;
 create external table test_hbase(key string,name string, age int) 
@@ -143,12 +143,12 @@ tblproperties ("hbase.table.name" = "test:test_hbase", "hbase.mapred.output.outp
 
 - https://github.com/google/googletest
 
-```sh
+```shell script
 # 解压 更名放在 protobuf-2.5.0 目录下
 mv googletest-release-1.5.0 gtest
 ```
 ### (3).编译,验证
-```sh
+```shell script
 yum install -y autoconf automake libtool
 ./autogen.sh
 ./configure
@@ -160,19 +160,19 @@ protoc --version
 - https://blog.csdn.net/Hello_Java2018/article/details/106036782
 - https://github.com/apache/tez/tree/master
 
-```sh
+```shell script
 chmod a+x /opt/software/apache-maven-3.6.3/bin/mvn
 # 顶层.pom文件 配置阿里云源
 # tez-ui这个模块,直接注释掉,费事费力容易报错
 mvn clean package install -Dhadoop.version=3.2.1 -DskipTests -Dmaven.javadoc.skip=true
 ```
 ### (5) 解压 tez-0.10.0-minimal.tar.gz 到集群各个节点,配置环境变量
-```sh
+```shell script
 mkdir /opt/software/tez-0.10.0
 tar -zxvf /opt/software/tez-0.10.0-minimal.tar.gz -C /opt/software/tez-0.10.0
 ```
 ### (6) 解压 tez-0.10.0.tar.gz 到集群各个节点,配置环境变量
-```sh
+```shell script
 echo $TEZ_HOME
 hadoop fs -mkdir /tez 
 hadoop fs -put /opt/software/tez-0.10.0.tar.gz /tez
@@ -211,7 +211,7 @@ hadoop fs -put /opt/software/tez-0.10.0.tar.gz /tez
     </property>
 </configuration>
 ```
-```sh
+```shell script
 cp /opt/software/hadoop-3.2.1/etc/hadoop/tez-site.xml /opt/software/apache-hive-3.1.1-bin/conf/
 scp /opt/software/hadoop-3.2.1/etc/hadoop/tez-site.xml 192.168.1.202:/opt/software/hadoop-3.2.1/etc/hadoop/
 scp /opt/software/hadoop-3.2.1/etc/hadoop/tez-site.xml 192.168.1.203:/opt/software/hadoop-3.2.1/etc/hadoop/
@@ -227,26 +227,26 @@ scp /opt/software/hadoop-3.2.1/etc/hadoop/tez-site.xml 192.168.1.203:/opt/softwa
 </property>
 ```
 #### hive-env.sh
-```sh
+```shell script
 export TEZ_HOME=/opt/software/tez-0.10.0
 export TEZ_CONF_DIR=/opt/software/tez-0.10.0
 export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:${TEZ_CONF_DIR}:${TEZ_HOME}/*:${TEZ_HOME}/lib/*
 export CLASSPATH=$CLASSPATH:${TEZ_CONF_DIR}:${TEZ_HOME}/*:${TEZ_HOME}/lib/*
 ```
 #### hadoop-env.sh
-```sh
+```shell script
 export TEZ_HOME=/opt/software/tez-0.10.0
 export TEZ_CONF_DIR=/opt/software/tez-0.10.0
 export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:${TEZ_CONF_DIR}:${TEZ_HOME}/*:${TEZ_HOME}/lib/*
 export CLASSPATH=$CLASSPATH:${TEZ_CONF_DIR}:${TEZ_HOME}/*:${TEZ_HOME}/lib/*
 ```
 ### (9).测试
-```sh
+```shell script
 hadoop jar /opt/software/tez-0.10.0/tez-examples-0.10.0.jar orderedwordcount /data/test.txt /tez/output/
 hdfs dfs -ls /tez/output/
 ```
 ## 8.启动 Hive
-```sh
+```shell script
 hive
 
 hiveserver2 start
@@ -256,7 +256,7 @@ set hive.execution.engine=spark;
 set spark.driver.extraClassPath=/opt/software/apache-hive-3.1.1-bin/lib/hive-exec-3.1.2.jar;
 ```
 ## 9.测试
-```sql
+```hiveql
 create table test_hive (id int,name string);
 insert into test_hive values (1,'a'),(2,'b'),(3,'c'),(4,'d'),(5,'e'),(6,'f'),(7,'g'),(8,'h'),(9,'i'),(10,'j'),(11,'k'),(12,'l'),(13,'m'),(14,'n'),
 (15,'o'),(16,'p'),(17,'q'),(18,'r'),(19,'s'),(20,'t'),(21,'u'),(22,'v'),(23,'w'),(24,'x'),(25,'y'),(26,'z');
@@ -264,12 +264,12 @@ select row_number() over (partition by 1 order by id) from test_hive limit 7,7;
 ```
 ## 10.一些报错信息
 ### java.lang.NoSuchMethodError: com.google.common.base.Preconditions.checkArgument(ZLjava/lang/String;Ljava/lang/Object;)V
-```sh
+```shell script
 # guava 版本过低,用 Hadoop 的
 rm -rf /opt/software/apache-hive-3.1.1-bin/lib/guava-19.0.jar
 ```
 ### java.lang.NoClassDefFoundError：org.apache.hadoop.hive.conf.HiveVariableSource
-```sh
+```shell script
 # 注释 hadoop-env.sh 
 # export HADOOP_CLASSPATH=${TEZ_JARS}/*:${TEZ_JARS}/lib/*:$HIVE_HOME/lib
 ```
@@ -278,12 +278,12 @@ rm -rf /opt/software/apache-hive-3.1.1-bin/lib/guava-19.0.jar
 进入 MySQL元数据库 配置 version表对应值为 3.1.0
 ```
 ### Caused by: java.lang.ClassNotFoundException: org.apache.spark.SparkConf
-```sh
+```shell script
 scp /opt/software/spark-3.0.1-bin-hadoop3.2/jars/scala* /opt/software/apache-hive-3.1.1-bin/lib/
 scp /opt/software/spark-3.0.1-bin-hadoop3.2/jars/spark* /opt/software/apache-hive-3.1.1-bin/lib/
 ```
 ### ERROR:Unable to instantiate org.apache.hadoop.hive.ql.metadata.SessionHiveMetaStoreClient
-```sh
+```shell script
 # 检查元数据库是否启动并可以连接
 sh /opt/software/apache-hive-3.1.1-bin/bin/schematool -initSchema -dbType mysql
 ```
