@@ -1,3 +1,9 @@
+### maven 添加jar包到本地仓库
+```sh
+# groupId,artifactId,version 照着这格式随便填
+mvn install:install-file -Dfile=D:/WorkSpace/ideaProject/data_compare/lib/hadoop-common.jar -DgroupId=org.apache.hadoop -DartifactId=hadoop-common -Dversion=1.0.0 -Dpackaging=jar
+```
+
 ### Failed to locate the winutils binary in the hadoop binary path,java.io.IOException: Could not locate executable null\bin\winutils.exe in the Hadoop binaries.
 ```http
 <!-- 下载winutils的windows版本,增加用户变量HADOOP_HOME,值是下载的zip包解压的目录,然后在系统变量path里增加%HADOOP_HOME%\bin 即可 -->
@@ -192,6 +198,27 @@ log4j.logger.org.apache.spark.util.ShutdownHookManager=OFF
 log4j.logger.org.apache.spark.SparkEnv=ERROR
 ```
 
+### maven打包包含其他目录文件
+```xml
+        <resources>
+<!--            <resource>-->
+<!--                <directory>lib</directory>-->
+<!--                <targetPath>lib/</targetPath>-->
+<!--                <includes>-->
+<!--                    <include>**/*.jar</include>-->
+<!--                </includes>-->
+<!--            </resource>-->
+<!--这一行是默认的,如果写了别的就必须写上这一个,否则会漏掉它-->
+            <resource>
+                <directory>src/main/resources</directory>
+                <!--                <targetPath>BOOT-INF/classes/</targetPath>-->
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+            </resource>
+        </resources>
+```
+
 ### maven插件1: 将依赖复制到一个目录下
 ```xml
 <plugin>
@@ -216,6 +243,7 @@ log4j.logger.org.apache.spark.SparkEnv=ERROR
 ```xml
 <plugin>
     <artifactId>maven-assembly-plugin</artifactId>
+    <version>3.3.0</version>
     <configuration>
         <!--                    这部分可有可无,加上的话则直接生成可运行jar包-->
         <archive>
@@ -266,5 +294,37 @@ log4j.logger.org.apache.spark.SparkEnv=ERROR
             </configuration>
         </execution>
     </executions>
+</plugin>
+```
+
+### maven插件4: 
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-jar-plugin</artifactId>
+    <version>3.1.0</version>
+    <configuration>
+        <archive>
+            <addMavenDescriptor>false</addMavenDescriptor>
+            <manifest>
+                <addClasspath>true</addClasspath>
+                <classpathPrefix>lib/</classpathPrefix>
+                <mainClass>main.SpringStartMain</mainClass>
+            </manifest>
+            <manifestEntries>
+                <Class-Path>./</Class-Path>
+            </manifestEntries>
+        </archive>
+        <!-- 过滤掉不希望包含在jar中的文件  -->
+        <excludes>
+            <exclude>*.xml</exclude>
+            <exclude>spring/**</exclude>
+            <exclude>config/**</exclude>
+        </excludes>
+        <!-- 这里不做举例了 -->
+        <includes>
+            <include></include>
+        </includes>
+    </configuration>
 </plugin>
 ```
