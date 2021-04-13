@@ -106,7 +106,8 @@ lateral view explode(split(si.depart,','))  b as add_depart;
 
 ## 函数
 ```hiveql
--- Hive编写自定义UDF函数上传
+-- 写了库名,调用函数的时候也要加库名.
+-- 临时函数
 add jar /opt/mysoft/hiveexample-1.0.jar;
 create temporary function myupper as 'udf.MyUpper';
 select myupper('yes') from bingo.test_hive limit 1;
@@ -116,6 +117,23 @@ select myuuid(9) from bingo.test_hive limit 1;
 
 create temporary function uaf as 'udf.UDFArrayFirst';
 select uaf(array(1,2,3)) from bingo.test_hive limit 1;
+
+-- 永久函数
+create function myupper as 'udf.MyUpper' using jar /opt/mysoft/hiveexample-1.0.jar;
+
+-- 查看函数
+desc function myupper;
+
+
+-- impala 新建临时函数(写返回值)
+create function if not exists hiveudf.md5(string)
+returns string 
+location 'hdfs:/user/hive/warehouse/hive_md5_udf-1.0.jar' 
+symbol='MD5UDF';
+-- impala 新建永久函数(不写返回值)
+create function if not exists hiveudf.md5
+location 'hdfs:/user/hive/warehouse/hive_md5_udf-1.0.jar' 
+symbol='MD5UDF';
 ```
 
 ## 动态分区
