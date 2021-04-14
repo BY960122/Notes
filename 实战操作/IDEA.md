@@ -1,3 +1,8 @@
+### 一些小技巧
+```sh
+# idea debug 日志 VM options
+-Dlog4j.debug
+```
 ### maven 添加jar包到本地仓库
 ```sh
 # groupId,artifactId,version 照着这格式随便填
