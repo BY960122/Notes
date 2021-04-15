@@ -20,7 +20,7 @@ https://github.com/steveloughran/winutils
 --illegal-access=warn
 **to field java.lang.String.value
 于是添加JVM启动参数
---add-opens java.base/java.io=ALL-UNNAMED
+--illegal-access=deny --add-opens java.base/java.lang=ALL-UNNAMED
 ```
 
 ### log4j升级为log4j2,中途还是会打印找不到log4j配置
