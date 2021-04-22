@@ -9,7 +9,7 @@ echo $HBASE_HOME
 ## 2.配置配置文件：
 ### hbase-env.sh
 ```shell script
-export JAVA_HOME=/opt/software/jdk1.8.0_261
+export JAVA_HOME=/opt/software/jdk1.8.0_291
 export HBASE_MANAGES_ZK=false
 ```
 ### hbase-site.xml

@@ -9,7 +9,7 @@ echo $HIVE_HOME
 ## 3.配置配置文件
 ### hive-env.sh
 ```shell script
-export JAVA_HOME=/opt/software/jdk1.8.0_261
+export JAVA_HOME=/opt/software/jdk1.8.0_291
 export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
 export HADOOP_HOME=/opt/software/hadoop-3.2.1
 ```
