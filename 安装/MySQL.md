@@ -13,20 +13,22 @@ echo $MYSQL_HOME
 ```
 ## 2.配置my.ini 文件
 ## 3.进入安装目录下执行
-```txt 
+```sh
+ # 如果安装过先卸载,删除data目录,再执行
+ # sc delete mysql
 mysqld --initialize --console (这里会产生密码)
 ```
 ## 4.再执行
-```txt
+```sh
 mysqld --install mysql
 net start mysql
 ```
 ## 5.进入mysql 修改密码(这是必须是第一步) 
 ```mysql based
+alter user root@'localhost' identified by 'By9216446o6'; 
 set global validate_password.length = 6;
 set global validate_password.policy = 0;
 update mysql.user set host = '%' where user = 'root';
-grant all on *.* to 'root'@'%';
 alter user root@'%' identified by 'By9216446o6'; 
 ```
 ## 6.赋予权限 
