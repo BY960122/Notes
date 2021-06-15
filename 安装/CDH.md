@@ -1,10 +1,10 @@
 # 下载 CDH
 - https://blog.csdn.net/wsdc0521/article/details/108366867
-- https://docs.cloudera.com/documentation/enterprise/6/release-notes/topics/rg_requirements_supported_versions.html#cm_cdh_compatibility
-- https://archive.cloudera.com/cdh6/6.3.2/parcels/CDH-6.3.2-1.cdh6.3.2.p0.1605554-el7.parcel
-- https://archive.cloudera.com/cdh6/6.3.2/parcels/manifest.json
-- https://archive.cloudera.com/cm6/6.3.1/repo-as-tarball/cm6.3.1-redhat7.tar.gz
-- https://archive.cloudera.com/cm6/6.3.1/allkeys.asc
+- https://www.cloudera.com/downloads/cdh.html
+- https://www.cloudera.com/documentation/enterprise/release-notes/topics
+- https://www.cloudera.com/documentation/enterprise/6/release-notes/topics
+- https://archive.cloudera.com/cm7
+- https://archive.cloudera.com/cdh7
 
 ## 1.时间同步
 ```shell script
