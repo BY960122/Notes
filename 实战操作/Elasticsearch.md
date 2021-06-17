@@ -1,5 +1,5 @@
 # 基本操作
-```shell script
+```sh
 # 查询所有节点
 curl -XGET localhost:9200/_cat/nodes?v
 
@@ -309,14 +309,14 @@ Content-Type: application/json
 >> 如果是 elasticsearch[{node}][bulk][T#1] 则是数据写入导致的
 >>
 >>> 在实际调优中,cpu 使用率很高,如果不是 SSD,建议把
-```shell script
+```sh
 index.merge.scheduler.max_thread_count = 1
 ```
 >>> 该参数可以有效调节写入的性能,因为在存储介质上并发写,由于寻址的原因,写入性能不会提升,只会降低,
 
 ## 索引 刷新频率
 > 索引的 refresh 会产生一个新的 lucene 段, 这会导致频繁的合并行为,如果业务需求对实时性要求没那么高,可以将此参数调大,实际调优告诉我,该参数确实很给力,cpu 使用率直线下降
-```shell script
+```sh
 # 默认是 1 , 改为 -1s  这样就是不刷新
 curl -XPUT 'http://localhost:9200/index_name/_settings' -d '
 {
@@ -332,7 +332,7 @@ curl -XPUT 'http://localhost:9200/index_name/_settings' -d '
 > index buffer 的大小是所有的 shard 公用的,一般建议,对于每个 shard 来说,最多给 512mb,因为再大性能就没什么提升了,
 >
 > ES 会将这个设置作为每个 shard 共享的 index buffer,那些特别活跃的 shard 会更多的使用这个 buffer,默认这个参数的值是 10%,也就是 jvm heap 的 10%
-```shell script
+```sh
 indices.memory.index_buffer_size=1024
 ```
 
@@ -362,7 +362,7 @@ indices.memory.index_buffer_size=1024
 > bulk：你可以猜到,此线程池用于批量操作,它的类型默认为fixed,size默认为可用处理器的数量,队列的size默认为50
 >
 > percolate：此线程池用于预匹配器操作,它的类型默认为fixed,size默认为可用处理器的数量,队列的size默认为1000
-```shell script
+```sh
 threadpool.index.type: fixed
 threadpool.index.size: 100
 threadpool.index.queue_size: 500
@@ -370,7 +370,7 @@ threadpool.index.queue_size: 500
 
 ## 定期优化清理缓存
 > 如果你不想重新配置节点并且重启,你可以做一个定时任务来定时清除cache
-```shell script
+```sh
 # 清除所有索引的cache,如果对查询有实时性要求,慎用！
 http://10.22.2.201:9200/*/_cache/clear
 # 到了晚上资源空闲的时候我们还能合并优化一下索引

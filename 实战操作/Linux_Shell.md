@@ -2,7 +2,7 @@
 > 如果是windows 编写的,注意报错: $'\r':command not found, 请先转义一下: dos2unix 文件名
 
 ## hdfs_sql_ftp
-```shell script
+```sh
 ##! /bin/bash
 exectime=`date -d "0 day" +%Y%m%d`
 if [ ! -n "$1" ]; then
@@ -61,7 +61,7 @@ done
 ```
 
 ## s3_delete
-```shell script
+```sh
 ##! /bin/bash
 ## 切忌: 请在一个空目录执行,程序会执行 rm -rf cqdsjb_*
 
@@ -116,7 +116,7 @@ echo "[SUCCESS] 程序执行成功^_^"
 ```
 
 ## s3_count
-```shell script
+```sh
 ##! /bin/bash
 ## 第一个参数为S3路径
 if [ ! -n "$1" ]; then
@@ -161,7 +161,7 @@ done
 ```
 
 ## zookeeper-start-all.sh
-```shell script
+```sh
 ##!/bin/bash
 
 echo "Starting ZkServer..."
@@ -196,7 +196,7 @@ echo "Time consuming `time_consuming` seconds"
 ```
 
 ## es-stop-all.sh
-```shell script
+```sh
 ##!/bin/bash
 
 ## 耗时
@@ -232,7 +232,7 @@ echo "Time consuming `time_consuming` seconds"
 ## es-restart.sh
 - https://www.cnblogs.com/sparkdev/p/6842805.html
 
-```shell script
+```sh
 ##! /bin/bash
 startTime=`date +%s`
 
@@ -296,7 +296,7 @@ echo "[Process exectute success^_^] time consuming `time_consuming` seconds"
 ## es-start-all.sh
 - https://www.cnblogs.com/sparkdev/p/6842805.html
 
-```shell script
+```sh
 ##! /bin/bash
 startTime=`date +%s`
 
@@ -354,7 +354,7 @@ echo "[Process exectute success^_^] time consuming `time_consuming` seconds"
 ```
 
 ## gp_delete_log
-```shell script
+```sh
 ## /bin/sh
 start_time=`date +%s`
 gpip_list=(77.1.33.1 77.1.33.2 77.1.33.3 77.1.33.4 77.1.33.5 77.1.33.6 77.1.33.7 77.1.33.8 77.1.33.9 77.1.33.10 77.1.33.11 77.1.33.1 77.1.33.13 77.1.33.14)
@@ -386,7 +386,7 @@ echo "[Execute compute]: comsuming time `time_commsuming` seconds^_^"
 ```
 
 ## storm_stop_all
-```shell script
+```sh
 ##!/bin/bash
 
 startTime=`date +%s`
@@ -437,7 +437,7 @@ echo "Time consuming `time_consuming` seconds"
 ```
 
 ## storm_start_all
-```shell script
+```sh
 ##!/bin/bash
 
 startTime=`date +%s`

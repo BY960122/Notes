@@ -8,7 +8,7 @@
 
 # MySQL 8.0 + (windows安装)
 ## 1.配置环境变量 
-```shell script
+```sh
 echo $MYSQL_HOME
 ```
 ## 2.配置my.ini 文件
@@ -62,35 +62,35 @@ net start mysql
 
 # MySQL 8.0 + (Linux安装)
 ## 1.配置环境变量 
-```shell script
+```sh
 echo $MYSQL_HOME
 ```
 ## 2.查看可以安装哪些安装包
-```shell script
+```sh
 yum repolist all | grep mysql
 rpm -pa | grep mysql
 rpm -pa | grep mariadb
 ```
 ## 3.删除之前的
-```shell script
+```sh
 yum remove ***
 rpm -ev ***
 ```
 ## 4.安装前先添加mysql组,和mysql用户
-```shell script
+```sh
 groupadd mysql
 useradd -r -g mysql mysql
 chown -R mysql:mysql /opt/software/mysql-8.0.21
 ```
 ## 5.安装
-```shell script
+```sh
 xz -d mysql-8.0.21-linux-glibc2.12-x86_64.tar.xz
 tar -vxf mysql-8.0.21-linux-glibc2.12-x86_64.tar -C mysql-8.0.21
 
 bin/mysqld --initialize --user=mysql --basedir=/opt/software/mysql-8.0.21 --datadir=/opt/software/mysql-8.0.21/data
 ```
 ## 6.然后记得检查下配置文件是否存在,没有的话手动添加
-```shell script
+```sh
 vim /etc/my.cnf
 
 [mysqld]
@@ -98,7 +98,7 @@ basedir=/opt/software/mysql-8.0.21
 datadir=/opt/software/mysql-8.0.21/data
 ```
 ## 7.添加服务并启动,重启记得先停止!!!
-```shell script
+```sh
 cd support-files/
 cp mysql.server /etc/init.d/mysql 
 chmod +x /etc/init.d/mysql
@@ -125,7 +125,7 @@ flush privileges;
 # 设置主从配置
 ## 原理 master:每产生磁盘变化就写进binlog日志 slave:转换成repaylog 
 ## 1.master配置文件
-```shell script
+```sh
 server-id=102
 log-bin=mysql-bin
 # statemet(语句变化):影响很多行的情况适合用语句模式
@@ -133,7 +133,7 @@ log-bin=mysql-bin
 binlog-format=mixed
 ```
 ## 2.slave配置文件
-```shell script
+```sh
 server-id=201
 relay-log=mysql-relay
 ```
@@ -164,14 +164,14 @@ stop slave;
 
 # 设置主主配置
 ## 1.master配置文件
-```shell script
+```sh
 server-id=102
 log-bin=mysql-bin
 relay-log=mysql-relay
 binlog-format=mixed
 ```
 ## 2.slave配置文件
-```shell script
+```sh
 server-id=201
 log-bin=mysql-bin
 relay-log=mysql-relay
@@ -207,7 +207,7 @@ set global auto_increment_offset=1;     #从1开始增长,另外一台只需要�
 进入 mysql\bin目录下 查看 mysqld文件,是不是有一个为0kb的,删掉它
 ```
 ## 初始化数据库报错:bin/mysqld: error while loading shared libraries: libaio.so.1: cannot open shared object file: No such file or directory
-```shell script
+```sh
 # 进入mysql-8.0.21/bin 目录执行,查看各个依赖项
 ldd mysql 
 # 从别的电脑复制一个过来
@@ -217,7 +217,7 @@ ll /usr/lib64/libtinfo.so.5.9
 ```
 
 # 范例配置文件,不要设置成UTF-8格式
-```shell script
+```sh
 [mysqld]
 # skip-grant-tables
 # 设置3306端口

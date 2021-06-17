@@ -6,12 +6,12 @@
 ## 3.配置免密码登录
 ## 4.配置Java,Zookeeper
 ## 5.配置环境变量
-```shell script
+```sh
 echo $HADOOP_HOME
 ```
 ## 6.配置配置文件
 ### hadoop-env.sh 
-```shell script
+```sh
 export JAVA_HOME=/opt/software/jdk1.8.0_291
 export HADOOP_HOME=/opt/software/hadoop-3.2.1
 export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
@@ -148,28 +148,28 @@ export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
 </propertys>
 ```
 ### workers,slaves
-```shell script
+```sh
 by201
 by202
 by203
 ```
 ## 7.格式化主节点NameNode
-```shell script
+```sh
 hdfs namenode -format
 
 scp -r /opt/software/hadoop-3.2.1/ 192.168.1.202:/opt/software/hadoop-3.2.1/
 scp -r /opt/software/hadoop-3.2.1/ 192.168.1.203:/opt/software/hadoop-3.2.1/
 ```
 ## 8.主节点启动
-```shell script
+```sh
 sh /opt/software/hadoop-3.2.1/sbin/start-all.sh
 ```
 ## 9.验证hadoop服务是否正常启动：打印HDFS的报告
-```shell script
+```sh
 hdfs dfsadmin -report  
 ```
 ## 10.测试.随便写一个文本上传
-```shell script
+```sh
 hdfs dfs -put /home/test.txt /data/
 hadoop jar /opt/software/hadoop-3.2.1/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.2.1.jar wordcount /data/test.txt /out/test1
 ```

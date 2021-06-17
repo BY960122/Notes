@@ -16,18 +16,18 @@
 ### (1).配置mvn,scala,java,配置maven源
 ### (2).上传前面编译好的整个目录
 ### (3).执行脚本
-```shell script
+```sh
 sh /opt/spark-3.0.1/dev/make-distribution.sh --name hadoop3.2-without-hive --tgz "-Phadoop-3.2,yarn,hadoop-provided,orc-provided,parquet-provided"
 ```
 
 # Spark安装
 ## 1.配置环境变量,安装scala
-```shell script
+```sh
 echo $SPARK_HOME
 ```
 ## 2.配置配置文件
 ### spark-env.sh
-```shell script
+```sh
 export JAVA_HOME=/opt/software/jdk1.8.0_261
 export LD_LIBRARY_PATH=/opt/software/hadoop-3.2.1/lib/native
 export SPARK_LIBRARY_PATH=/opt/software/spark-3.0.1-bin-hadoop3.2/jars
@@ -43,18 +43,18 @@ export SPARK_EXECUTOR_CORES=4
 export SPARK_EXECUTOR_MEMORY=4g
 ```
 ### spark-defaults.conf
-```shell script
+```sh
 spark.master                     spark://by202:7077
 spark.driver.memory              2g
 spark.executor.memory            2g
 ```
 ### slaves,(写自己会造成既是master,又是worker)
-```shell script
+```sh
 192.168.1.201
 192.168.1.203
 ```
 ## 3.启动Zookeeper,hadoop,spark
-```shell script
+```sh
 zkServer.sh start 
 start-all.sh 
 sh /opt/software/spark-3.0.1-bin-hadoop3.2/sbin/start-all.sh
@@ -65,7 +65,7 @@ sh /opt/software/spark-3.0.1-bin-hadoop3.2/sbin/stop-all.sh
 - http://192.168.1.201:8081/
 
 ## 5.测试
-```shell script
+```sh
 cd /opt/software/spark-3.0.1-bin-hadoop3.2/
 # 本地模式提交测试
 ./bin/run-example SparkPi 10
@@ -78,24 +78,24 @@ cd /opt/software/spark-3.0.1-bin-hadoop3.2/
 ## 6.Spark整合进Hive
 - https://www.bmc.com/blogs/using-spark-with-hive/
 
-```shell script
+```sh
 cp /opt/software/apache-hive-3.1.2-bin/conf/hive-site.xml /opt/software/spark-3.0.1-bin-hadoop3.2/conf/
 cp mysql-connector-java-8.0.18.jar /opt/software/spark-3.0.1-bin-hadoop3.2/jars/
 ```
 ### 开启Hive的MetaStore服务
-```shell script
+```sh
 nohup hive --service metastore > metastore.log 2>&1 &
 hive --service hiveserver2 --hiveconf hive.server2.thrift.port=10000
 ```
 ### 启动spark-shell
-```shell script
+```sh
 sh /opt/software/spark-3.0.1-bin-hadoop3.2/bin/spark-shell --master spark://192.168.1.202:7077 --jar mysql-connector-java-8.0.21.jar
 ```
 import org.apache.spark.sql.hive.HiveContext;
 val hc = new HiveContext(sc);
 hc.sql("show databases").show;
 ### 启动spark-sql
-```shell script
+```sh
 spark-sql --master spark://192.168.1.201:7077 --executor-memory 1024m --total-executor-cores 2
 ```
 ## 7.一些报错信息

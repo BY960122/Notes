@@ -14,14 +14,14 @@ win10专业版：PK6DJ-BWPFR-YGXH8-X7MPJ-R34QW
 ```
 
 ## 电脑关机快捷方式
-```shell script
+```sh
 #右击鼠标惦记添加快捷方式,输入
 shutdown -s -t 0
 #这里的0代表时间,比如100,那么我们点击之后100秒才会启动关机程序
 ```
 
 ## 完全删除OneDrive
-```shell script
+```sh
 #编辑文本文档,拷贝以下内容
 
 @ECHO OFF
@@ -38,7 +38,7 @@ END
 ```
 
 ## 家庭版添加组策略 gpedit.msc
-```shell script
+```sh
 @echo off
 pushd "%~dp0"
 dir /b C:\Windows\servicing\Packages\Microsoft-Windows-GroupPolicy-ClientExtensions-Package~3*.mum >List.txt
@@ -50,7 +50,7 @@ pause
 ```
 
 ## 删除桌面图标小箭头
-```shell script
+```sh
 #删除箭头
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Icons" /v 29 /d "%systemroot%\system32\imageres.dll,197" /t reg_sz /f
 taskkill /f /im explorer.exe
@@ -70,7 +70,7 @@ Pause
 ```
 
 ## 删除此电脑下的文件夹
-```shell script
+```sh
 #新建文本文档
 Windows Registry Editor Version 5.00
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{f86fa3ab-70d2-4fc7-9c99-fcbf05467f3a}]
@@ -94,13 +94,13 @@ Windows Registry Editor Version 5.00
 ```
 
 ## 安装msi时2503,2502错误及其解决
-```shell script
+```sh
 #管理员方式运行cmd,然后执行
 msiexec /package "D:\Mysoft\Navicat_12.1\sqlncli_x64.msi"
 ```
 
 ## 右下角图标无法点开
-```shell script
+```sh
 ## 可能是误删了一个目录
 C:\Windows\SystemApps\ShellExperienceHost_cw5n1h2txyewy
 ```
@@ -109,7 +109,7 @@ C:\Windows\SystemApps\ShellExperienceHost_cw5n1h2txyewy
 - https://www.delihuifu.com
 
 ## 解决端口占用
-```shell script
+```sh
 # 1.查看端口占用
 netstat -ano | findstr "1080"
 #TCP    192.168.1.5:1080       27.148.207.206:443     CLOSE_WAIT      7896
@@ -136,7 +136,7 @@ taskkill /F /IM SearchApp.exe
 - github.global.ssl.fastly.net
 - codeload.github.com
 
-```shell script
+```sh
 192.30.253.113 github.com
 151.101.25.194 github.global.ssl.fastly.net
 192.30.253.121 codeload.github.com

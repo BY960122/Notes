@@ -137,7 +137,7 @@ symbol='MD5UDF';
 ```
 
 ## 动态分区
-```shell script
+```sh
 set hive.exec.dynamic.partition=true;  
 set hive.exec.dynamic.partition.mode=nonstrict; 
 set hive.exec.max.dynamic.partitions.pernode=1000;
@@ -169,7 +169,7 @@ select name,favorlist,favor from student_favors_2 view explode(split(favorlist,'
 ```
 
 ## 奇异bug
-```shell script
+```sh
 # 用tez运算后的表,无法用mr查到,例如 union all 之后,tez会多存一级目录 HIVE_UNION_SUBDIR..
 # 原因: mr不会递归查询该目录,tez会
 # 建议: 将此参数添加进hive-site,允许mr递归读取目录

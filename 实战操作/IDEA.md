@@ -197,7 +197,7 @@ https://github.com/steveloughran/winutils
 ```
 
 ### idea跑spark,最后无法删除临时目录
-```shell script
+```sh
 # log4j 配置
 log4j.logger.org.apache.spark.util.ShutdownHookManager=OFF
 log4j.logger.org.apache.spark.SparkEnv=ERROR

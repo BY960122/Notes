@@ -1,6 +1,6 @@
 # 命令行操作
 ## 命名空间
-```shell script
+```sh
 # 创建命名空间
 create_namespace 'test'
 
@@ -16,7 +16,7 @@ drop_namespace 'test'
 ```
 
 ## 表
-```shell script
+```sh
 # 创建表
 create 'test:test_hbase','info'
 # 插入数据
