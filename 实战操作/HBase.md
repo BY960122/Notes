@@ -66,6 +66,9 @@ create external table test_hbase(key string,name string, age int)
 stored by 'org.apache.hadoop.hive.hbase.HBaseStorageHandler' 
 with serdeproperties ("hbase.columns.mapping" = ":key,info:name,info:age") 
 tblproperties ("hbase.table.name" = "test:test_hbase", "hbase.mapred.output.outputtable" = "test_hbase");
+# 统计行数
+count 'test:test_hbase'
+hbase org.apache.hadoop.hbase.mapreduce.RowCounter 'test:test_hbase'
 ```
 
 # 性能优化
