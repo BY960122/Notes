@@ -7,6 +7,7 @@
 - [Elasticsearch.md](./安装/Elasticsearch.md)
 - [Flink.md](./安装/Flink.md)
 - [Flume.md](./安装/Flume.md)
+- [Gbase.md](./安装/Gbase.md)
 - [Hadoop-HA.md](./安装/Hadoop-HA.md)
 - [Hadoop.md](./安装/Hadoop.md)
 - [HBase.md](./安装/HBase.md)
@@ -18,13 +19,11 @@
 - [Redis.md](./安装/Redis.md)
 - [Spark.md](./安装/Spark.md)
 - [Sqoop.md](./安装/Sqoop.md)
+- [Storm.md](./安装/Storm.md)
 - [Sublime.md](./安装/Sublime.md)
 - [Windows.md](./安装/Windows.md)
-
-> 读书笔记
-- [座右铭.md](./读书笔记/座右铭.md)
-- [随记.md](./读书笔记/随记.md)
-- [逗比.md](./读书笔记/逗比.md)
+- [Zookeeper.md](./安装/Zookeeper.md)
+- [环境变量.md](./安装/环境变量.md)
 
 > 实战操作
 - [Elasticsearch.md](./实战操作/Elasticsearch.md)
@@ -40,7 +39,12 @@
 - [MySQL_Function.md](./实战操作/MySQL_Function.md)
 - [MySQL_Procedure.md](./实战操作/MySQL_Procedure.md)
 - [Oracle.md](./实战操作/Oracle.md)
+- [Spark.md](./实战操作/Spark.md)
 - [Sqoop.md](./实战操作/Sqoop.md)
 - [Windows_Bat.md](./实战操作/Windows_Bat.md)
 - [大数据基本概念.md](./实战操作/大数据基本概念.md)
 
+> 读书笔记
+- [座右铭.md](./读书笔记/座右铭.md)
+- [随记.md](./读书笔记/随记.md)
+- [逗比.md](./读书笔记/逗比.md)
