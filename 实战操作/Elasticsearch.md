@@ -6,6 +6,16 @@ curl -XGET localhost:9200/_cat/nodes?v
 # 查询所有的索引配置
 curl -XGET localhost:9200/_settings/_all?pretty
 
+# 修改配置
+PUT localhost:9200/index_name/_settings
+Content-Type: application/json
+
+{
+  "settings": {
+    "refresh_interval": "-1"
+  }
+}
+
 # 创建索引 ?pretty 输出格式化
 curl -XPUT localhost:9200/index_name?pretty
 

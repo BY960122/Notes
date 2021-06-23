@@ -1,4 +1,47 @@
-## 导入导出
+# mysql 优化工具
+## mysqltuner.pl
+- 项目地址 https://github.com/major/MySQLTuner-perl
+```sh
+
+# 下载
+wget https://raw.githubusercontent.com/major/MySQLTuner-perl/master/mysqltuner.pl
+# 使用 
+./mysqltuner.pl --socket /var/lib/mysql/mysql.sock
+```
+
+## tuning-primer.sh
+- 项目地址 https://github.com/BMDan/tuning-primer.sh
+```sh
+# 下载
+wget https://launchpad.net/mysql-tuning-primer/trunk/1.6-r1/+download/tuning-primer.sh
+# 使用
+./tuning-primer.sh
+```
+
+## pt-variable-advisor
+- https://www.percona.com/downloads/percona-toolkit/LATEST/
+```sh
+# 安装
+wget https://www.percona.com/downloads/percona-toolkit/3.0.13/binary/redhat/7/x86_64/percona-toolkit-3.0.13-re85ce15-el7-x86_64-bundle.tar
+yum install percona-toolkit-3.0.13-1.el7.x86_64.rpm
+# 使用
+pt-variable-advisor localhost --socket /var/lib/mysql/mysql.sock
+# 直接分析慢查询文件
+pt-query-digest /var/lib/mysql/slowtest-slow.log
+# 分析最近12小时内的查询
+pt-query-digest --since=12h /var/lib/mysql/slowtest-slow.log > slow_report2.log
+# 分析指定时间范围内的查询
+pt-query-digest /var/lib/mysql/slowtest-slow.log --since '2017-01-07 09:30:00' --until '2017-01-07 10:00:00' > slow_report3.log
+# 分析指含有select语句的慢查询
+pt-query-digest --filter '$event->{fingerprint} =~ m/^select/i' /var/lib/mysql/slowtest-slow.log> slow_report4.log
+# 针对某个用户的慢查询
+pt-query-digest --filter '($event->{user} || "") =~ m/^root/i' /var/lib/mysql/slowtest-slow.log> slow_report5.log
+# 查询所有所有的全表扫描或full join的慢查询
+pt-query-digest --filter '(($event->{Full_scan} || "") eq "yes") ||(($event->{Full_join} || "") eq "yes")' /var/lib/mysql/slowtest-slow.log> slow_report6.log
+```
+
+
+# 导入导出
 ```mysql based
 -- 导入文件
 -- 用navicat不能使用local关键字
@@ -35,7 +78,7 @@ mysqldump -u root -p -n -t -d -r --triggers=false database > database.sql
 log-bin-trust-function-creators=1
 ```
 
-## 常用命令
+# 常用命令
 ```mysql
 -- 修改mysql提示符
 # prompt \u@\h \d>
@@ -102,7 +145,7 @@ update table_name set field_name = replace(replace(field_name,char(10),''),char(
 reset query cache;
 ```
 
-## 日期
+# 日期
 ```mysql
 -- 当前日期和时间
 select now();
@@ -133,7 +176,7 @@ select date(concat_ws('-',year(now()),elt(quarter(now()),1,4,7,10),1));
 select last_day(makedate(year(now()),1) + interval quarter(now())*3-1 month);
 ```
 
-## 经纬度
+# 经纬度
 ```mysql
 -- 找到距离纬度:78.3232,经度:65.3234坐标0.4公里里范围内最近的20个位置
 select  
@@ -172,7 +215,7 @@ from hotels dest order by distance limit 10;
 
 ```
 
-## 事件
+# 事件
 ```mysql based
 -- 创建事件
     -- 重点人员轨迹信息,每2小时跑一次
@@ -211,7 +254,7 @@ where event_schema = 'bingo_zntszs';
 drop event test;
 ```
 
-## 分区表
+# 分区表
 ```mysql based
 -- 创建分区表
 create table partition_list(
