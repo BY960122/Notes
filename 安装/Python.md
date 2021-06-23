@@ -43,7 +43,7 @@ pip3 config set global.index-url https://mirrors.aliyun.com/pypi/simple/
 
 pip3 install --upgrade pip
 python -m pip install -i https://mirrors.aliyun.com/pypi/simple/ --upgrade pip
-pip install -i https://mirrors.aliyun.com/pypi/simple/ you-get
+pip install -i https://mirrors.aliyun.com/pypi/simple/ you-get
 
 # 查看安装包的依赖情况--离线安装时,如果有依赖需先安装底层依赖
 pip show packagename
