@@ -1,7 +1,7 @@
 # 下载 Elasticsearch
 - https://github.com/mobz/elasticsearch-head
 - https://github.com/medcl/elasticsearch-analysis-ik/
-- https://www.elastic.co/cn/downloads/past-releases/elasticsearch-7-9-1
+- https://www.elastic.co/cn/downloads/past-releases/elasticsearch-7-13-1
 
 ## 1.配置环境变量
 ```sh
@@ -9,10 +9,10 @@ echo $ELASTICSEARCH
 ```
 ## 2.创建用户
 ```sh
-tar -zvxf elasticsearch-7.9.1-linux-x86_64.tar.gz
+tar -zvxf elasticsearch-7.13.1-linux-x86_64.tar.gz
 useradd -d /home/elasticsearch -m elasticsearch
 usermod -a -G elasticsearch elasticsearch
-chown -R elasticsearch:elasticsearch /opt/software/elasticsearch-7.9.1
+chown -R elasticsearch:elasticsearch /opt/software/elasticsearch-7.13.1
 ```
 ## 3.修改配置文件
 ### /etc/sysctl.conf
@@ -44,16 +44,16 @@ http.cors.allow-origin: "*"
 # -XX:+UseConcMarkSweepGC 
 -XX:+UseG1GC 
 
-scp /opt/software/elasticsearch-7.9.1/config/* 192.168.1.202:/opt/software/elasticsearch-7.9.1/config/
-scp /opt/software/elasticsearch-7.9.1/config/* 192.168.1.203:/opt/software/elasticsearch-7.9.1/config/
+scp /opt/software/elasticsearch-7.13.1/config/* 192.168.1.202:/opt/software/elasticsearch-7.13.1/config/
+scp /opt/software/elasticsearch-7.13.1/config/* 192.168.1.203:/opt/software/elasticsearch-7.13.1/config/
 ```
 ### bin/elasticsearch-env
 ```sh
 # 看到java路径都改成
 JAVA="/opt/software/jdk-11.0.1/bin/java"
 
-scp elasticsearch-env 192.168.1.202:/opt/software/elasticsearch-7.9.1/bin/
-scp elasticsearch-env 192.168.1.203:/opt/software/elasticsearch-7.9.1/bin/
+scp elasticsearch-env 192.168.1.202:/opt/software/elasticsearch-7.13.1/bin/
+scp elasticsearch-env 192.168.1.203:/opt/software/elasticsearch-7.13.1/bin/
 ```
 ## 4.启动
 ```sh
@@ -61,7 +61,7 @@ su - elasticsearch
 # 前台启动
 bin/elasticsearch
 # 后台启动
-/opt/mysoft/elasticsearch-7.9.1/bin/elasticsearch -d
+/opt/mysoft/elasticsearch-7.13.1/bin/elasticsearch -d
 ```
 ## 5.web界面
 - http://192.168.1.201:9200

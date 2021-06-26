@@ -13,8 +13,8 @@ yum install -y gcc gcc-c++ tcl zlib zlib-devel perl libffi-devel openssl-devel o
 ```
 ## 3.编译
 ```sh
-tar zvxf Python-3.8.1.tgz -C python-3.8.1
-cd python-3.8.1
+tar zvxf Python-3.9.1.tgz -C python-3.9.1
+cd python-3.9.1
 sudo ./configure --enable-optimizations --prefix=/usr/local/python3
 sudo make && make install
 ```

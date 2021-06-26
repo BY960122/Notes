@@ -3,6 +3,13 @@
 # idea debug 日志 VM options
 -Dlog4j.debug
 ```
+
+### idea 运行问题:Command line is too long.Shorten command line
+```xml
+<!-- 修改项目下 .idea\workspace.xml，找到标签 <component name="PropertiesComponent"> -->
+<property name="dynamic.classpath" value="true" />
+```
+
 ### maven 添加jar包到本地仓库
 ```sh
 # groupId,artifactId,version 照着这格式随便填
