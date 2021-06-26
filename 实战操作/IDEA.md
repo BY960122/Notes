@@ -10,6 +10,13 @@
 <property name="dynamic.classpath" value="true" />
 ```
 
+### idea 初次提交代码到 github 报错: Can't finish GitHub sharing process,Successfully created project '--' on GitHub,but initial push failed:git@github.com: Permission denied (publickey).
+```txt
+看本地的.git/config设置的仓库url地址和github使用的链接地址是否一致,如use https,则url需要用https的仓库地址
+统一改为github的http模式,例如
+https://github.com/ByDylan-YH/srping-boot_hadoop.git
+```
+
 ### maven 添加jar包到本地仓库
 ```sh
 # groupId,artifactId,version 照着这格式随便填
@@ -335,7 +342,7 @@ log4j.logger.org.apache.spark.SparkEnv=ERROR
         </excludes>
         <!-- 这里不做举例了 -->
         <includes>
-            <include></include>
+            <include>**</include>
         </includes>
     </configuration>
 </plugin>

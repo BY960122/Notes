@@ -13,8 +13,8 @@ echo $HADOOP_HOME
 ### hadoop-env.sh
 ```sh
 export JAVA_HOME=/opt/software/jdk1.8.0_291
-export HADOOP_HOME=/opt/software/hadoop-3.2.1
-export HADOOP_CONF_DIR=/opt/software/hadoop-3.2.1/etc/hadoop
+export HADOOP_HOME=/opt/software/hadoop-3.3.1
+export HADOOP_CONF_DIR=/opt/software/hadoop-3.3.1/etc/hadoop
 export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
 export TEZ_HOME=/opt/software/tez-0.10.0
 export TEZ_CONF_DIR=/opt/software/tez-0.10.0
@@ -32,15 +32,15 @@ export CLASSPATH=$CLASSPATH:${TEZ_CONF_DIR}:${TEZ_HOME}/*:${TEZ_HOME}/lib/*
     <!-- 指定hadoop目录 -->
     <property>
         <name>hadoop.tmp.dir</name>
-        <value>/opt/software/hadoop-3.2.1/data/tmp</value>
+        <value>/opt/software/hadoop-3.3.1/data/tmp</value>
     </property>
     <property> 
         <name>dfs.namenode.name.dir</name>
-        <value>/opt/software/hadoop-3.2.1/data/name</value>
+        <value>/opt/software/hadoop-3.3.1/data/name</value>
     </property>
     <property>
         <name>dfs.dataname.data.dir</name> 
-        <value>/opt/software/hadoop-3.2.1/data</value>
+        <value>/opt/software/hadoop-3.3.1/data</value>
     </property>
     <!-- 指定zookeeper地址 -->
     <property>
@@ -104,7 +104,7 @@ export CLASSPATH=$CLASSPATH:${TEZ_CONF_DIR}:${TEZ_HOME}/*:${TEZ_HOME}/lib/*
     <!-- 指定JournalNode在本地磁盘存放数据的位置 -->
     <property>
         <name>dfs.journalnode.edits.dir</name>
-        <value>/opt/software/hadoop-3.2.1/journal</value>
+        <value>/opt/software/hadoop-3.3.1/journal</value>
     </property>
     <!-- 开启NameNode失败自动切换 -->
     <property>
@@ -221,7 +221,7 @@ export CLASSPATH=$CLASSPATH:${TEZ_CONF_DIR}:${TEZ_HOME}/*:${TEZ_HOME}/lib/*
         <value>192.168.1.201:2181,192.168.1.202:2181,192.168.1.203:2181</value>
     </property>
     <!--MapReduce运行方式：shuffle洗牌-->
-    <!-- cp /opt/software/spark-3.0.1-bin-hadoop3.2/yarn/spark-3.0.1-yarn-shuffle.jar /opt/software/hadoop-3.2.1/share/hadoop/yarn/lib/ -->
+    <!-- cp /opt/software/spark-3.0.1-bin-hadoop3.2/yarn/spark-3.0.1-yarn-shuffle.jar /opt/software/hadoop-3.3.1/share/hadoop/yarn/lib/ -->
     <property>
         <name>yarn.nodemanager.aux-services</name>
         <value>mapreduce_shuffle,spark_shuffle</value>
@@ -279,9 +279,9 @@ zkServer.sh status
 ```
 ## 8.在两个主节点上启动journalnode
 ```sh
-# 做这一步之前先删除所有节点/opt/software/hadoop-3.2.1/data目录,然后再创建一个文件夹,确保一致
-rm -rf /opt/software/hadoop-3.2.1/journal
-rm -rf /opt/software/hadoop-3.2.1/data
+# 做这一步之前先删除所有节点/opt/software/hadoop-3.3.1/data目录,然后再创建一个文件夹,确保一致
+rm -rf /opt/software/hadoop-3.3.1/journal
+rm -rf /opt/software/hadoop-3.3.1/data
     # hadoop-2.*
 hadoop-daemon.sh start journalnode
     # hadoop-3.*
@@ -290,9 +290,9 @@ hdfs --daemon start journalnode
 ## 9.在一台主节点格式化 HDFS
 ```sh
 hdfs namenode -format
-# INFO common.Storage: Storage directory /opt/software/hadoop-3.2.1/data/dfs/name has been successfully formatted.
-scp -r /opt/software/hadoop-3.2.1/data 192.168.1.202:/opt/software/hadoop-3.2.1/
-scp -r /opt/software/hadoop-3.2.1/data 192.168.1.203:/opt/software/hadoop-3.2.1/
+# INFO common.Storage: Storage directory /opt/software/hadoop-3.3.1/data/dfs/name has been successfully formatted.
+scp -r /opt/software/hadoop-3.3.1/data 192.168.1.202:/opt/software/hadoop-3.3.1/
+scp -r /opt/software/hadoop-3.3.1/data 192.168.1.203:/opt/software/hadoop-3.3.1/
 ```
 ## 10.格式化 Zookeeper
 ```sh
@@ -332,4 +332,8 @@ yarn application -kill application_1600865572447_0003
 ### Call From by201/192.168.1.201 to by201:8485 failed on connection exception
 ```sh
 hdfs --daemon start journalnode
+```
+### hadoop启动报错: java.lang.NoClassDefFoundError:/org/apache/hadoop/yarn/server/timelineCollectorManager
+```txt
+将hadoop-yarn-server-timelineservice-3.3.1.jar,放到share\hadoop\yarn\lib下
 ```

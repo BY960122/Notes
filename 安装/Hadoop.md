@@ -13,7 +13,7 @@ echo $HADOOP_HOME
 ### hadoop-env.sh 
 ```sh
 export JAVA_HOME=/opt/software/jdk1.8.0_291
-export HADOOP_HOME=/opt/software/hadoop-3.2.1
+export HADOOP_HOME=/opt/software/hadoop-3.3.1
 export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
 # export TEZ_HOME=/opt/software/tez-0.10.1
 ```
@@ -48,15 +48,15 @@ export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
 <!-- 指定hadoop目录 -->
 <property>
         <name>hadoop.tmp.dir</name>
-        <value>/opt/software/hadoop-3.2.1/data/tmp</value>
+        <value>/opt/software/hadoop-3.3.1/data/tmp</value>
 </property>
 <property> 
         <name>dfs.namenode.name.dir</name>
-        <value>/opt/software/hadoop-3.2.1/data/name</value>
+        <value>/opt/software/hadoop-3.3.1/data/name</value>
 </property>
 <property>
         <name>dfs.dataname.data.dir</name> 
-        <value>/opt/software/hadoop-3.2.1/data</value>
+        <value>/opt/software/hadoop-3.3.1/data</value>
 </property>
 <!-- 这样可以远程登录Hive -->
 <property>
@@ -157,12 +157,12 @@ by203
 ```sh
 hdfs namenode -format
 
-scp -r /opt/software/hadoop-3.2.1/ 192.168.1.202:/opt/software/hadoop-3.2.1/
-scp -r /opt/software/hadoop-3.2.1/ 192.168.1.203:/opt/software/hadoop-3.2.1/
+scp -r /opt/software/hadoop-3.3.1/ 192.168.1.202:/opt/software/hadoop-3.3.1/
+scp -r /opt/software/hadoop-3.3.1/ 192.168.1.203:/opt/software/hadoop-3.3.1/
 ```
 ## 8.主节点启动
 ```sh
-sh /opt/software/hadoop-3.2.1/sbin/start-all.sh
+sh /opt/software/hadoop-3.3.1/sbin/start-all.sh
 ```
 ## 9.验证hadoop服务是否正常启动：打印HDFS的报告
 ```sh
@@ -171,7 +171,7 @@ hdfs dfsadmin -report
 ## 10.测试.随便写一个文本上传
 ```sh
 hdfs dfs -put /home/test.txt /data/
-hadoop jar /opt/software/hadoop-3.2.1/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.2.1.jar wordcount /data/test.txt /out/test1
+hadoop jar /opt/software/hadoop-3.3.1/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.1.jar wordcount /data/test.txt /out/test1
 ```
 ## 11.一些参考信息
 ### HDFS管理界面 
