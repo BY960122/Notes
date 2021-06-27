@@ -1,5 +1,7 @@
 ## 1.下载 Redis
-- https://github.com/MSOpenTech/redis/releases
+- https://download.redis.io/releases
+- windows 请用下面的网址
+- https://github.com/MicrosoftArchive/redis/releases
 
 # Windows安装
 ## 1.配置环境变量
@@ -8,7 +10,7 @@ echo $REDIS_HOME
 ```
 ## 2.进入安装目录.注册成服务
 ```sh
-redis-server.exe --service-install redis.windows.conf 
+redis-server.exe --service-install redis.windows.conf 
 ```
 ## 3.启动
 ```sh
@@ -39,7 +41,7 @@ make && make install
 # redis.conf
 # 修改以下9个地方
 
-bind 192.168.0.212
+bind 192.168.1.212
 port 6379
 maxmemory 536870912
 dbfilename dump.rdb
@@ -49,7 +51,7 @@ requirepass xf_server
 cluster-enabled yes
 cluster-config-file nodes-6379.conf
 
-bind 192.168.0.212
+bind 192.168.1.212
 port 6380
 maxmemory 536870912
 dbfilename dump_back.rdb
@@ -98,7 +100,7 @@ auth "cqdsjb"
 ```
 ## 9.连接集群验证
 ```sh
-./src/redis-cli -h 192.168.0.201 -p 6379 -a xf_server -c 
+./src/redis-cli -h 192.168.1.201 -p 6379 -a xf_server -c 
 
 # 查看集群管理命令
 redis-cli --cluster help
@@ -162,12 +164,12 @@ ps aux | grep redis-live
 ```
 ## 7.浏览器地址
 ```http
-http://192.168.0.201:8082/index.html
+http://192.168.1.201:8082/index.html
 ```
 ## 8.压力测试
 ```sh
 cd /opt/software/redis-5.0.4/src/
-./redis-benchmark -h 192.168.0.201 -p 6379 -a xf_server -n 1000 -c 20
+./redis-benchmark -h 192.168.1.201 -p 6379 -a xf_server -n 1000 -c 20
 ```
 
 # 一些报错信息
@@ -183,12 +185,12 @@ redis-cli --cluster check 192.168.1.101:6379 -a cqdsjb
 # 修复
 redis-cli --cluster fix 192.168.1.101:6379 -a cqdsjb
 ```
-## [ERR] Node 192.168.0.201:6379 is not empty.Either the node already knows other nodes
+## [ERR] Node 192.168.1.201:6379 is not empty.Either the node already knows other nodes
 ```sh
 # 原因:创建集群后写入了数据;集群已经创建好了.已经是集群模式就不用再创建
 	# 解决办法:
 # 如果有数据
-./src/redis-cli -h 192.168.0.201 -p 6379 -a xf_server -c 
+./src/redis-cli -h 192.168.1.201 -p 6379 -a xf_server -c 
 >keys *
 >flushall	
 # 如果还有数据,直接删除以下2个文件
