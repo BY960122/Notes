@@ -1,6 +1,9 @@
-# Window 单机版
+# Hadoop Window 单机版
+
+- winutils下载: https://github.com/kontext-tech/winutils
 
 ## 1.配置环境变量 HADOOP_HOME,验证 hadoop version
+> 最新版已支持 java 11
 
 ## 2.修改配置文件
 
@@ -15,7 +18,14 @@
         <name>hadoop.tmp.dir</name>
         <value>file:/D:/Mysoft/Hadoop-3.3.1/tmp</value>
         <final>true</final>
-        <description>A base for other temporary directories.</description>
+    </property>
+    <property>
+        <name>hadoop.proxyuser.root.groups</name>
+        <value>*</value>
+    </property>
+    <property>
+        <name>hadoop.proxyuser.root.hosts</name>
+        <value>*</value>
     </property>
 </configration>
 ```
@@ -23,6 +33,10 @@
 ### hdfs-site.xml
 ```xml
 <configration>
+    <property>
+        <name>dfs.namenode.http-address</name>
+        <value>127.0.0.1:50070</value>
+    </property>
     <property>
         <name>dfs.replication</name>
         <value>1</value>
@@ -36,8 +50,8 @@
         <value>file:/D:/Mysoft/Hadoop-3.3.1/data/</value>
     </property>
     <property>
-        <name>dfs.namenode.http-address</name>
-        <value>127.0.0.1:50070</value>
+        <name>dfs.permissions.enabled</name>
+        <value>false</value>
     </property>
 </configration>
 ```
