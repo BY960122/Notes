@@ -3,13 +3,22 @@
 - winutils下载: https://github.com/kontext-tech/winutils
 
 ## 1.配置环境变量 HADOOP_HOME,验证 hadoop version
-> 最新版已支持 java 11
+> hadoop 3.3.1 已支持 java 11
 
-## 2.修改配置文件
+# 2.修改配置文件
 
 ### core-site.xml
 ```xml
 <configration>
+    <!-- 这里配完进 50070端口查看是不是,可能显示为8020,那就用8020 -->
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://localhost:9000</value>
+    </property>
+    <property>
+        <name>ha.zookeeper.quorum</name>
+        <value>localhost:2181</value>
+    </property>
     <property>
         <name>fs.defaultFS</name>
         <value>hdfs://localhost:8020</value>

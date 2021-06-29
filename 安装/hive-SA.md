@@ -1,6 +1,6 @@
 # Hive Windows 单机版
 
-## 1.安装好 windows hadoop单机版
+## 1.安装好 windows hadoop单机版,配置环境变量 HIVE_HOME
 > 最新版不支持 java 11
 
 ## 2.新建hdfs目录
@@ -15,10 +15,10 @@ hdfs dfs -chmod -R 777 /user/hive/warehouse
 
 ## 4.修改配置文件
 ### hive-env.sh
-```xml
+```sh
 export HADOOP_HOME=D:\Mysoft\Hadoop-3.3.1
-export HIVE_CONF_DIR=D:\Mysoft\apache-hive-3.1.1-bin\conf
-export HIVE_AUX_JARS_PATH=D:\Mysoft\apache-hive-3.1.1-bin\lib
+export HIVE_CONF_DIR=D:\Mysoft\apache-hive-3.1.1\conf
+export HIVE_AUX_JARS_PATH=D:\Mysoft\apache-hive-3.1.1\lib
 ```
 
 ### hive-site.xml, 如果是hive-default.xml,请改过来
@@ -54,19 +54,19 @@ export HIVE_AUX_JARS_PATH=D:\Mysoft\apache-hive-3.1.1-bin\lib
     </property>
     <property>
         <name>hive.exec.local.scratchdir</name>
-        <value>D:\Mysoft\apache-hive-3.1.1-bin\data\operationDir</value>
+        <value>D:\Mysoft\apache-hive-3.1.1\data\operationDir</value>
     </property>
     <property>
         <name>hive.downloaded.resources.dir</name>
-        <value>D:\Mysoft\apache-hive-3.1.1-bin\data\resourcesDir</value>
+        <value>D:\Mysoft\apache-hive-3.1.1\data\resourcesDir</value>
     </property>
     <property>
         <name>hive.querylog.location</name>
-        <value>D:\Mysoft\apache-hive-3.1.1-bin\data\querylogDir</value>
+        <value>D:\Mysoft\apache-hive-3.1.1\data\querylogDir</value>
     </property>
     <property>
         <name>hive.server2.logging.operation.log.location</name>
-        <value>D:\Mysoft\apache-hive-3.1.1-bin\data\operationDir</value>
+        <value>D:\Mysoft\apache-hive-3.1.1\data\operationDir</value>
     </property>
 </configuration>
 ```
@@ -80,7 +80,7 @@ export HIVE_AUX_JARS_PATH=D:\Mysoft\apache-hive-3.1.1-bin\lib
 hive.cmd --service schematool -dbType mysql -initSchema
 ```
 
-## 6.连接 hive
+## 6.管理员启动 cmd, 连接 hive
 ```sh
 # 普通连接
 hive.cmd
