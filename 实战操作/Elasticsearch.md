@@ -86,7 +86,7 @@ POST localhost:9200/index_name/_doc/_delete_by_query?refresh&slices=5&pretty
   }
 }
 
-### 新建索引并设置字段映射
+### 新建索引并设置字段映射,text默认会做keyword类型映射,字段本身作为text查询,字段.keyword会做精确匹配
 PUT localhost:9200/new_index_name
 Content-Type: application/json
 
@@ -97,7 +97,7 @@ Content-Type: application/json
         "type": "float"
       },
       "field_2": {
-        "type": "text"
+        "type": "double"
       },
       "field_3": {
         "type": "text",
@@ -107,7 +107,10 @@ Content-Type: application/json
             "ignore_above": 256
           }
         }
-      }
+      },
+      "field_4": {
+        "type": "integer"
+      },
     }
   }
 }
