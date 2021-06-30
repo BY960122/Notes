@@ -15,7 +15,7 @@ echo $HADOOP_HOME
 export JAVA_HOME=/opt/software/jdk1.8.0_291
 export HADOOP_HOME=/opt/software/hadoop-3.3.1
 export HADOOP_CONF_DIR=/opt/software/hadoop-3.3.1/etc/hadoop
-export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
+export HIVE_HOME=/opt/software/apache-hive-3.1.1
 export TEZ_HOME=/opt/software/tez-0.10.0
 export TEZ_CONF_DIR=/opt/software/tez-0.10.0
 export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:${TEZ_CONF_DIR}:${TEZ_HOME}/*:${TEZ_HOME}/lib/*

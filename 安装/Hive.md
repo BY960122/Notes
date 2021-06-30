@@ -10,7 +10,7 @@ echo $HIVE_HOME
 ### hive-env.sh
 ```sh
 export JAVA_HOME=/opt/software/jdk1.8.0_291
-export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
+export HIVE_HOME=/opt/software/apache-hive-3.1.1
 export HADOOP_HOME=/opt/software/hadoop-3.2.1
 ```
 ### hive-site.xml
@@ -97,7 +97,7 @@ export HADOOP_HOME=/opt/software/hadoop-3.2.1
 ```
 ## 4.初始化 hive
 ```sh
-sh /opt/software/apache-hive-3.1.1-bin/bin/schematool -dbType mysql -initSchema
+sh /opt/software/apache-hive-3.1.1/bin/schematool -dbType mysql -initSchema
 ```
 ## 5.HIVE 整合 Spark
 ```http
@@ -120,10 +120,10 @@ https://cwiki.apache.org/confluence/display/Hive/Hive+on+Spark%3A+Getting+Starte
 </property>
 ```
 ```sh
-scp /opt/software/apache-hive-3.1.1-bin/conf/hive-site.xml 192.168.1.202:/opt/software/apache-hive-3.1.1-bin/conf/
-scp /opt/software/apache-hive-3.1.1-bin/conf/hive-site.xml 192.168.1.203:/opt/software/apache-hive-3.1.1-bin/conf/
-scp /opt/software/apache-hive-3.1.1-bin/conf/hive-site.xml 192.168.1.202:/opt/software/spark-3.0.0-bin-hadoop3.2/conf/
-scp /opt/software/apache-hive-3.1.1-bin/conf/hive-site.xml 192.168.1.203:/opt/software/spark-3.0.0-bin-hadoop3.2/conf/
+scp /opt/software/apache-hive-3.1.1/conf/hive-site.xml 192.168.1.202:/opt/software/apache-hive-3.1.1/conf/
+scp /opt/software/apache-hive-3.1.1/conf/hive-site.xml 192.168.1.203:/opt/software/apache-hive-3.1.1/conf/
+scp /opt/software/apache-hive-3.1.1/conf/hive-site.xml 192.168.1.202:/opt/software/spark-3.0.0-bin-hadoop3.2/conf/
+scp /opt/software/apache-hive-3.1.1/conf/hive-site.xml 192.168.1.203:/opt/software/spark-3.0.0-bin-hadoop3.2/conf/
 ```
 ```hiveql
 -- 在hive创建外部表印射hbase
@@ -212,11 +212,11 @@ hadoop fs -put /opt/software/tez-0.10.0.tar.gz /tez
 </configuration>
 ```
 ```sh
-cp /opt/software/hadoop-3.2.1/etc/hadoop/tez-site.xml /opt/software/apache-hive-3.1.1-bin/conf/
+cp /opt/software/hadoop-3.2.1/etc/hadoop/tez-site.xml /opt/software/apache-hive-3.1.1/conf/
 scp /opt/software/hadoop-3.2.1/etc/hadoop/tez-site.xml 192.168.1.202:/opt/software/hadoop-3.2.1/etc/hadoop/
 scp /opt/software/hadoop-3.2.1/etc/hadoop/tez-site.xml 192.168.1.203:/opt/software/hadoop-3.2.1/etc/hadoop/
-scp /opt/software/hadoop-3.2.1/etc/hadoop/tez-site.xml 192.168.1.202:/opt/software/apache-hive-3.1.1-bin/conf/
-scp /opt/software/hadoop-3.2.1/etc/hadoop/tez-site.xml 192.168.1.203:/opt/software/apache-hive-3.1.1-bin/conf/
+scp /opt/software/hadoop-3.2.1/etc/hadoop/tez-site.xml 192.168.1.202:/opt/software/apache-hive-3.1.1/conf/
+scp /opt/software/hadoop-3.2.1/etc/hadoop/tez-site.xml 192.168.1.203:/opt/software/apache-hive-3.1.1/conf/
 ```
 ### (8).配置配置
 #### hive-site.xml
@@ -253,7 +253,7 @@ hiveserver2 start
 beeline -u jdbc:hive2://192.168.1.201:10000 -n root -p By921644606
 
 set hive.execution.engine=spark;
-set spark.driver.extraClassPath=/opt/software/apache-hive-3.1.1-bin/lib/hive-exec-3.1.2.jar;
+set spark.driver.extraClassPath=/opt/software/apache-hive-3.1.1/lib/hive-exec-3.1.2.jar;
 ```
 ## 9.测试
 ```hiveql
@@ -266,7 +266,7 @@ select row_number() over (partition by 1 order by id) from test_hive limit 7,7;
 ### java.lang.NoSuchMethodError: com.google.common.base.Preconditions.checkArgument(ZLjava/lang/String;Ljava/lang/Object;)V
 ```sh
 # guava 版本过低,用 Hadoop 的
-rm -rf /opt/software/apache-hive-3.1.1-bin/lib/guava-19.0.jar
+rm -rf /opt/software/apache-hive-3.1.1/lib/guava-19.0.jar
 ```
 ### java.lang.NoClassDefFoundError：org.apache.hadoop.hive.conf.HiveVariableSource
 ```sh
@@ -279,11 +279,11 @@ rm -rf /opt/software/apache-hive-3.1.1-bin/lib/guava-19.0.jar
 ```
 ### Caused by: java.lang.ClassNotFoundException: org.apache.spark.SparkConf
 ```sh
-scp /opt/software/spark-3.0.1-bin-hadoop3.2/jars/scala* /opt/software/apache-hive-3.1.1-bin/lib/
-scp /opt/software/spark-3.0.1-bin-hadoop3.2/jars/spark* /opt/software/apache-hive-3.1.1-bin/lib/
+scp /opt/software/spark-3.0.1-bin-hadoop3.2/jars/scala* /opt/software/apache-hive-3.1.1/lib/
+scp /opt/software/spark-3.0.1-bin-hadoop3.2/jars/spark* /opt/software/apache-hive-3.1.1/lib/
 ```
 ### ERROR:Unable to instantiate org.apache.hadoop.hive.ql.metadata.SessionHiveMetaStoreClient
 ```sh
 # 检查元数据库是否启动并可以连接
-sh /opt/software/apache-hive-3.1.1-bin/bin/schematool -initSchema -dbType mysql
+sh /opt/software/apache-hive-3.1.1/bin/schematool -initSchema -dbType mysql
 ```

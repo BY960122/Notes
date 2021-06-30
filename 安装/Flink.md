@@ -29,7 +29,7 @@ historyserver.web.port: 8084
 ```
 ### zoo.cfg
 ```sh
-cp /opt/software/apache-zookeeper-3.6.1-bin/conf/zoo.cfg /opt/software/flink-1.13.1/conf/
+cp /opt/software/apache-zookeeper-3.6.1/conf/zoo.cfg /opt/software/flink-1.13.1/conf/
 
 scp -r /opt/software/flink-1.13.1/conf/ 192.168.1.202:/opt/software/flink-1.13.1/conf/
 scp -r /opt/software/flink-1.13.1/conf/ 192.168.1.203:/opt/software/flink-1.13.1/conf/

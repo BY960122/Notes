@@ -32,7 +32,7 @@ echo $REDIS_HOME
 ## 3.编译
 ```sh
 sudo yum install -y tcl,ruby
-cd redis-5.0.4
+cd redis-6.2.1
 make && make install
 ```
 ## 4.修改配置文件,每个节点2个,不同的节点只需要修改ip
@@ -95,7 +95,7 @@ auth "cqdsjb"
 # [OK] All 16384 slots covered.
 
 # 如果集群已经创建成功
-# /opt/software/redis-5.0.4/ 会有2个文件
+# /opt/software/redis-6.2.1/ 会有2个文件
 # nodes-6379.conf nodes-6380.conf
 ```
 ## 9.连接集群验证
@@ -168,7 +168,7 @@ http://192.168.1.201:8082/index.html
 ```
 ## 8.压力测试
 ```sh
-cd /opt/software/redis-5.0.4/src/
+cd /opt/software/redis-6.2.1/src/
 ./redis-benchmark -h 192.168.1.201 -p 6379 -a xf_server -n 1000 -c 20
 ```
 

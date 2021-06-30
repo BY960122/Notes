@@ -14,7 +14,7 @@ echo $HADOOP_HOME
 ```sh
 export JAVA_HOME=/opt/software/jdk1.8.0_291
 export HADOOP_HOME=/opt/software/hadoop-3.3.1
-export HIVE_HOME=/opt/software/apache-hive-3.1.1-bin
+export HIVE_HOME=/opt/software/apache-hive-3.1.1
 # export TEZ_HOME=/opt/software/tez-0.10.1
 ```
 ### hdfs-site.xml
