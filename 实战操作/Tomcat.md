@@ -7,7 +7,7 @@ sh /opt/software/apache-tomcat-9.0.41/bin/startup.sh
 
 ## Tomcat windows 启动或 idea 启动控制台乱码
 
-> 修改 conf\logging.properties 所有 encoding 为 GBK 项试试
+> 修改 conf\logging.properties 所有 encoding 项为 GBK 试试
 
 ## Tomcat 修改为 https
 
