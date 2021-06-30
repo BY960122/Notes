@@ -12,6 +12,7 @@
 - [Hadoop-SA.md](./安装/Hadoop-HS.md)
 - [Hadoop.md](./安装/Hadoop.md)
 - [HBase.md](./安装/HBase.md)
+- [HBase-SA.md](./安装/HBase-SA.md)
 - [Hive.md](./安装/Hive.md)
 - [Hive-SA.md](./安装/Hive-SA.md)
 - [Linux.md](./安装/Linux.md)
