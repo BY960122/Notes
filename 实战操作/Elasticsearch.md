@@ -42,8 +42,8 @@ curl -XGET localhost:9200/_cat/indices?v
 
 - 查询多条文档: https://wiki.jikexueyuan.com/project/elasticsearch-definitive-guide-cn/030_Data/50_Mget.html
 
-# 查询字段类型
-curl -XGET localhost:9200/index_name/_doc/_mapping
+# 查询索引字段类型映射
+curl -XGET localhost:9200/index_name/_mapping?pretty
 
 # 检查索引是否存在
 curl -i -XHEAD localhost:9200/index_name/_doc/123
