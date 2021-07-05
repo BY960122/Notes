@@ -16,7 +16,7 @@ sh /opt/software/apache-tomcat-9.0.41/bin/startup.sh
 # windows 
 keytool.exe -genkeypair -alias "tomcat" -keyalg "RSA" -keystore "D:\Mysoft\apache-tomcat-9.0.41\tomcat.keystore" 
 # linux
-keytool -genkeypair -alias "tomcat" -keyalg "RSA" -keystore /opt/software/apache-tomcat-9.0.41/tomcat.keystore"
+keytool -genkeypair -alias "tomcat" -keyalg "RSA" -keystore /opt/software/apache-tomcat-9.0.41/tomcat.keystore
 
 # 输入 密钥口令: By9216446o6 , 名字与姓氏: BYDylan 即可,其它直接回车,最后确认输入 y
 ```
