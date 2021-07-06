@@ -11,12 +11,12 @@ jps | grep -e SupportedKafka | awk '{print $1}' | xargs kill -9
 
 ## 生产者吞吐量测试
 ```sh
-bin/kafka-producer-perf-test.sh --num-records 100000 --topic test --producer-props bootstrap.servers=192.168.0.201:9092,192.168.0.212:9092,192.168.0.211:9092 --throughput 5000 --record-size 102400
+bin/kafka-producer-perf-test.sh --num-records 100000 --topic test --producer-props bootstrap.servers=192.168.1.201:9092,192.168.1.203:9092,192.168.1.202:9092 --throughput 5000 --record-size 102400
 ```
 
 ## 消费者吞吐量测试
 ```sh
-/bin/kafka-consumer-perf-test.sh --topoc test --messages 100000 --num-fetch-threads 10 --threads 10 --broker-list 192.168.0.201:9092,192.168.0.212:9092,192.168.0.211:9092 --group perf-consumer-30108
+/bin/kafka-consumer-perf-test.sh --topoc test --messages 100000 --num-fetch-threads 10 --threads 10 --broker-list 192.168.1.201:9092,192.168.1.203:9092,192.168.1.202:9092 --group perf-consumer-30108
 ```
 
 ## Topic
@@ -97,7 +97,7 @@ import time
 
 from kafka import KafkaProducer
 
-producer = KafkaProducer(bootstarp_servers=["192.168.0.201:9092","192.168.0.211:9092","192.168.0.212:9092"],
+producer = KafkaProducer(bootstarp_servers=["192.168.1.201:9092","192.168.1.202:9092","192.168.1.203:9092"],
                     retries=5,acks=1)
                             (几个副本发送确认信息)
 for number in range(10):
@@ -111,7 +111,7 @@ for number in range(10):
 ```py
 from Kafka import KafkaConsumer
  // group_id指定了所属群组,如果多个消费者进程同属一个群组,他们之间不会出现重复数据
-consumer = KafkaConsumer("test",bootstarp_server=["192.168.0.201:9092","192.168.0.211:9092","192.168.0.212:9092"],
+consumer = KafkaConsumer("test",bootstarp_server=["192.168.1.201:9092","192.168.1.202:9092","192.168.1.203:9092"],
             group_id="BY")
 
 for message in consumer:
