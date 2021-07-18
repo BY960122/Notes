@@ -21,7 +21,7 @@ docker run
 # --name='容器名字'
 # -d 后台运行
 # -it 交互方式运行
-# -v 主机目录:容器目录,它俩相互同步
+# -v 主机目录:容器目录,它俩相互同步,docker 删了数据不会丢 
 # -p 端口 主机端口:容器端口 ip:主机端口:容器端口
 # -P 随机端口
 # --rm 用完就删,一般用于测试
@@ -29,6 +29,8 @@ docker run -it centos /bin/bash
 docker run -d --name nginx01 -p 3344:80 nginx
 # es 启动很占内存,这样启动
 docker run -d --name elasticsearch -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -e ES_JAVA_OPTS="-Xms64m -Xmx512m" elasticsearch:7.6.2
+# mysql 设置挂载盘
+docker run -d -p:3310:3306 -v /home/mysql/conf:/etc/mysql/conf.d -v /home/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=By9216446o6 --name mysql-docker mysql:5.7
 
 # 列出所有运行的容器
 docker ps 
