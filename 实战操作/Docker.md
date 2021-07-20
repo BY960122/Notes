@@ -125,7 +125,7 @@ docker commit -m="描述信息" -a="作者" 容器id 目标镜像名:version
 # COPY 类似ADD,将文件拷贝进镜像
 # ENY 构建的时候设置环境变量
 
-# 示例:创建一个自定义centos,名字一般命令为默认的 Dockerfile ,好处是可以不用加 -f 参数
+# 示例1:创建一个自定义centos,名字一般命令为默认的 Dockerfile ,好处是可以不用加 -f 参数
 FROM centos
 MAINTAINER BYDylan<921644606@qq.com>
 
@@ -161,4 +161,65 @@ docker run -it 镜像名对应的image_id /bin/bash
 
 # 查看镜像的构建过程
 docker history 镜像id
+
+# 示例2:springboot微服务发布
+FROM java:8
+
+COPY *.JAR /app.jar 
+
+CMD ["--server.port=8080"]
+
+EXPOSE 8080
+
+ENTRYPOINT ["java","-jar","/app.jar"]
+
+# 打包
+docker build -t 容器名 .
+
+# 启动
+docker run -d -P --name *** 容器名
+```
+
+## 发布镜像
+```sh
+# 登录
+docker login -u 921644606
+
+# 发布,一定要带版本号
+docker push 921644606/容器名:版本号
+
+# 可以定义下版本号
+docker tag 容器id 921644606/容器名:版本号
+```
+
+## 网络实战,搭建 Redis 集群
+```sh
+# 1.创建网络
+docker network create redis --subnet 192.168.1.0/16
+# docker network ls
+
+# 2.shell 脚本创建集群
+for port in ${seg 1 6};
+do 
+	mkdir -p/mydata/redis/node-${port}/conf 
+	touch /opt/software/redis/node-${port}/conf/redis.conf 
+	cat < EOF >/opt/software/redis/node-${port}/conf/redis.conf 
+	port 6379
+	bind 0.0.0.0
+	cluster-enabled yes 
+	cluster-config-file nodes conf 
+	cluster-node-timeout 5000
+	cluster-announce-ip 172.38.0.1${port}
+	cluster-announce-port 6379
+	cluster-announce-bus-port 16379
+	appendon ly yes done
+	EOF
+done
+
+# 3.启动6个,例如
+docker run -p 6371:6379 -p 16371:16379 --name redis-1 -v /opt/software/redis/node-1/data:/data -v /opt/software/redis/node-1/conf:/etc/redis/redis.conf \
+-d --net redis --ip 192.168.1.1 redis:6.3.1 redis-server /etc/redis/redis.conf
+
+# 4.创建集群
+redis-cli --cluster create 192.168.1.1:6379 192.168.1.2:6379 192.168.1.3:6379 192.168.1.4:6379 192.168.1.5:6379 192.168.1.6:6379 --cluster-replicas 1
 ```
