@@ -1,3 +1,9 @@
+# spark 和 flink 的区别
+
+# rdd
+
+# 表优化
+
 # 数据倾斜的解决思路
 ## 1、通过 Spark Web UI
 ```txt
