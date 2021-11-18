@@ -58,7 +58,7 @@
 > 4.三者都有partition的概念
 > 5.三者有许多共同的函数,如filter,排序等
 > 6.在对DataFrame和Dataset进行操作许多操作都需要这个包进行支持,import spark.implicits._
-> 7.DataFrame和Dataset均可使用模式匹配获取各个字段的值和类型
+> 7.DataFrame 和 Dataset 均可使用模式匹配获取各个字段的值和类型
 
 ## 不同点
 > 1.RDD不支持sparksql操作
@@ -107,9 +107,6 @@
 > 9.使用高性能算子,使用filter之后进行coalesce操作,手动减少RDD的partition数量
 > 10.使用高性能算子,使用 repartitionAndSortWithinPartitions 替代 repartition 与 sort 类操作
 > 11.使用序列化,Spark支持使用Kryo序列化机制。Kryo序列化机制，比默认的Java序列化机制，速度要快，序列化后的数据要更小，大概是Java序列化机制的1/10。所以Kryo序列化优化以后，可以让网络传输的数据变少；在集群中耗费的内存资源大大减少。注册要序列化的自定义类型。
-
-
-
 
 ## 数据倾斜的解决思路
 ### 1、通过 Spark Web UI

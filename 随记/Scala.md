@@ -1,3 +1,9 @@
+# 伴生类和伴生对象
+> 定义的 class 与 object 必须在同一个文件内,并且同名,object 这个被称为伴生对象,class被称为伴生类
+> 它主要是为了实现类似于java 中一个类既存在实例成员,又存在静态成员的功能,说白了就是弥补没有static关键字的缺陷
+> class 里面实现实例成员,object 里面实现静态成员
+> 它们可以相互访问对方的private 内容
+
 # 模式匹配
 ## 模式匹配相比于 Java Switch 的优势
 > Scala的match表达式可以计算出一个值,而Java的switch却不能
