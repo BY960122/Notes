@@ -4,6 +4,12 @@
 > 批处理的特点是: 有界、持久、大量,非常适合需要访问全套记录才能完成的计算工作,一般用于离线统计。
 > 流处理的特点是: 无界、实时, 无需针对整个数据集执行操作,而是对通过系统传输的每个数据项执行操作,一般用于实时统计。
 
+# Flink 运行时组件
+> 资源管理器(ResourceManager): 主要负责管理任务管理器(TaskManager)的插槽(slot),负责任务的分配和管理
+> 作业管理器(JobManager): 每个应用程序都会被一个不同的 JobManager 所控制执行,它包含作业图(JobGraph)、逻辑数据流图(logical dataflow graph),会把 JobGraph 转换成 执行图(ExecutionGraph),然后向资源管理器(ResourceManager)请求执行任务必要的资源,也就是任务管理器(TaskManager)上的插槽(slot)
+> 任务管理器(TaskManager): 具体的工作进程,会有多个,每一个都有N个slot
+> 分发器(Dispatcher): 可以跨作业运行,它为应用提交提供了 REST 接口。当一个应用被提交执行时,分发器就会启动并将应用移交给一个 JobManager。
+
 # Flink 分层
 > ProcessFunction: 可以访问事件的时间戳信息和水位线信息,都继承自 RichFunction 接口,所以都有 open()、close()和 getRuntimeContext()等方法
 - ProcessFunction
@@ -25,11 +31,19 @@
 > ExecutionGraph 是 JobGraph 的并行化版本,是调度层最核心的数据结构。
 > 物理执行图: JobManager 根据 ExecutionGraph 对 Job 进行调度后,在各个TaskManager 上部署 Task 后形成的图,并不是一个具体的数据结构。
 
-# Flink 运行时组件
-> 资源管理器(ResourceManager): 主要负责管理任务管理器(TaskManager)的插槽(slot),负责任务的分配和管理
-> 作业管理器(JobManager): 每个应用程序都会被一个不同的 JobManager 所控制执行,它包含作业图(JobGraph)、逻辑数据流图(logical dataflow graph),会把 JobGraph 转换成 执行图(ExecutionGraph),然后向资源管理器(ResourceManager)请求执行任务必要的资源,也就是任务管理器(TaskManager)上的插槽(slot)
-> 任务管理器(TaskManager): 具体的工作进程,会有多个,每一个都有N个slot
-> 分发器(Dispatcher): 可以跨作业运行,它为应用提交提供了 REST 接口。当一个应用被提交执行时,分发器就会启动并将应用移交给一个 JobManager。
+# Flink 算子链
+> Flink会在生成 JobGraph 阶段,将代码中可以优化的算子优化成一个算子链(Operator Chains)以放到一个task（一个线程）中执行
+> 算子链机制的好处: 在一起的 sub-task 都会在同一个线程(TaskManager 的 slot)中执行,能够减少不必要的数据交换、序列化和上下文切换,从而提高作业的执行效率
+
+# Flink 并行度
+> 一个数据流的并行度可以认为是其所有算子中最大的并行度
+> slot 是 TaskManager 资源的最小单元,最大并行度的那个算子,决定了需要多少个 slot
+> slot 是指 TaskManager 的最大并发能力,slot 只对内存隔离,对 cpu 不隔离
+> 并行度顺序: 算子设置的并行度 > env 设置的并行度 > WebUI > 配置文件默认的并行度
+- 全局环境: env.setParallelism(10)
+- source: env.addSource(...).setParallelism(3),kafka topic 有3个分区,设置并行度3,同时消费3个并行度
+- 算子: .map(...).setParallelism(5)
+- 输出 sink: sum.print().setParallelism(1)
 
 # Flink 任务提交流程
 > 1.client 向 hdfs 提交jar包和配置,之后向Yarn ResourceManager 提交任务

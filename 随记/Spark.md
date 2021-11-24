@@ -28,7 +28,7 @@
 > Driver不一定在本地机器上运行
 
 # SparkShuffle
-> 主要是有shuffle类算子,比如: reduceByKey,join,distinct,repartions
+> 主要是有shuffle类算子,比如: reduceByKey,GroupByKey,sortByKey,join,distinct,repartions
 > Spark Shuffle分为 map 阶段和 reduce 阶段,或者称之为 ShuffleRead 阶段和 ShuffleWrite 阶段
 > 输入时又文件的 split 个数对应 rdd 的 partition 个数,也就是 map 数量
 > 经过一系列算子重新分区后,map 端的最后一个分区数对应的就是 reduce 数量,如果设置了spark.default.parallelism,那reduce按这个来
@@ -42,6 +42,10 @@
 ## 算子
 > transformations,它是用来将RDD进行转化,构建RDD的血缘关系,比如:groupby,map,join,union,distinct,zip,combinerbykey
 > actions,它是用来触发RDD的计算,得到RDD的相关计算结果或者将RDD保存的文件系统中,比如:take,collect,first,reduce,checkpoint
+
+## Spark 宽窄依赖
+> 宽依赖: 父RDD的分区数据划分到子RDD的多个分区,表名有 shuffle 算子,比如: reduceByKey,GroupByKey,sortByKey,join,distinct,repartions
+> 窄依赖: 父RDD的每个分区的数据直接到子RDD的对应一个分区,没有 shuffle 过程
 
 # SparkSql
 ## DataFrame
