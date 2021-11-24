@@ -4,6 +4,12 @@
 > 批处理的特点是: 有界、持久、大量,非常适合需要访问全套记录才能完成的计算工作,一般用于离线统计。
 > 流处理的特点是: 无界、实时, 无需针对整个数据集执行操作,而是对通过系统传输的每个数据项执行操作,一般用于实时统计。
 
+# Flink 搭建方式
+> Standalone(单机)
+> yarn-session
+- 会话模式(Session-Cluster): 通过yarn-session提交作业yarn-session会一直启动,不停地接收客户端提交的作业,有大量的小作业,适合使用这种方式,JobManager 和 Task-managers
+- 分离模式(Per-Job-Cluster): 直接提交任务给 YARN,大作业适合使用这种方式
+
 # Flink 运行时组件
 > 资源管理器(ResourceManager): 主要负责管理任务管理器(TaskManager)的插槽(slot),负责任务的分配和管理
 > 作业管理器(JobManager): 每个应用程序都会被一个不同的 JobManager 所控制执行,它包含作业图(JobGraph)、逻辑数据流图(logical dataflow graph),会把 JobGraph 转换成 执行图(ExecutionGraph),然后向资源管理器(ResourceManager)请求执行任务必要的资源,也就是任务管理器(TaskManager)上的插槽(slot)
