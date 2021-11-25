@@ -54,4 +54,7 @@
 > spout 发送速度 > bolt 接受速度
 > 1.增加 bolt 的并发度
 > 2.设置 spout 的发送速度: topology.max.spout.pending,或者通过代码 config.setMaxSpoutPending(num)
-> 3.
+
+# Storm 反压
+> 通过监控 Bolt 中的接收队列负载情况,如果超过高水位值就会将反压信息写到 Zookeeper,Zookeeper 上的 watch 会通知该拓扑的所有 Worker 都进入反压状态,最后 Spout 停止发送 tuple。
+> 而Storm是直接从源头降速

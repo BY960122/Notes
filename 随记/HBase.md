@@ -46,7 +46,7 @@ default 表是用户默认使用的命名空间
 
 # HBase 优化
 > 1.内存优化: 一般会分配整个可用内存的 70%给 HBase 的 Java 堆,一般 16-48G 内存就可以了
-> 2.允许在 HDFS 的文件中追加内容,可以优秀的配合 HBase 的数据同步和持久化.hdfs-site.xml、hbase-site.xml,属性：dfs.support.append=true
+> 2.允许在 HDFS 的文件中追加内容,可以优秀的配合 HBase 的数据同步和持久化.hdfs-site.xml、hbase-site.xml,属性:dfs.support.append=true
 > 3.优化 DataNode 允许的最大文件打开数,hdfs-site.xml,dfs.datanode.max.transfer.threads=4096(默认)
 > 4.优化延迟高的数据操作的等待时间,hdfs-site.xml,dfs.image.transfer.timeout=60000毫秒,如果对于某一次数据操作来讲延迟非常高,以确保 socket 不会被 timeout 掉
 > 5.优化数据的写入效率,mapred-site.xml,mapreduce.map.output.compress=true,mapreduce.map.output.compress.codec=org.apache.hadoop.io.compress.GzipCodec
@@ -54,3 +54,33 @@ default 表是用户默认使用的命名空间
 > 7.优化 HStore 文件大小,hbase-site.xml,hbase.hregion.max.filesize=10737418240(10GB),走 MR 应适当减小
 > 8.优化 HBase 客户端缓存: hbase-site.xml,hbase.client.write.buffer,增大会减小通信次数,但需要内存
 > 9.指定 scan.next 扫描 HBase 所获取的行数,hbase-site.xml,hbase.client.scanner.caching,用于指定 scan.next 方法获取的默认行数
+
+# HBase rowkey 设计原则
+> 1.Rowkey的唯一原则
+> 2.Rowkey的排序原则: HBase的Rowkey是按照ASCII有序设计的,设置前缀
+> 3.Rowkey的散列原则: 例如时间戳,前面都一样,容易被分到一个 region,造成热点问题
+- Reverse反转
+- Salt加盐: 将每一个Rowkey加一个前缀，前缀使用一些随机字符,abc001,abc002,abc003 => a-abc001,b-abc002,c-abc003,增加了读的开销
+- Hash散列或者Mod: 取hash的前4个字符作为前缀:,abc001,abc002,abc003 => 9bf0-abc001,7006-abc002,95e6-abc003
+> 4.rowkey 不要过长
+- HBase 的 HFile 是按 KeyValue存的
+- MemStore缓存部分数据到内存,如果Rowkey字段过长内存的有效利用率会降低
+
+# HBase 二级索引
+## 基于 Coprocessor的开源方案: Phoenix
+> Covered Indexes(覆盖索引): 把关注的数据字段也附在索引表上,只需要通过索引表就能返回所要查询的数据(列), 所以索引的列必须包含所需查询的列(SELECT的列和WHRER的列)
+> Functional indexes(函数索引): 索引不局限于列,支持任意的表达式来创建索引。
+> Global indexes(全局索引): 适用于读多写少场景。通过维护全局索引表,所有的更新和写操作都会引起索引的更新,写入性能受到影响。 
+> Local indexes(本地索引): 适用于写多读少场景。 在数据写入时,索引数据和表数据都会存储在本地。在数据读取时, 由于无法预先确定region的位置,所以在读取数据时需要检查每个 region（以找到索引数据）,会带来一定性能(网络)开销。
+
+优点： 基于Coprocessor的方案,把很多对二级索引管理的细节都封装在的Coprocessor具体实现类里面,这些细节对外面读写的人是无感知的,简化了数据访问者的使用。
+缺点： 但是Coprocessor的方案入侵性比较强,增加了在Regionserver内部需要运行和维护二级索引关系表的代码逻辑等,对Regionserver的性能会有一定影响。
+
+## 非Coprocessor方案
+> 常见的是采用底层基于Apache Lucene的 Elasticsearch 或Apache Solr,来构建强大的索引能力、搜索能力,例如支持模糊查询、全文检索、组合查询、排序等。
+> 1.rowkey 为主键
+> 2.主键以外的某些字段建立类似Key-Value对的数据格式,key: 列值,value: 主键,并对 key 建立索引
+> 3.将索引存放于 ES,rowkey 作业文档ID,实现数据和索引的分离
+> 4.当发生Put操作时,将Put数据转化为JSON格式,索引到Elasticsearch中,并将RowKey和ES的文档ID建立关联
+> 5.当发生Delete操作时,获取Delete数据的RowKey,删除ElasticSearch中对应ID的document记录
+> 6.借助ES的缓冲机制Bulk,用户的提交的数据积累到某个阈值时才进行批量操作,降低网络I/O负载

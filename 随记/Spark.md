@@ -3,6 +3,19 @@
 > Spark的技术理念是使用微批来模拟流的计算,数据流以时间为单位被切分为一个个批次,通过分布式数据集RDD进行批量处理,是一种伪实时
 > Flink是基于事件驱动的,是面向流的处理框架,Flink基于每个事件一行一行地流式处理,是真正的流式计算.另外他也可以基于流来模拟批进行计算实现批处理
 
+# Spark 内存管理模型
+- https://bbs.huaweicloud.com/blogs/detail/170627
+> Spark是一个基于内存的分布式计算引擎,为了更为高效地利用内存,并减少OOM等内存问题,Spark对JVM内存模型进行了进一步的管理规划,MemoryManager
+> 1.spark.executor.memory 指定的JVM堆内内存,将堆内内存逻辑上划分为三个主要内存区域
+- Reserved Memory: 这一块是系统预留的内存,由 spark.testing.reservedMemory=300M 决定,(只存spark 内部对象)
+- User Memory: 为用户编写的Spark应用逻辑而预留的内存,(Java Heap - Reserved Memory) * (1.0 - spark.memory.fraction)
+- Spark Memory: MemoryManager实际管理的是Spark Memory这一部分内存区域,该部分内存区域大小由spark.memory.fraction=0.6控制
+- (1).Storage Memory: 该部分内存可用于unroll RDD,缓存RDD,以及缓存broadcast等的传输数据,spark.memory.storageFraction=0.5
+- (2).Execution Memory: 该部分内存用作shuffle,joins,sorts以及aggregations等操作的计算内存,由所有task共享.其确保每个task在进行spill之前,至少能获得1/2N的内存,但最多只能获取1/N的内存
+> 2.spark.memory.offHeap.size 指定的堆外内存: Spark在JVM内存之外直接开辟的内存空间,用于存储经过序列化的二进制数据
+- Execution Memory的空间被对方占用后,可让对方将占用的部分转存到磁盘,然后"归还"借用的空间。
+- Storage Memory的空间被对方占用后,无法让对方"归还",因为需要考虑执行过程中的很多因素,实现起来较为复杂。
+
 # Spark 核心组件
 ## Driver
 > Spark驱动器节点,用于执行Spark任务中的main方法,负责实际代码的执行工作。Driver在Spark作业执行时主要负责：
@@ -19,19 +32,14 @@
 # Spark运行流程
 ## YarnClient
 > Driver在任务提交的本地机器上运行
-> 1.client会和 ResourceManager 通讯申请启动 ApplicationMaster,ApplicationMaster 会单独启动 Driver 后台线程,Driver 主要初始化 SparkContext 对象
+> 1.client会和 ResourceManager 通讯申请启动 ApplicationMaster
 > 2.ResourceManager 分配 container,在合适的 NodeManager 上启动 ApplicationMaster
+- ApplicationMaster 会单独启动 Driver 后台线程,Driver 主要初始化 SparkContext 对象
 > 3.在 NodeManager 上启动 Executor 进程,然后向 Driver 反向注册
 > 4.全部反向注册完成后,Driver开始执行 main 函数,执行到 action 算子的时候,触发一个 job,开始划分 stage,每个 stage 就是一个 taskset ,然后分发到 Executor 执行.
 
 ## YarnCluster
 > Driver不一定在本地机器上运行
-
-# SparkShuffle
-> 主要是有shuffle类算子,比如: reduceByKey,GroupByKey,sortByKey,join,distinct,repartions
-> Spark Shuffle分为 map 阶段和 reduce 阶段,或者称之为 ShuffleRead 阶段和 ShuffleWrite 阶段
-> 输入时又文件的 split 个数对应 rdd 的 partition 个数,也就是 map 数量
-> 经过一系列算子重新分区后,map 端的最后一个分区数对应的就是 reduce 数量,如果设置了spark.default.parallelism,那reduce按这个来
 
 # RDD
 > 1.弹性分布式数据集,是一个抽象类,它代表一个不可变,可分区,里面的元素可并行计算的集合。
@@ -41,6 +49,12 @@
 
 ## 算子
 > transformations,它是用来将RDD进行转化,构建RDD的血缘关系,比如:groupby,map,join,union,distinct,zip,combinerbykey
+
+# SparkShuffle
+> 主要是有shuffle类算子,比如: reduceByKey,GroupByKey,sortByKey,join,distinct,repartions
+> Spark Shuffle分为 map 阶段和 reduce 阶段,或者称之为 ShuffleRead 阶段和 ShuffleWrite 阶段
+> 输入时又文件的 split 个数对应 rdd 的 partition 个数,也就是 map 数量
+> 经过一系列算子重新分区后,map 端的最后一个分区数对应的就是 reduce 数量,如果设置了spark.default.parallelism,那reduce按这个来
 > actions,它是用来触发RDD的计算,得到RDD的相关计算结果或者将RDD保存的文件系统中,比如:take,collect,first,reduce,checkpoint
 
 ## Spark 宽窄依赖
@@ -73,6 +87,20 @@
 
 
 # 优化
+## 优化思路
+> 1.尽可能多的分配资源,例如一共有20台 worker 节点,每台节点8g内存,10个cpu。那么可以分配 20个 exeuctor,每个 executor 内存8g,使用8个cpu
+> 2.设置并行度: spark作业中,各个 stage 的task的数量也就代表了作业在各个阶段stage的并行度,官方推荐,task数量,设置成总core数量的2到3倍
+> 3.rdd重用: 多次用到的rdd进行持久化,避免重复计算,方法: rdd.cache,rdd.persist(StorageLevel.MEMORY_ONLY)
+> 4.小表直接广播变量
+> 5.避免使用shuffle类算子,例如本来join的,改成小表广播变量,然后大表.map(广播变量)
+> 6.使用map-side预聚合(类似于combiner),建议使用reduceByKey或者aggregateByKey算子来替代掉groupByKey算子。因为reduceByKey和aggregateByKey算子都会使用用户自定义的函数对每个节点本地
+的相同key进行预聚合。而groupByKey算子是不会进行预聚合的,全量的数据会在集群的各个节点之间分发和传输,性能相对来说比较差。
+> 7.使用高性能算子,使用mapPartitions替代普通map,mapPartitions类的算子,一次函数调用会处理一个partition所有的数据,而不是一次函数调用处理一条,性能相对来说会高一些。但要注意内存够用.
+> 8.使用高性能算子,使用foreachPartition替代foreach
+> 9.使用高性能算子,使用filter之后进行coalesce操作,手动减少RDD的partition数量
+> 10.使用高性能算子,使用 repartitionAndSortWithinPartitions 替代 repartition 与 sort 类操作
+> 11.使用序列化,Spark支持使用Kryo序列化机制。Kryo序列化机制,比默认的Java序列化机制,速度要快,序列化后的数据要更小,大概是Java序列化机制的1/10。所以Kryo序列化优化以后,可以让网络传输的数据变少；在集群中耗费的内存资源大大减少。注册要序列化的自定义类型。
+
 ## 参数调优
 > 1.Hive 参数对 Spark 同样起作用。
 > set hive.exec.dynamic.partition=true; // 是否允许动态生成分区
@@ -97,20 +125,6 @@
 > set spark.defalut.parallelism=300
 > 5.序列化
 > set spark.serializer=org.apache.spark.serializer.KryoSerializer
-
-## 优化思路
-> 1.尽可能多的分配资源,例如一共有20台 worker 节点,每台节点8g内存,10个cpu。那么可以分配 20个 exeuctor,每个 executor 内存8g,使用8个cpu
-> 2.设置并行度: spark作业中,各个 stage 的task的数量也就代表了作业在各个阶段stage的并行度,官方推荐,task数量,设置成总core数量的2到3倍
-> 3.rdd重用: 多次用到的rdd持久化,避免重复计算,方法: rdd.cache,rdd.persist(StorageLevel.MEMORY_ONLY)
-> 4.小表直接广播变量
-> 5.避免使用shuffle类算子,例如本来join的,改成小表广播变量,然后大表.map(广播变量)
-> 6.使用map-side预聚合(类似于combiner),建议使用reduceByKey或者aggregateByKey算子来替代掉groupByKey算子。因为reduceByKey和aggregateByKey算子都会使用用户自定义的函数对每个节点本地
-的相同key进行预聚合。而groupByKey算子是不会进行预聚合的，全量的数据会在集群的各个节点之间分发和传输，性能相对来说比较差。
-> 7.使用高性能算子,使用mapPartitions替代普通map,mapPartitions类的算子，一次函数调用会处理一个partition所有的数据，而不是一次函数调用处理一条，性能相对来说会高一些。但要注意内存够用.
-> 8.使用高性能算子,使用foreachPartition替代foreach
-> 9.使用高性能算子,使用filter之后进行coalesce操作,手动减少RDD的partition数量
-> 10.使用高性能算子,使用 repartitionAndSortWithinPartitions 替代 repartition 与 sort 类操作
-> 11.使用序列化,Spark支持使用Kryo序列化机制。Kryo序列化机制，比默认的Java序列化机制，速度要快，序列化后的数据要更小，大概是Java序列化机制的1/10。所以Kryo序列化优化以后，可以让网络传输的数据变少；在集群中耗费的内存资源大大减少。注册要序列化的自定义类型。
 
 ## 数据倾斜的解决思路
 ### 1、通过 Spark Web UI
