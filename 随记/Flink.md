@@ -22,7 +22,7 @@
 - 每个TaskManager负责管理其所在节点上的资源信息,如内存、磁盘、网络,在启动的时候将资源的状态向 JobManager 汇报
 > 分发器(Dispatcher): 可以跨作业运行,它为应用提交提供了 REST 接口。当一个应用被提交执行时,分发器就会启动并将应用移交给一个 JobManager。
 
-# Flink 分层
+# Flink 分层API
 > ProcessFunction: 可以访问事件的时间戳信息和水位线信息,都继承自 RichFunction 接口,所以都有 open()、close()和 getRuntimeContext()等方法
 - ProcessFunction
 - KeyedProcessFunction
@@ -37,9 +37,9 @@
 
 # Flink 内存管理
 > 对象都序列化到一个预分配的内存块上,大量使用堆外内存,如果超过了内存限制,会将部分数据写入硬盘.
-> 1.Network Buffers(堆外): 这个是在TaskManager启动的时候分配的,这是一组用于缓存网络数据的内存,MemorySegment(内存抽象)每个块是32K,默认分配2048个,taskmanager.network.numberOfBuffers
-> 2.Memory Manage pool: 这部分启动的时候就会分配,用于运行时的算法(shuffle,join)
-> 3.User Code: 这部分是除了Memory Manager之外的内存用于User code和TaskManager本身的数据结构
+> 1.Memory Manage pool: 这部分启动的时候就会分配,用于运行时的算法(shuffle,join)
+> 2.User Code: 这部分是除了Memory Manager之外的内存用于User code和TaskManager本身的数据结构
+> 3.Network Buffers(堆外): 这个是在TaskManager启动的时候分配的,这是一组用于缓存网络数据的内存,MemorySegment(内存抽象)每个块是32K,默认分配2048个,taskmanager.network.numberOfBuffers
 
 # Flink 序列化
 > TypeInformation 是所有类型描述符的基类。它揭示了该类型的一些基本属性,并且可以生成序列化器。TypeInformation 支持以下几种类型
@@ -120,11 +120,6 @@
 - 事务写入: 构建的事务对应着 checkpoint,把结果数据先当成状态保存,等到 checkpoint 真正完成的时候,才把所有对应的结果写入 sink 系统中,实现方式: 预写日志(WAL)和两阶段提交
 (2PC),DataStream API 提供了 GenericWriteAheadSink 模板类和TwoPhaseCommitSinkFunction 接口
 
-# Flink 状态后端(存储)
-> MemoryStateBackend
-> FsStateBackend
-> RocksDBStateBackend。
-
 # Flink 是如何保证Exactly-once语义的？
 > Flink通过实现两阶段提交和状态保存来实现端到端的一致性语义。分为以下几个步骤:
 > 1.开始事务（beginTransaction）创建一个临时文件夹,来写把数据写入到这个文件夹里面
@@ -132,6 +127,11 @@
 > 3.正式提交（commit）将之前写完的临时文件放入目标目录下。这代表着最终的数据会有一些延迟
 > 4.丢弃（abort）丢弃临时文件
 若失败发生在预提交成功后,正式提交前。可以根据状态来提交预提交的数据,也可删除预提交的数据。
+
+# Flink 状态后端(存储)
+> MemoryStateBackend
+> FsStateBackend
+> RocksDBStateBackend。
 
 # Flink 重启策略
 > 固定延迟重启策略(Fixed Delay Restart Strategy)
@@ -148,7 +148,7 @@ env.registerCachedFile("file:///path/to/exec/file", "localExecFile", true)
 
 # Flink SQL
 > 1.用户使用对外提供Stream SQL的语法开发业务应用
-> 2.用calcite对StreamSQL进行语法检验,语法检验通过后,转换成calcite的逻辑树节点；最终形成calcite的逻辑计划
+> 2.用 calcite 对StreamSQL进行语法检验,语法检验通过后,转换成calcite的逻辑树节点；最终形成calcite的逻辑计划
 > 3.采用Flink自定义的优化规则和calcite火山模型、启发式模型共同对逻辑树进行优化,生成最优的Flink物理计划
 > 4.对物理计划采用janino codegen生成代码,生成用低阶API DataStream 描述的流应用,提交到Flink平台执行
 
