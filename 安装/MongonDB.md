@@ -19,7 +19,7 @@ db.createUser({user: 'root', pwd: 'By9216446o6', roles: [{ role: "root", db: "ad
 ```
 ## 5.检查是否创建成功
 ```mongojs
-db.auth('root', 'By9216446o6')
+db.auth('root', 'By9216446o6');
 ```
 ## 6.查看已有用户
 ```mongojs
@@ -28,7 +28,7 @@ show users;
 ```
 ## 7.删除用户
 ```mongojs
-db.system.users.remove({user:'root'})
+db.system.users.remove({user:'root'});
 ```
 ## 8.修改配置,mongo.conf
 ```sh
