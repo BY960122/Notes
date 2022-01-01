@@ -40,6 +40,8 @@ python3.8 setup.py install
 ```sh
 pip3 config set global.index-url https://mirrors.cloud.tencent.com/pypi/simple
 pip3 config set global.index-url https://mirrors.aliyun.com/pypi/simple/
+pip3 config set global.index-url https://mirrors.tools.huawei.com/pypi/simple/
+pip3 config set global.trusted-host mirrors.aliyun.com
 
 pip3 install --upgrade pip
 python -m pip install -i https://mirrors.aliyun.com/pypi/simple/ --upgrade pip

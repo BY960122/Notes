@@ -8,43 +8,56 @@ git config --global user.email 921644606@qq.com
 git config --global user.password By9216446o6
 
 git config --list
+```
 
-# 初始化版本库
+## 设置本地分支
+```sh
 git init
 # 设置远程仓库
-git remote add dev https://github.com/ByDylan-YH/Notes.git
-# 创建本地分支并指向远端分支
-git checkout -b dev master
-	# 或者正常指定
-git branch dev master
+git remote add 定义的远程主机名remote_repository_name https://github.com/ByDylan-YH/Notes.git
+# 创建本地分支
+git branch local_branch
+# 切换分支
+git branch local_branch
+git switch local_branch
 # 查看分支
 git branch
+# 创建本地分支并切换
+git checkout -b local_branch
 # 合并分支
-git merge dev
+git merge local_branch
 # 删除分支
-git branch -d dev
-# 切换分支
-git checkout -b dev
-	# 相当于
-git branch dev
-git checkout dev
-	# 新版使用
-git switch dev
-
-# 普遍提交流程
-	# 添加当前目录下所有文件到缓存区
-git add .
-	# 如果要丢弃
-git checkout -- file
-	# 提交缓存区
-git commit -m "代码说明"
-	# 提交到远程仓库(先下载同步,再上传)
-git pull dev master
-git push dev master
-	# 如果另一用户此时pull报错,则需要
-git push --set-upstream origin dev
-	# 或者强行覆盖
-git push --force by master
-# 查看状态
-git status
+git branch -d local_branch
 ```
+
+## 拉取分支
+```sh
+# 拉取远程主机 remote_repository_name,remote_branch 分支与本地 local_branch 合并
+git pull remote_repository_name remote_branch:local_branch
+# 如果已经切换了分支,可以省略 :local_branch
+git pull remote_repository_name remote_branch
+```
+
+## 提交流程
+```sh
+# 添加当前目录下所有文件到缓存区,最好指定具体文件
+git add .
+git add filename
+# 如果要丢弃
+git rm --cached 全路径文件名
+git rm -r --cached 全路径目录名
+# 提交缓存区
+git commit -m "代码说明"
+# 如果要修改,此命令会进入vim编辑状态
+git commit -amend
+# 查看目前状态
+git status
+# 提交代码
+git push remote_repository_name local_branch:remote_branch
+# 如果本地分支名与远程分支名相同,则可以省略:
+git push remote_repository_name local_branch
+# 强行覆盖提交
+git push --force by remote_branch
+# 删除 remote_repository_name 主机的 remote_branch 分支
+git push remote_repository_name --delete remote_branch
+```sh

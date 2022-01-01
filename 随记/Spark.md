@@ -49,6 +49,7 @@
 
 ## 算子
 > transformations,它是用来将RDD进行转化,构建RDD的血缘关系,比如:groupby,map,join,union,distinct,zip,combinerbykey
+> action,结果算子.例如: count,foreach,collect,table,reduce,checkpoint
 
 # SparkShuffle
 > 主要是有shuffle类算子,比如: reduceByKey,GroupByKey,sortByKey,join,distinct,repartions

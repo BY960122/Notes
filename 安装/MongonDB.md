@@ -2,18 +2,15 @@
 - https://www.mongodb.com/download-center#community
 
 # Windows安装
-## 1.初始化数据目录,记得新建目录
+## 1.设置环境变量
+## 2.初始化数据目录,安装服务
 ```sh
-mongod --dbpath D:\Mysoft\MongoDB\data
-```
-## 2.安装服务,记得用管理员
-```sh
-mongod.exe --logpath D:\Mysoft\MongoDB\log\mongodb.log --logappend --dbpath D:\Mysoft\MongoDB\data --directoryperdb --serviceName MongoDB --install
+mongod --dbpath D:\Software\MongoDB\data --config D:\Software\MongoDB\mongo.conf --logpath D:\Software\MongoDB\log\mongodb.log --logappend --install --serviceName "MongoDB"
 ```
 ## 3.启动服务,停止服务
 ```sh
-net start mongodb
-net stop mongodb
+net start MongoDB
+net stop MongoDB
 ```
 ## 4.设置用户密码,只能单独给一个库创建用户权限
 ```mongojs
@@ -22,14 +19,54 @@ db.createUser({user: 'root', pwd: 'By9216446o6', roles: [{ role: "root", db: "ad
 ```
 ## 5.检查是否创建成功
 ```mongojs
-db.auth('root', 'By960122')
+db.auth('root', 'By9216446o6')
 ```
 ## 6.查看已有用户
 ```mongojs
-db.system.users.find()
-db.system.users.find({user:"root"})
+db.system.users.find().pretty();
+show users;
 ```
 ## 7.删除用户
 ```mongojs
 db.system.users.remove({user:'root'})
+```
+## 8.修改配置,mongo.conf
+```sh
+# 配置IP端口
+net:
+	port: 27017
+	bindIp: 0.0.0.0
+# 数据路径
+storage:
+	dbPath: D:\Software\MongoDB\data
+journal:
+	enabled: true
+# 日志文件
+systemLog:
+	path: D:\Software\MongoDB\log\mongodb.log
+	destination: file
+	logAppend: true
+# 开启密码登录
+security:
+	authorization: enabled
+# 副本集
+replication:
+	reolSetName: replication
+```
+## 重启后登录配置
+```mongojs
+# 密码登录
+mongo --port 27017 -u root -p By9216446o6 --authenticationDatabase admin
+# 初始化副本集
+# 查看
+rs.conf();
+# 初始化
+rs.initiate();
+# 修改内容
+cfg = rs.conf();
+cfg.members[0].host = "127.0.0.1:27017"
+rs.reconfig(cfg);
+# 或者
+config = {_id: "replication",members: [{_id: 0,host: "127.0.0.1:27017"}]};
+rs.initiate(config);
 ```

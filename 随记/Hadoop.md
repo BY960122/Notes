@@ -1,7 +1,7 @@
 # hadoop 进程
 ## HA
-> 1.master: namenode、dfszkfailoverController、resourcemanager、QuorumPeerMain
-> 2.slaver: datanode、nodemanager,journalnode
+> 1.master: namenode,dfszkfailoverController,resourcemanager,QuorumPeerMain
+> 2.slaver: datanode,nodemanager,journalnode
 
 # hdfs 读流程
 > 1.首先调用 FileSystem.open()方法,获取到 DistributedFileSystem 实例
@@ -26,7 +26,7 @@
 > SequenceFile: 以二进制键值对的形式存储数据
 > Avro: 将数据定义和数据一起存储在一条消息中,数据定义以JSON格式存储,数据以二进制格式存储,文件格式更为紧凑,读取大量数据时Avro能够提供更好的序列化和反序列化性能
 > RCFile: 以列格式保存每个行组数据它不是存储第一行然后是第二行,而是存储所有行上的第1列,然后是所有行上的第2列,以此类推。RCFile在map阶段从远端拷贝仍然是拷贝整个数据块,并且拷贝到本地目录后RCFile并不是真正直接跳过不需要的列,并跳到需要读取的列, 而是通过扫描每一个row group的头部定义来实现的,但是在整个HDFS Block 级别的头部并没有定义每个列从哪个row group起始到哪个row group结束。所以在读取所有列的情况下,RCFile的性能反而没有SequenceFile高。
-> ORCFile: 将数据划分为默认大小为250M的Stripe。每个Stripe包括索引、数据和Footer,索引存储每一列的最大最小值，以及列中每一行的位置。
+> ORCFile: 将数据划分为默认大小为250M的Stripe。每个Stripe包括索引,数据和Footer,索引存储每一列的最大最小值,以及列中每一行的位置。
 > Parquet: 是Hadoop的一种列存储格式,提供了高效的编码和压缩方案,特别擅长处理深度嵌套的数据
 
 # MapReduce流程
@@ -50,7 +50,7 @@
 > 1.client 调用 job.waitForCompletion 方法,向整个集群提交 MapReduce 作业。
 > 2.client 向 RM 申请一个作业 id。
 > 3.RM 给 client 返回该 job 资源的提交路径和作业 id。
-> 4.client 提交 jar 包、切片信息和配置文件到指定的资源提交路径。
+> 4.client 提交 jar 包,切片信息和配置文件到指定的资源提交路径。
 > 5.client 提交完资源后,向 RM 申请运行 MrAppMaster。
 ## 2.作业初始化
 > 6.当 RM 收到 client 的请求后,将该 job 添加到容量调度器中。

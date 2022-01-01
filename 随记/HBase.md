@@ -35,7 +35,7 @@ default 表是用户默认使用的命名空间
 > 5.将数据写入对应的 MemStore,数据会在 MemStore 进行排序
 > 6.向客户端发送 ack
 > 7.等达到 MemStore 的刷写时机后,将数据刷写到 HFile,hbase.hregion.memstore.flush.size=默认值 128M
-
+             
 # HBase 读流程
 > 1.Client 先访问 zookeeper,获取 hbase:meta 表位于哪个 Region Server
 > 2.访问对应的 Region Server,获取 hbase:meta 表,根据读请求的 namespace:table/rowkey,查询出目标数据位于哪个 Region Server 中的哪个 Region 中并将该 table 的 region 信息以及 meta 表的位置信息缓存在客户端的 meta cache,方便下次访问
