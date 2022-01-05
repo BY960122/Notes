@@ -1,8 +1,5 @@
 # 目录
-> 安装
->
-> 默认安装目录 /opt/software
->
+## 安装
 - [CDH.md](./安装/CDH.md)
 - [Docker.md](./安装/Docker.md)
 - [Elasticsearch.md](./安装/Elasticsearch.md)
@@ -29,7 +26,7 @@
 - [Zookeeper.md](./安装/Zookeeper.md)
 - [环境变量.md](./安装/环境变量.md)
 
-> 实战操作
+## 实战操作
 - [Docker.md](./实战操作/Docker.md)
 - [Elasticsearch.md](./实战操作/Elasticsearch.md)
 - [Flume.md](./实战操作/Flume.md)
