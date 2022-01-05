@@ -108,19 +108,18 @@ taskkill /T /F /PID 7896
 taskkill /F /IM SearchApp.exe
 ```
 
-## 软件卸载后,右键菜单仍然存在
-### Open as OneNote Notebook
-> windows + R 输入: regedit
-> 定位到 HKEY_CLASSES_ROOT\Directory\shell\Open as OneNote Notebook
-> 还可能存在于
-> HKEY_CLASSES_ROOT\*\shell
+* 软件卸载后,右键菜单仍然存在
+    - windows + R 输入: regedit
+    - 定位到 HKEY_CLASSES_ROOT\Directory\shell\Open as OneNote Notebook
+    - 还可能存在于
+    - HKEY_CLASSES_ROOT\*\shell
 
 ## cmd 刷新
 ```sh
 ipconfig /flushdns
 ```
 
-## 完全删除病毒库
-> windows + R 输入: regedit
-> 1.定位到 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SecurityHealthService,右侧找到 start 并双击将 数值数据 由2更改为4
-> 2.定位到 HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender , 右侧添加 DisableAntiSpyware (CWD32) 设置值为 1
+* 完全删除病毒库
+    - windows + R 输入: regedit
+    - 1.定位到 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SecurityHealthService,右侧找到 start 并双击将 数值数据 由2更改为4
+    - 2.定位到 HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender , 右侧添加 DisableAntiSpyware (CWD32) 设置值为 1
