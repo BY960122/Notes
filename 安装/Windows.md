@@ -2,12 +2,8 @@
 
 - http://fastlinkvpn.vip/
 
-```text
-win10专业版：PK6DJ-BWPFR-YGXH8-X7MPJ-R34QW
-```
-
 ## 禁止U盘复制电脑文件
-```text
+```
 打开运行输入gpedit.msc然后点击本地计算机策略,点击管理模板
 再点击系统,找到可移动储存访问,在右边找到可移动磁盘拒绝写入访问
 双击,选择已启用,确定即可,然后再测试一下能否复制电脑文件到U盘
@@ -95,24 +91,21 @@ Windows Registry Editor Version 5.00
 
 ## 安装msi时2503,2502错误及其解决
 ```sh
-#管理员方式运行cmd,然后执行
+# 管理员方式运行cmd,然后执行
 msiexec /package "D:\Mysoft\Navicat_12.1\sqlncli_x64.msi"
 ```
 
 ## 右下角图标无法点开
 ```sh
-## 可能是误删了一个目录
+# 可能是误删了一个目录
 C:\Windows\SystemApps\ShellExperienceHost_cw5n1h2txyewy
 ```
-
-## 数据恢复
-- https://www.delihuifu.com
 
 ## 解决端口占用
 ```sh
 # 1.查看端口占用
 netstat -ano | findstr "1080"
-#TCP    192.168.1.5:1080       27.148.207.206:443     CLOSE_WAIT      7896
+## TCP    192.168.1.5:1080       27.148.207.206:443     CLOSE_WAIT      7896
 # 2.继续查询是哪个程序
 tasklist | findstr "7896"
 # SearchApp.exe                 7896 Console                    1    146,040 K
@@ -129,19 +122,7 @@ taskkill /F /IM SearchApp.exe
 > 还可能存在于
 > HKEY_CLASSES_ROOT\*\shell
 
-## 提高 Github 访问速度
-- https://www.ipaddress.com/
-依次搜索下面3个网址,填入hosts文件
-- github.com
-- github.global.ssl.fastly.net
-- codeload.github.com
-
-```sh
-192.30.253.113 github.com
-151.101.25.194 github.global.ssl.fastly.net
-192.30.253.121 codeload.github.com
-
-# cmd 刷新
+## cmd 刷新
 ipconfig /flushdns
 ```
 
