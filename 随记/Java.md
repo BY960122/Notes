@@ -67,8 +67,8 @@
 ### 4.公平锁,非公平锁
 > 当一个线程持有的锁释放时,其他线程按照先后顺序,先申请的先得到锁,那么这个锁就是公平锁 反之,如果后申请的线程有可能先获取到锁,就是非公平锁 
 ### 5.乐观锁,悲观锁
-> 悲观锁:即在读数据的时候总认为其他线程会对数据进行修改,所以采取加锁的形式,一旦本线程要读取数据时,就加锁,其他线程被阻塞,等待锁的释放 所以悲观锁总结为悲观加锁阻塞线程 
-> 乐观锁实际上是没有锁的,只是通过一种比较交换的方法来保证数据同步,总结为乐观无锁回滚重试 
+- 悲观锁即在读数据的时候总认为其他线程会对数据进行修改,所以采取加锁的形式,一旦本线程要读取数据时,就加锁,其他线程被阻塞,等待锁的释放 所以悲观锁总结为悲观加锁阻塞线程 
+- 乐观锁实际上是没有锁的,只是通过一种比较交换的方法来保证数据同步,总结为乐观无锁回滚重试 
 ### 6.可重入锁
 > 可重入锁即允许多个线程多次获取同一把锁,那从锁本身的角度来看,就是可以重新进入该锁 比如有一个递归函数里面有加锁操作,如果这个锁不阻塞自己,就是可重入锁,故也称递归锁 
 ### 7.可中断锁
@@ -80,20 +80,20 @@
 > 读写锁就是其最典型的锁 写锁是独享锁,读锁是共享锁 
 
 ## synchronized 与 ReentrantLock 的区别
-> 如果使用 synchronized,如果A不释放,B将一直等下去,不能被中断
-> 如果使用 ReentrantLock,如果A不释放,可以使B在等待了足够长的时间以后,中断等待,而干别的事情
-> 在资源竞争不是很激烈的情况下,Synchronized 的性能要优于 ReetrantLock,但是在资源竞争很激烈的情况下,Synchronized 的性能会下降几十倍,但是 ReetrantLock 的性能能维持常态
+* 如果使用 synchronized,如果A不释放,B将一直等下去,不能被中断
+* 如果使用 ReentrantLock,如果A不释放,可以使B在等待了足够长的时间以后,中断等待,而干别的事情
+* 在资源竞争不是很激烈的情况下,Synchronized 的性能要优于 ReetrantLock,但是在资源竞争很激烈的情况下,Synchronized 的性能会下降几十倍,但是 ReetrantLock 的性能能维持常态
 
 ## synchronized 与 Lock 的区别
 > synchronized是在JVM层面上实现的,不但可以通过一些监控工具监控synchronized的锁定,而且在代码执行时出现异常,JVM会自动释放锁定,但是使用Lock则不行,lock是通过代码实现的,要保证锁定一定会被释放,就必须将unLock()放到finally{}中
 
 # 线程池的创建方法
 - https://www.cnblogs.com/pcheng/p/13540619.html
-> 1.newCachedThreadPool: 创建一个可缓存的线程池,若线程数超过处理所需,缓存一段时间后会回收,若线程数不够,则新建线程 
-> 2.newFixedThreadPool: 创建一个固定大小的线程池,可控制并发的线程数,超出的线程会在队列中等待 
-> 3.newScheduledThreadPool: 创建一个周期性的线程池,支持定时及周期性执行任务
-> 4.newSingleThreadExecutor: 创建一个单线程的线程池,可保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行
-> 5.ThreadPoolExecutor: ThreadPoolExecutor类提供了4种构造方法,可根据需要来自定义一个线程池
+* 1.newCachedThreadPool: 创建一个可缓存的线程池,若线程数超过处理所需,缓存一段时间后会回收,若线程数不够,则新建线程 
+* 2.newFixedThreadPool: 创建一个固定大小的线程池,可控制并发的线程数,超出的线程会在队列中等待 
+* 3.newScheduledThreadPool: 创建一个周期性的线程池,支持定时及周期性执行任务
+* 4.newSingleThreadExecutor: 创建一个单线程的线程池,可保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行
+* 5.ThreadPoolExecutor: ThreadPoolExecutor类提供了4种构造方法,可根据需要来自定义一个线程池
 
 ## 1.newCachedThreadPool
 ```java
