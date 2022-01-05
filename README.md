@@ -1,4 +1,4 @@
-<div align='center' ><font size=100>目录</font></div>
+<div align='center' ><font># 目录</font></div>
 
 ## 安装
 - [CDH.md](./安装/CDH.md)
