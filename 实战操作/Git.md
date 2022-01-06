@@ -50,6 +50,8 @@ git rm -r --cached 全路径目录名
 git commit -m "代码说明"
 # 如果要修改,此命令会进入vim编辑状态
 git commit -amend
+# 回退修改了但还未提交的文件
+checkout .
 # 查看目前状态
 git status
 # 提交代码
