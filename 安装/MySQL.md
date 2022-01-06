@@ -24,12 +24,15 @@ mysqld --install mysql
 net start mysql
 ```
 ## 5.进入mysql 修改密码(这是必须是第一步) 
-```mysql based
+```mysql
 alter user root@'localhost' identified by 'By9216446o6'; 
 set global validate_password.length = 6;
 set global validate_password.policy = 0;
 update mysql.user set host = '%' where user = 'root';
-alter user root@'%' identified by 'By9216446o6'; 
+alter user root@'%' identified by 'By9216446o6';
+# 新建用户
+create user 'username'@'host' identified by 'password';
+grant all privileges on *.* to 'username'@'%' with grant option; 
 ```
 ## 6.赋予权限 
 ```mysql
