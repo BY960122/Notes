@@ -20,7 +20,7 @@ mysqld --initialize --console (这里会产生密码)
 ```
 ## 4.再执行
 ```sh
-mysqld --install mysql
+mysqld --install MySQL
 net start mysql
 ```
 ## 5.进入mysql 修改密码(这是必须是第一步) 
@@ -32,11 +32,10 @@ update mysql.user set host = '%' where user = 'root';
 alter user root@'%' identified by 'By9216446o6';
 # 新建用户
 create user 'username'@'host' identified by 'password';
-grant all privileges on *.* to 'username'@'%' with grant option; 
 ```
 ## 6.赋予权限 
 ```mysql
-grant all on *.* to 'root'@'%';
+grant all privileges on *.* to 'root'@'%' with grant option; 
 ```
 ## 7.刷新权限 
 ```mysql
@@ -56,7 +55,7 @@ sc delete mysql
 ## 3.修改环境变量
 ## 4.安装mysql
 ```txt
-mysqld install
+mysqld --install MySQL
 ```
 ## 5.启动mysql,配置文件必须是ANSI格式
 ```txt
