@@ -127,3 +127,10 @@ windows + R 输入: regedit
 1.定位到 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SecurityHealthService,右侧找到 start 并双击将 数值数据 由2更改为4
 2.定位到 HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender , 右侧添加 DisableAntiSpyware (CWD32) 设置值为 1
 ```
+
+## Edge 浏览器报错: STATUS_INVALID_IMAGE_HASH
+```
+windows + R 输入: regedit
+1.定位到
+HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge,右边窗口右键单击新建DWORD(32位)值,双击创建的新值,命名为RendererCodeIntegrityEnabled,并将值设定为0,重启Edge
+```
