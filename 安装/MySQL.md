@@ -31,7 +31,7 @@ set global validate_password.policy = 0;
 update mysql.user set host = '%' where user = 'root';
 alter user root@'%' identified by 'By9216446o6';
 # 如果需要修改加密插件
-alter user root@'%' identified with mysql_native_password by 'By9216446o6;
+alter user root@'%' identified with mysql_native_password by 'By9216446o6';
 # 新建用户
 create user 'username'@'host' identified by 'password';
 ```
