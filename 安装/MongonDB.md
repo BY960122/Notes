@@ -15,11 +15,11 @@ net stop MongoDB
 ## 4.设置用户密码,只能单独给一个库创建用户权限
 ```mongojs
 use admin;
-db.createUser({user: 'root', pwd: 'By9216446o6', roles: [{ role: "root", db: "admin" }]});
+db.createUser({user: 'root', pwd: 'By96o122', roles: [{ role: "root", db: "admin" }]});
 ```
 ## 5.检查是否创建成功
 ```mongojs
-db.auth('root', 'By9216446o6');
+db.auth('root', 'By96o122');
 ```
 ## 6.查看已有用户
 ```mongojs
@@ -56,7 +56,7 @@ replication:
 ## 重启后登录配置
 ```mongojs
 # 密码登录
-mongo --port 27017 -u root -p By9216446o6 --authenticationDatabase admin
+mongo --port 27017 -u root -p By96o122 --authenticationDatabase admin
 # 初始化副本集
 # 查看
 rs.conf();

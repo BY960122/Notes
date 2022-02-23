@@ -25,13 +25,13 @@ net start mysql
 ```
 ## 5.进入mysql 修改密码(这是必须是第一步) 
 ```mysql
-alter user root@'localhost' identified by 'By9216446o6'; 
+alter user root@'localhost' identified by 'By96o122'; 
 set global validate_password.length = 6;
 set global validate_password.policy = 0;
 update mysql.user set host = '%' where user = 'root';
-alter user root@'%' identified by 'By9216446o6';
+alter user root@'%' identified by 'By96o122';
 # 如果需要修改加密插件
-alter user root@'%' identified with mysql_native_password by 'By9216446o6';
+alter user root@'%' identified with mysql_native_password by 'By96o122';
 # 新建用户
 create user 'username'@'host' identified by 'password';
 ```
@@ -116,7 +116,7 @@ set global validate_password.length = 8;
 set global validate_password.policy = 0;
 update mysql.user set host = '%' where user = 'root';
 grant all on *.* to 'root'@'%';
-alter user root@'%' identified by 'By9216446o6';
+alter user root@'%' identified by 'By96o122';
 flush privileges;
 ```
 ## 9.新建MySQL用户
@@ -144,7 +144,7 @@ relay-log=mysql-relay
 ## 3.分别启动主从mysql
 ## 4.登录master,创建master用户
 ```mysql
-create user 'master'@'localhost' identified by 'By9216446o6';
+create user 'master'@'localhost' identified by 'By96o122';
 grant all on *.* to 'master'@'localhost';
 update mysql.user set host = '%' where user = 'master';
 flush privileges;
@@ -183,7 +183,7 @@ binlog-format=mixed
 ```
 ## 3.两个服务器同时建立master帐号
 ```mysql based
-create user 'master'@'localhost' identified by 'By9216446o6';
+create user 'master'@'localhost' identified by 'By96o122';
 grant all on *.* to 'master'@'localhost';
 update mysql.user set host = '%' where user = 'master';
 flush privileges;
