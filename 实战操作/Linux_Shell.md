@@ -2,7 +2,7 @@
 > 如果是windows 编写的,注意报错: $'\r':command not found, 请先转义一下: dos2unix 文件名
 
 ## hdfs_sql_ftp
-```sh
+```shell
 ##! /bin/bash
 exectime=`date -d "0 day" +%Y%m%d`
 if [ ! -n "$1" ]; then
@@ -61,7 +61,7 @@ done
 ```
 
 ## s3_delete
-```sh
+```shell
 ##! /bin/bash
 ## 切忌: 请在一个空目录执行,程序会执行 rm -rf cqdsjb_*
 
@@ -116,7 +116,7 @@ echo "[SUCCESS] 程序执行成功^_^"
 ```
 
 ## s3_count
-```sh
+```shell
 ##! /bin/bash
 ## 第一个参数为S3路径
 if [ ! -n "$1" ]; then
@@ -161,7 +161,7 @@ done
 ```
 
 ## zookeeper-start-all.sh
-```sh
+```shell
 ##!/bin/bash
 
 echo "Starting ZkServer..."
@@ -196,7 +196,7 @@ echo "Time consuming `time_consuming` seconds"
 ```
 
 ## es-stop-all.sh
-```sh
+```shell
 ##!/bin/bash
 
 ## 耗时
@@ -232,7 +232,7 @@ echo "Time consuming `time_consuming` seconds"
 ## es-restart.sh
 - https://www.cnblogs.com/sparkdev/p/6842805.html
 
-```sh
+```shell
 ##! /bin/bash
 startTime=`date +%s`
 
@@ -252,13 +252,13 @@ time_consuming(){
 }
 ## 获取IP下所有es节点进程
 get_pid(){
-    ssh ${1} "ps -ef | grep elasticsearch | grep -w 'elasticsearch' | grep -v 'grep'" | grep bootstrap.Elasticsearch | awk '{print $2}'
+    ssh $1 "ps -ef | grep elasticsearch | grep -w 'elasticsearch' | grep -v 'grep'" | grep bootstrap.Elasticsearch | awk '{print $2}'
 }
 ## 获取es集群健康节点数量
 es_colony_health(){
     # curl -sX GET http://192.168.1.203:9200/_cluster/health?pretty | awk '{print $5}' | sed -n '2p'
-    curl -sX GET http://${1}:9200/_cat/health?v | awk '{print $5}' | sed -n '2p'
-    #curl -sX GET http://${1}:9200/_cat/health?v | awk '{print $5}' | sed -n '2p'
+    curl -sX GET http://$1:9200/_cat/health?v | awk '{print $5}' | sed -n '2p'
+    #curl -sX GET http://$1:9200/_cat/health?v | awk '{print $5}' | sed -n '2p'
 }
 
 echo "[Currently available nodes] `es_colony_health`"
@@ -296,7 +296,7 @@ echo "[Process exectute success^_^] time consuming `time_consuming` seconds"
 ## es-start-all.sh
 - https://www.cnblogs.com/sparkdev/p/6842805.html
 
-```sh
+```shell
 ##! /bin/bash
 startTime=`date +%s`
 
@@ -316,11 +316,11 @@ time_consuming(){
 }
 ## 获取IP下所有es节点进程
 get_pid(){
-    ssh ${1} "ps -ef | grep elasticsearch | grep -w 'elasticsearch' | grep -v 'grep'" | grep bootstrap.Elasticsearch | awk '{print $2}'
+    ssh $1 "ps -ef | grep elasticsearch | grep -w 'elasticsearch' | grep -v 'grep'" | grep bootstrap.Elasticsearch | awk '{print $2}'
 }
 ## 获取es集群健康节点数量
 es_colony_health(){
-    curl -sX GET http://${1}:9200/_cat/health?v | awk '{print $5}' | sed -n '2p'
+    curl -sX GET http://$1:9200/_cat/health?v | awk '{print $5}' | sed -n '2p'
 }
 
 echo "[Currently available nodes] `es_colony_health`"
@@ -354,7 +354,7 @@ echo "[Process exectute success^_^] time consuming `time_consuming` seconds"
 ```
 
 ## gp_delete_log
-```sh
+```shell
 ## /bin/sh
 start_time=`date +%s`
 gpip_list=(77.1.33.1 77.1.33.2 77.1.33.3 77.1.33.4 77.1.33.5 77.1.33.6 77.1.33.7 77.1.33.8 77.1.33.9 77.1.33.10 77.1.33.11 77.1.33.1 77.1.33.13 77.1.33.14)
@@ -386,7 +386,7 @@ echo "[Execute compute]: comsuming time `time_commsuming` seconds^_^"
 ```
 
 ## storm_stop_all
-```sh
+```shell
 ##!/bin/bash
 
 startTime=`date +%s`
@@ -437,7 +437,7 @@ echo "Time consuming `time_consuming` seconds"
 ```
 
 ## storm_start_all
-```sh
+```shell
 ##!/bin/bash
 
 startTime=`date +%s`
@@ -473,3 +473,40 @@ done
 
 echo "Time consuming `time_consuming` seconds"
 ```
+## pattern_equal
+```shell
+##!/bin/bash
+echo $1
+echo $2
+
+if [[ $1 =~ $2 ]]]; then
+  echo "equal"
+else
+  echo "not equal"
+fi
+```
+
+## count_group_by_keys
+```shell
+##!/bin/bash
+cat $1.* > merge.txt
+
+more merge.txt | grep 'keys' | awk -F ',' '{print [$1]++;}' END {for(i in count) {print count[i] " : " i}} | sort -n -r | head -n $2
+```
+
+## batch_request
+```shell
+##!/bin/bash
+request_uri="https://baidu.com"
+
+while read line
+do
+  request_method=`echo ${line} | awk -F ':' '{print $1}'`
+  request_url=`echo ${line} | awk -F ':' '{print $2}'`
+  echo "prepare request ${request_method} - ${request_uri}${request_url}"
+  echo "prepare request ${request_method} - ${request_uri}${request_url}" > ./request_result.txt
+  curl -k -H "header" -X "${request_method}" "${request_uri}${request_url}" >> ./request_result.txt
+  sleep $1
+done < ./request_list.txt
+```
+
