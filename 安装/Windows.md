@@ -134,3 +134,8 @@ windows + R 输入: regedit
 1.定位到
 HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge,右边窗口右键单击新建DWORD(32位)值,双击创建的新值,命名为RendererCodeIntegrityEnabled,并将值设定为0,重启Edge
 ```
+
+## win10 u盘制作
+```
+https://www.microsoft.com/zh-cn/software-download/windows10
+```
