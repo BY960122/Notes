@@ -11,13 +11,13 @@ mongod --dbpath C:\Software\MongoDB\data --config C:\Software\MongoDB\bin\mongod
 ```sh
 net start MongoDB
 net stop MongoDB
-# mongodb 6.0.0 windows 没有提供 mongo.exe 登录客户端,从 5.* 版本拷贝过来
-# 启动后需命令行登录执行初始化命令.否则navicat登录会报错 node is not in primary or recovering state
-![img.png](./../picture/MongoDB-Start.png)
-rs.initiate()
 ```
+### 备注: mongodb 6.0.0 windows 没有提供 mongo.exe 登录客户端,从 5.* 版本拷贝过来
+### 启动后需命令行登录执行初始化命令.否则navicat登录会报错 node is not in primary or recovering state
+![img.png](./../picture/MongoDB-Start.png)
 ## 4.设置用户密码,只能单独给一个库创建用户权限
 ```mongojs
+rs.initiate()
 use admin;
 db.createUser({user: 'root', pwd: 'By96o122', roles: [{ role: "root", db: "admin" }]});
 ```
