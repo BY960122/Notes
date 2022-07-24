@@ -5,12 +5,16 @@
 ## 1.设置环境变量
 ## 2.初始化数据目录,安装服务
 ```sh
-mongod --dbpath D:\Software\MongoDB\data --config D:\Software\MongoDB\mongo.conf --logpath D:\Software\MongoDB\log\mongodb.log --logappend --install --serviceName "MongoDB"
+mongod --dbpath C:\Software\MongoDB\data --config C:\Software\MongoDB\bin\mongod.cfg --logpath C:\Software\MongoDB\log\mongodb.log --logappend --install --serviceName "MongoDB"
 ```
 ## 3.启动服务,停止服务
 ```sh
 net start MongoDB
 net stop MongoDB
+# mongodb 6.0.0 windows 没有提供 mongo.exe 登录客户端,从 5.* 版本拷贝过来
+# 启动后需命令行登录执行初始化命令.否则navicat登录会报错 node is not in primary or recovering state
+![img.png](./../picture/MongoDB-Start.png)
+rs.initiate()
 ```
 ## 4.设置用户密码,只能单独给一个库创建用户权限
 ```mongojs
@@ -30,28 +34,29 @@ show users;
 ```mongojs
 db.system.users.remove({user:'root'});
 ```
-## 8.修改配置,mongo.conf
+## 8.修改配置,mongod.cfg,没有的文件直接新建
 ```sh
 # 配置IP端口
 net:
-	port: 27017
-	bindIp: 0.0.0.0
+    port: 27017
+    bindIp: 0.0.0.0
 # 数据路径
 storage:
-	dbPath: D:\Software\MongoDB\data
-journal:
-	enabled: true
+    dbPath: C:\Software\MongoDB\data
 # 日志文件
 systemLog:
-	path: D:\Software\MongoDB\log\mongodb.log
-	destination: file
-	logAppend: true
+    path: C:\Software\MongoDB\log\mongodb.log
+    destination: file
+    logAppend: true
 # 开启密码登录
+# windows 安装 openSSL http://slproweb.com/products/Win32OpenSSL.html
+# openssl rand -base64 666 > C:\Software\MongoDB\mongodb.keyfile
 security:
-	authorization: enabled
+    authorization: enabled
+    keyFile: C:\Software\MongoDB\mongodb.keyfile
 # 副本集
 replication:
-	reolSetName: replication
+    replSetName: "rs0"
 ```
 ## 重启后登录配置
 ```mongojs
