@@ -280,6 +280,10 @@ local-infile=1
 # 切分ibdata1
 innodb_file_per_table=1
 
+# 自动清除 binlog 日志,单位:天
+# 或执行sql: purge master logs before date_sub(now(), interval 1 day);
+expire_logs_days=1
+
 # 插入慢优化,配置前先备份旧配置,再到数据库查看相应默认值,一点点修改.
 # =1最安全,=2,系统崩溃时会丢失事物,=0裸奔,最快.有事物慎用
 innodb_flush_log_at_trx_commit=1
