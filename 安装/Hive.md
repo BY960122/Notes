@@ -33,7 +33,7 @@ export HADOOP_HOME=/opt/software/hadoop-3.2.1
     </property>
     <property>
         <name>javax.jdo.option.ConnectionPassword</name>
-        <value>By9216446o6</value>
+        <value>By96o122</value>
     </property>
     <property>
         <name>datanucleus.connectionPoolingType</name>

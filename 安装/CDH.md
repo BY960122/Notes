@@ -66,8 +66,8 @@ scp /etc/rc.local 192.168.1.213:/etc/
 create database cmf;
 create database amon;
 
-create user 'cmf'@'%' identified by 'By9216446o6'; 
-create user 'amon'@'%' identified by 'By9216446o6'; 
+create user 'cmf'@'%' identified by 'By96o122'; 
+create user 'amon'@'%' identified by 'By96o122'; 
 grant all on cmf.* to 'cmf'@'%' ;
 grant all on amon.* to 'amon'@'%';
 flush privileges;
@@ -133,7 +133,7 @@ com.cloudera.cmf.db.type=mysql
 com.cloudera.cmf.db.host=192.168.1.6
 com.cloudera.cmf.db.name=cmf
 com.cloudera.cmf.db.user=cmf
-com.cloudera.cmf.db.password=By9216446o6
+com.cloudera.cmf.db.password=By96o122
 com.cloudera.cmf.db.setupType=EXTERNAL
 ```
 ## 8.启动

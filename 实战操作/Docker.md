@@ -83,7 +83,7 @@ localhost:8088
 # mysql 设置挂载盘
 # :ro readonly,只能通过外部改边,容器内没有权限修改
 # :rw 可读可写
-docker run -d -p:3310:3306 -v /home/mysql/conf:/etc/mysql/conf.d -v /home/mysql/data:/var/lib/mysql:ro -e MYSQL_ROOT_PASSWORD=By9216446o6 --name mysql-docker mysql:5.7
+docker run -d -p:3310:3306 -v /home/mysql/conf:/etc/mysql/conf.d -v /home/mysql/data:/var/lib/mysql:ro -e MYSQL_ROOT_PASSWORD=By96o122 --name mysql-docker mysql:5.7
 
 # 具名挂载和匿名挂载
 # 具名挂载: -v 卷名:容器内路径

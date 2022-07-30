@@ -18,7 +18,7 @@ keytool.exe -genkeypair -alias "tomcat" -keyalg "RSA" -keystore "D:\Mysoft\apach
 # linux
 keytool -genkeypair -alias "tomcat" -keyalg "RSA" -keystore /opt/software/apache-tomcat-9.0.41/tomcat.keystore
 
-# 输入 密钥口令: By9216446o6 , 名字与姓氏: BYDylan 即可,其它直接回车,最后确认输入 y
+# 输入 密钥口令: By96o122 , 名字与姓氏: BYDylan 即可,其它直接回车,最后确认输入 y
 ```
 
 ### 2.修改配置文件
@@ -28,7 +28,7 @@ keytool -genkeypair -alias "tomcat" -keyalg "RSA" -keystore /opt/software/apache
 <Connector protocol="org.apache.coyote.http11.Http11NioProtocol"
            port="8080" maxThreads="200"
            scheme="https" secure="true" SSLEnabled="true"
-           keystoreFile="D:\Mysoft\apache-tomcat-9.0.41\tomcat.keystore" keystorePass="By9216446o6"
+           keystoreFile="D:\Mysoft\apache-tomcat-9.0.41\tomcat.keystore" keystorePass="By96o122"
            clientAuth="false" sslProtocol="TLS"/>
 ```
 

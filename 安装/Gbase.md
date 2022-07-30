@@ -30,7 +30,7 @@ dataHost = 192.168.1.211,192.168.1.212,192.168.1.213
 dbaUser = gbase
 dbaGroup = gbase
 dbaPwd = 'gbase'
-rootPwd = 'By9216446o6'
+rootPwd = 'By96o122'
 #rootPwdFile = rootPwd.json
 
 # 所有节点执行
@@ -51,7 +51,7 @@ cd /opt/software/gcinstall
 vim demo.hosts
 Hosts=192.168.1.211,192.168.1.212,192.168.1.213
 
-python2 gethostsid --hosts=demo.hosts -u root -p By9216446o6 -f by_hostsfinger.txt
+python2 gethostsid --hosts=demo.hosts -u root -p By96o122 -f by_hostsfinger.txt
 ```
 
 ## 4.导入 License

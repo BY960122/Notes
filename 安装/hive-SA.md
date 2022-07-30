@@ -50,7 +50,7 @@ export HIVE_AUX_JARS_PATH=D:\Mysoft\apache-hive-3.1.1\lib
     </property>
     <property>
         <name>javax.jdo.option.ConnectionPassword</name>
-        <value>By9216446o6</value>
+        <value>By96o122</value>
     </property>
     <property>
         <name>hive.exec.local.scratchdir</name>

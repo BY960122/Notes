@@ -24,7 +24,7 @@ cp /opt/software/apache-hive-3.1.1-bin/conf/hive-site.xml /opt/software/sqoop-1.
 ## 4.验证
 ```sh
 sqoop version
-sqoop list-databases --connect jdbc:mysql://192.168.1.6/hive --username root --password By9216446o6
+sqoop list-databases --connect jdbc:mysql://192.168.1.6/hive --username root --password By96o122
 ```
 
 # 阿里 DataX
@@ -53,7 +53,7 @@ sqoop list-databases --connect jdbc:mysql://192.168.1.6/hive --username root --p
                         ]
                     }],
                     "username": "root",
-                    "password": "By9216446o6"	
+                    "password": "By96o122"	
                 }
             },
             "writer": {
