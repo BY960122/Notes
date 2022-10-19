@@ -1,6 +1,8 @@
 # Docker 命令大全
+- https://docs.docker.com/engine/reference/run/
 
 ## 常用命令
+### 镜像
 ```sh
 # 查看所有镜像
 docker images
@@ -11,8 +13,8 @@ docker search mysql
 docker search mysql --filter=STARS=3000
 
 # 删除镜像
-docker rm -f 容器id
-docker rm -f 容器id1 容器id2 容器id3
+docker rm -f 镜像id
+docker rm -f 镜像id1 镜像id2 镜像id3
 docker rm -f $(docker images -aq)
 
 # 拉取镜像
@@ -31,6 +33,14 @@ docker run -d --name nginx01 -p 3344:80 nginx
 # es 启动很占内存,这样启动
 docker run -d --name elasticsearch -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" -e ES_JAVA_OPTS="-Xms64m -Xmx512m" elasticsearch:7.6.2
 
+# docker 图形化管理界面
+docker run -d -p 8088:9000 --restart=always -v /var/run/docker.sock:/var/run/docker.sock --privileged=true portainer/portainer
+访问
+localhost:8088
+```
+
+### 容器
+```sh
 # 列出所有运行的容器
 docker ps 
 # -a 正在运行 + 历史
@@ -42,11 +52,6 @@ exit
 
 # 退出但不通知
 ctrl + p + q
-
-# 删除容器(不能删除正在运行的容器)
-docker rm 容器id
-docker rm -f $(docker ps -aq)
-docker -a -q | xargs docker rm 
 
 # 停止容器
 docker start 容器id
@@ -65,17 +70,44 @@ docker stats
 docker inspect 容器id
 
 # 进入容器
-docker exec -it 容器id bashbashShell
 docker attach 容器id
+
+# 执行命令
+docker container exec --privileged a0a44148a673 ls /opt/software
 
 # 把容器内文件拷贝出来
 docker cp 容器id:/home/test.txt /home
+docker cp C:\\Downloads\\Python-3.9.1.tgz a0a44148a673:/opt/software
 # 把文件拷贝到容器里面
 
-# docker 图形化管理界面
-docker run -d -p 8088:9000 --restart=always -v /var/run/docker.sock:/var/run/docker.sock --privileged=true portainer/portainer
-访问
-localhost:8088
+# 提交容器为一个镜像
+docker commit -m="自定义容器-centos" -a="BYDylan" a0a44148a673 centos_custom:1.0
+```
+
+## 发布镜像
+```sh
+# 登录
+docker login -u by960122
+
+# 发布,一定要带版本号
+docker push by960122/centos_custom:1.0
+
+# 可以定义下版本号
+docker tag 镜像id by960122/centos_custom:1.0
+docker tag 84cecd33e2f8 by960122/centos_custom:1.0
+
+# 镜像保存到本地
+docker save -o C:\\Downloads\\centos_custom-1.0.tar centos_custom:1.0
+
+# 镜像导入
+docker load < centos_custom-1.0.tar
+docker load -i centos_custom-1.0.tar
+
+# 容器导出
+docker export -o C:\\Downloads\\centos_custom.tar centos_custom
+
+# 注意导入后变为镜像,而不是容器
+docker import C:\\Downloads\\centos_custom.tar
 ```
 
 ## 数据同步挂载
@@ -103,14 +135,10 @@ docker容器相互同步
 docker run -it --name docker01 容器名:版本号
 # 子容器,继承父容器
 docker run -it --name docker02 --volumns-from docker01
-
 ```
 
 ## Dockerfile
 ```sh
-# 提交镜像
-docker commit -m="描述信息" -a="作者" 容器id 目标镜像名:version
-
 # 所有命令都是大写
 # FROM 基础镜像,一切从这里开始
 # MAINTAINER 作者,姓名+邮箱
@@ -127,7 +155,7 @@ docker commit -m="描述信息" -a="作者" 容器id 目标镜像名:version
 
 # 示例1:创建一个自定义centos,名字一般命令为默认的 Dockerfile ,好处是可以不用加 -f 参数
 FROM centos
-MAINTAINER BYDylan<921644606@qq.com>
+MAINTAINER BYDylan<by960122@outlook.com>
 
 COPY readme.txt /usr/local/readme.txt
 
@@ -178,18 +206,6 @@ docker build -t 容器名 .
 
 # 启动
 docker run -d -P --name *** 容器名
-```
-
-## 发布镜像
-```sh
-# 登录
-docker login -u 921644606
-
-# 发布,一定要带版本号
-docker push 921644606/容器名:版本号
-
-# 可以定义下版本号
-docker tag 容器id 921644606/容器名:版本号
 ```
 
 ## 网络实战,搭建 Redis 集群
