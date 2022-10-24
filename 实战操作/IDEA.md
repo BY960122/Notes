@@ -6,8 +6,14 @@
 
 ### idea 运行问题:Command line is too long.Shorten command line
 ```xml
-<!-- 修改项目下 .idea\workspace.xml，找到标签 <component name="PropertiesComponent"> -->
+<!-- 修改项目下 .idea\workspace.xml找到标签 <component name="PropertiesComponent"> -->
 <property name="dynamic.classpath" value="true" />
+```
+
+### idea 初次分享代码仓到 github 报错: github代码仓为空,本地无法分析
+```txt
+之前提交代码保存过账号信息(用户名和密码)所以导致这次提交提示403错误
+打开本地Windows的cmd命令窗口输入 rundll32.exe keymgr.dll,KRShowKeyMgr 将之前存储的git提交时保留的用户名密码删除
 ```
 
 ### idea 初次提交代码到 github 报错: Can't finish GitHub sharing process,Successfully created project '--' on GitHub,but initial push failed:git@github.com: Permission denied (publickey).
