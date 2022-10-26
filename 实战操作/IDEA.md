@@ -4,6 +4,13 @@
 -Dlog4j.debug
 ```
 
+### pyspark3.1异常: Python worker failed to connect back
+```txt
+win10增加系统环境变量：
+key: PYSPARK_PYTHON
+value: python
+```
+
 ### idea 运行问题:Command line is too long.Shorten command line
 ```xml
 <!-- 修改项目下 .idea\workspace.xml找到标签 <component name="PropertiesComponent"> -->
