@@ -160,17 +160,101 @@ do
 done
 ```
 
-## zookeeper-start-all.sh
+## zookeeper-shell.sh
 ```shell
 ##!/bin/bash
 
-echo "Starting ZkServer..."
-for i in 1,2,3
-do 
-    ssh by20$i "source ~/.bash_profile;/opt/mysoft/zookeeper-3.5.1-alpha/bin/zkServer.sh start"
+if [ $# -lt 1 ]
+then 
+ echo "Usage: zookeeper-shell.sh start|stop"
+ exit
+fi
+case $1 in 
+start)
+for i in {1..3}
+do
+    echo "starting zookeeper by20$i..."
+    ssh by20$i "source ~/.bash_profile;/opt/software/zookeeper-3.6.1/bin/zkServer.sh start"
 done
+;;
+stop)
+for i in {1..3}
+do
+    echo "stoping zookeeper by20$i..."
+    ssh by20$i "source ~/.bash_profile;/opt/software/zookeeper-3.6.1/bin/zkServer.sh stop"
+done
+;;
+esac
+```
 
-elasticsearch-start-all
+## kafka-shell.sh
+```shell
+#!/bin/bash
+if [ $# -lt 1 ]
+then 
+ echo "Usage: kafka-shell.sh {start|stop|kc [topic]|kp [topic] |list |delete [topic] |describe [topic]}"
+ exit
+fi
+case $1 in 
+start)
+for i in by201 by202 by203
+do
+ echo "starting kafka $i..."
+ ssh $i "nohup /opt/software/kafka_2.12-2.8.1/bin/kafka-server-start.sh /opt/software/kafka_2.12-2.8.1/config/server.properties >> /opt/logs/kafka-logs/server.logs 2>&1 &" 
+done
+;;
+stop)
+for i in by201 by202 by203
+do
+ echo "stoping kafka $i..."
+ ssh $i /opt/software/kafka_2.12-2.8.1/bin/kafka-server-stop.sh
+done
+;;
+kc)
+if [ $2 ]
+then
+ /opt/software/kafka_2.12-2.8.1/bin/kafka-console-consumer.sh --bootstrap-server by201:9092,by202:9092,by203:9092 --topic $2
+else
+ echo "Usage: kafka-shell.sh {start|stop|kc [topic]|kp [topic] |list |delete [topic] |describe [topic]}"
+fi
+;;
+kp)
+if [ $2 ]
+then 
+ /opt/software/kafka_2.12-2.8.1/bin/kafka-console-producer.sh --broker-list by201:9092,by202:9092,by203:9092 --topic $2
+else
+ echo "Usage: kafka-shell.sh {start|stop|kc [topic]|kp [topic] |list |delete [topic] |describe [topic]}"
+fi
+;;
+list)
+/opt/software/kafka_2.12-2.8.1/bin/kafka-topics.sh --list --bootstrap-server by201:9092,by202:9092,by203:9092
+;;
+describe)
+if [ $2 ]
+then
+/opt/software/kafka_2.12-2.8.1/bin/kafka-topics.sh --describe --bootstrap-server by201:9092,by202:9092,by203:9092 --topic $2
+else
+echo "Usage: kafka-shell.sh {start|stop|kc [topic]|kp [topic] |list |delete [topic] |describe [topic]}"
+fi 
+;;
+delete)
+if [ $2 ]
+then
+/opt/software/kafka_2.12-2.8.1/bin/kafka-topics.sh --delete --bootstrap-server by201:9092,by202:9092,by203:9092 --topic $2
+else
+echo "Usage: kf.sh {start|stop|kc [topic]|kp [topic] |list 
+|delete [topic] |describe [topic]}"
+fi
+;;
+*)
+ echo "Usage: kf.sh {start|stop|kc [topic]|kp [topic] |list |delete [topic] |describe [topic]}"
+ exit
+;;
+esac
+```
+
+### elasticsearch-start-all.sh
+```shell
 ##!/bin/bash
 
 ## 耗时
@@ -179,7 +263,7 @@ time_consuming(){
     expr `date +%s` - ${startTime}
 }
 
-echo "Starting Elasticsearch cluster ........"
+echo "starting elasticsearch cluster ..."
 for ip in {1..3};
 do
     echo "[192.168.1.20${ip}] : Starting"
@@ -449,20 +533,20 @@ echo "Starting storm cluster ........"
 for ip in {1..1};
 do
     echo "[192.168.1.20${ip}] : Starting nimbus,ui"
-    ssh by20${ip} "source ~/.bash_profile;nohup storm nimbus > /opt/mysoft/apache-storm-2.1.0/logs/nimbus.log 2>&1 &"
-    ssh by20${ip} "source ~/.bash_profile;nohup storm ui > /opt/mysoft/apache-storm-2.1.0/logs/ui.log 2>&1 &"
+    ssh by20${ip} "source ~/.bash_profile;nohup storm nimbus > /opt/software/apache-storm-2.1.0/logs/nimbus.log 2>&1 &"
+    ssh by20${ip} "source ~/.bash_profile;nohup storm ui > /opt/software/apache-storm-2.1.0/logs/ui.log 2>&1 &"
 done
 
 for ip in {1..3};
 do
     echo "[192.168.1.20${ip}] : Starting logviewer"
-    ssh by20${ip} "source ~/.bash_profile;nohup storm logviewer > /opt/mysoft/apache-storm-2.1.0/logs/logviewer.log 2>&1 &"
+    ssh by20${ip} "source ~/.bash_profile;nohup storm logviewer > /opt/software/apache-storm-2.1.0/logs/logviewer.log 2>&1 &"
 done
 
 for ip in {2..3};
 do
     echo "[192.168.1.20${ip}] : Starting supervisor"
-    ssh by20${ip} "source ~/.bash_profile;nohup storm supervisor > /opt/mysoft/apache-storm-2.1.0/logs/supervisor.log 2>&1 &"
+    ssh by20${ip} "source ~/.bash_profile;nohup storm supervisor > /opt/software/apache-storm-2.1.0/logs/supervisor.log 2>&1 &"
 done
 
 for ip in {1..3};

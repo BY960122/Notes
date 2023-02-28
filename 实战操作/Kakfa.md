@@ -3,7 +3,7 @@
 
 ## 启动kafka服务节点
 ```sh
-nohup /opt/software/kafka_2.12-2.8.1/bin/kafka-server-start.sh /opt/software/kafka_2.12-2.8.1/config/server.properties >> /opt/software/kafka_2.12-2.8.1/logs/server.logs 2>&1 &
+nohup /opt/software/kafka_2.12-2.8.1/bin/kafka-server-start.sh /opt/software/kafka_2.12-2.8.1/config/server.properties >> /opt/logs/kafka-logs/server.logs 2>&1 &
 
 ## 终止kafka相关进程
 jps | grep -e SupportedKafka | awk '{print $1}' | xargs kill -9
