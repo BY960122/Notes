@@ -47,7 +47,7 @@ maxmemory 536870912
 dbfilename dump.rdb
 pidfile /var/run/redis_6379.pid
 appendfilename "appendonly.aof"
-requirepass xf_server
+requirepass By96o122
 cluster-enabled yes
 cluster-config-file nodes-6379.conf
 
@@ -57,14 +57,14 @@ maxmemory 536870912
 dbfilename dump_back.rdb
 pidfile /var/run/redis_6380.pid
 appendfilename "appendonly_back.aof"
-requirepass xf_server
+requirepass By96o122
 cluster-enabled yes
 cluster-config-file nodes-6380.conf
 ```
 ## 5.启动
 ```sh
-./src/redis-server /opt/software/redis-5.0.8/redis.conf > log.txt 2>&1 &
-./src/redis-server /opt/software/redis-5.0.8/redis_backup.conf > log_backup.txt 2>&1 &
+./src/redis-server /opt/software/redis-6.2.1/redis.conf > log.txt 2>&1 &
+./src/redis-server /opt/software/redis-6.2.1/redis_backup.conf > log_backup.txt 2>&1 &
 ```
 ## 6.检验是否成功启动
 ```sh
@@ -80,7 +80,7 @@ ps aux | grep -w redis-server | grep -v grep | awk '{print $2}' | xargs kill
 auth "cqdsjb"
 
 # 集群模式连接
-./src/redis-cli -h 192.168.1.201 -p 6379 -a xf_server -c 
+./src/redis-cli -h 192.168.1.201 -p 6379 -a By96o122 -c 
 ```
 ## 8.创建redis集群
 ### 须满足条件一: 6个redis实例均正常启动,并且可连接
@@ -100,7 +100,7 @@ auth "cqdsjb"
 ```
 ## 9.连接集群验证
 ```sh
-./src/redis-cli -h 192.168.1.201 -p 6379 -a xf_server -c 
+./src/redis-cli -h 192.168.1.201 -p 6379 -a By96o122 -c 
 
 # 查看集群管理命令
 redis-cli --cluster help
