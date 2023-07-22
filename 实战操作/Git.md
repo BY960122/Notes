@@ -8,13 +8,7 @@ git config --global user.email 921644606@qq.com
 git config --global user.password By96o122
 
 git config --list
-```
 
-## 设置本地分支
-```sh
-git init
-# 设置远程仓库
-git remote add 定义的远程主机名remote_repository_name https://github.com/ByDylan-YH/Notes.git
 # 创建本地分支
 git branch local_branch
 # 切换分支
@@ -26,8 +20,29 @@ git branch
 git checkout -b local_branch
 # 合并分支
 git merge local_branch
+# 修改分支名分支
+git branch -m master main
 # 删除分支
 git branch -d local_branch
+```
+
+## 推送分支
+```sh
+git init
+# 设置远程仓库
+git remote add origin https://github.com/BY960122/spring-boot3_example.git
+
+git add README.md
+# 提交全部
+git add .
+
+git commit -m "first commit"
+
+# 修改分支名
+git branch -M main
+
+# 推送
+git push -u origin main --forace
 ```
 
 ## 拉取分支
