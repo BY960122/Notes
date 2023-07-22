@@ -20,6 +20,7 @@ mysqld --initialize --console (这里会产生密码)
 ```
 ## 4.再执行
 ```sh
+cd C:\Software\MySQL\bin
 mysqld --install MySQL
 net start mysql
 ```
