@@ -30,6 +30,11 @@ value: python
 https://github.com/ByDylan-YH/srping-boot_hadoop.git
 ```
 
+### idea 关闭一直显示 close project...
+
+```txt
+主页 Help -> Find Action -> 输入 Registry -> 禁用 ide.await.scope.completion
+```
 ### maven 添加jar包到本地仓库
 ```sh
 # groupId,artifactId,version 照着这格式随便填

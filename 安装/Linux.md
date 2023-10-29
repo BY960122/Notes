@@ -1,34 +1,107 @@
 # 下载地址
-- https://mirrors.aliyun.com/centos/
+
+- https://mirrors.aliyun.com/centos/8.5.2111/isos/x86_64/?spm=a2c6h.25603864.0.0.54f344cb52OwJ1
+- [centos7和8的区别](https://www.ycyaw.com/Linux/317.html)
 
 ## 修改网卡配置
 ```sh
 vi /etc/sysconfig/network-scripts/ifcfg-enp0s3
 
-# centos 7
-systemctl restart network
-# centos 8
-systemctl restart NetworkManager
-ip addr
-ipconfig
-```
-### 网络地址转换(NAT)模式
-```sh
+# 网络地址转换(NAT)模式
 ONBOOT=yes
-```
-### 桥接网卡模式
-```sh
+# 桥接网卡模式
 BOOTPROTO=static
 ONBOOT=yes
 IPADDR=192.168.1.201
 NETMASK=255.255.255.0
-GETEWAY=192.168.1.1
+GATEWAY=192.168.1.1
 DNS1=192.168.1.1
+
+# 关闭防火墙
+systemctl status firewalld
+systemctl stop firewalld
+systemctl disable firewalld
+
+# centos 7
+systemctl restart network
+
+ipconfig
+# centos 8
+# 确认网卡激活
+nmcli connection up enp0s3
+# 检查接口是否有正确的 IP 地址分配
+ip addr show
+# 重启网络管理器
+systemctl restart NetworkManager
+systemctl enable NetworkManager
+# 验证
+ping baidu.com
+```
+
+## Centos7修改repo源配置
+
+- http://mirrors.aliyun.com/repo/Centos-7.repo
+- http://mirrors.163.com/.help/CentOS7-Base-163.repo
+
+## Centos8修改repo源配置
+
+```sh
+rm -rf /etc/yum.repos.d/*
+vi /etc/yum.repos.d/CentOS-Base.repo
+
+[base]
+name=CentOS-8.5.2111 - Base - mirrors.aliyun.com
+baseurl=http://mirrors.aliyun.com/centos-vault/8.5.2111/BaseOS/$basearch/os/
+        http://mirrors.aliyuncs.com/centos-vault/8.5.2111/BaseOS/$basearch/os/
+        http://mirrors.cloud.aliyuncs.com/centos-vault/8.5.2111/BaseOS/$basearch/os/
+gpgcheck=0
+gpgkey=http://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-Official
+ 
+#additional packages that may be useful
+[extras]
+name=CentOS-8.5.2111 - Extras - mirrors.aliyun.com
+baseurl=http://mirrors.aliyun.com/centos-vault/8.5.2111/extras/$basearch/os/
+        http://mirrors.aliyuncs.com/centos-vault/8.5.2111/extras/$basearch/os/
+        http://mirrors.cloud.aliyuncs.com/centos-vault/8.5.2111/extras/$basearch/os/
+gpgcheck=0
+gpgkey=http://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-Official
+ 
+#additional packages that extend functionality of existing packages
+[centosplus]
+name=CentOS-8.5.2111 - Plus - mirrors.aliyun.com
+baseurl=http://mirrors.aliyun.com/centos-vault/8.5.2111/centosplus/$basearch/os/
+        http://mirrors.aliyuncs.com/centos-vault/8.5.2111/centosplus/$basearch/os/
+        http://mirrors.cloud.aliyuncs.com/centos-vault/8.5.2111/centosplus/$basearch/os/
+gpgcheck=0
+enabled=0
+gpgkey=http://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-Official
+ 
+[PowerTools]
+name=CentOS-8.5.2111 - PowerTools - mirrors.aliyun.com
+baseurl=http://mirrors.aliyun.com/centos-vault/8.5.2111/PowerTools/$basearch/os/
+        http://mirrors.aliyuncs.com/centos-vault/8.5.2111/PowerTools/$basearch/os/
+        http://mirrors.cloud.aliyuncs.com/centos-vault/8.5.2111/PowerTools/$basearch/os/
+gpgcheck=0
+enabled=0
+gpgkey=http://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-Official
+
+[AppStream]
+name=CentOS-8.5.2111 - AppStream - mirrors.aliyun.com
+baseurl=http://mirrors.aliyun.com/centos-vault/8.5.2111/AppStream/$basearch/os/
+        http://mirrors.aliyuncs.com/centos-vault/8.5.2111/AppStream/$basearch/os/
+        http://mirrors.cloud.aliyuncs.com/centos-vault/8.5.2111/AppStream/$basearch/os/
+gpgcheck=0
+gpgkey=http://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-Official
+
+# 测试
+# centos7: sudo dhclient
+yum clean all & yum makecache & yum -y update
+yum install -y vim tar
 ```
 
 ## 修改主机名 Hostname
 ```sh
-vi /etc/hostname
+vim /etc/hostname
 by201
 
 vim /etc/hosts
@@ -54,71 +127,9 @@ cd /root/.ssh  id_rsa(私钥) id_rsa.pub(公钥)
 ssh-copy-id -i /root/.ssh/id_rsa.pub root@192.168.1.201
 ssh-copy-id -i /root/.ssh/id_rsa.pub root@192.168.1.202
 ssh-copy-id -i /root/.ssh/id_rsa.pub root@192.168.1.203
-```
 
-## Centos7修改repo源配置
-- http://mirrors.aliyun.com/repo/Centos-7.repo
-- http://mirrors.163.com/.help/CentOS7-Base-163.repo
-
-## Centos8修改repo源配置
-```sh
-cd /etc/yum.repos.d/
-
-[BaseOS]
-name=CentOS-$releasever - Base - mirrors.aliyun.com
-failovermethod=priority
-baseurl=https://mirrors.aliyun.com/centos/$releasever/BaseOS/$basearch/os/
-        http://mirrors.aliyuncs.com/centos/$releasever/BaseOS/$basearch/os/
-        http://mirrors.cloud.aliyuncs.com/centos/$releasever/BaseOS/$basearch/os/
-gpgcheck=1
-gpgkey=https://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-Official
- 
-##additional packages that may be useful
-[Extras]
-name=CentOS-$releasever - Extras - mirrors.aliyun.com
-failovermethod=priority
-baseurl=https://mirrors.aliyun.com/centos/$releasever/extras/$basearch/os/
-        http://mirrors.aliyuncs.com/centos/$releasever/extras/$basearch/os/
-        http://mirrors.cloud.aliyuncs.com/centos/$releasever/extras/$basearch/os/
-gpgcheck=1
-gpgkey=https://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-Official
- 
-##additional packages that extend functionality of existing packages
-[centosplus]
-name=CentOS-$releasever - Plus - mirrors.aliyun.com
-failovermethod=priority
-baseurl=https://mirrors.aliyun.com/centos/$releasever/centosplus/$basearch/os/
-        http://mirrors.aliyuncs.com/centos/$releasever/centosplus/$basearch/os/
-        http://mirrors.cloud.aliyuncs.com/centos/$releasever/centosplus/$basearch/os/
-gpgcheck=1
-enabled=0
-gpgkey=https://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-Official
- 
-[PowerTools]
-name=CentOS-$releasever - PowerTools - mirrors.aliyun.com
-failovermethod=priority
-baseurl=https://mirrors.aliyun.com/centos/$releasever/PowerTools/$basearch/os/
-        http://mirrors.aliyuncs.com/centos/$releasever/PowerTools/$basearch/os/
-        http://mirrors.cloud.aliyuncs.com/centos/$releasever/PowerTools/$basearch/os/
-gpgcheck=1
-enabled=0
-gpgkey=https://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-Official
-
-[AppStream]
-name=CentOS-$releasever - AppStream - mirrors.aliyun.com
-failovermethod=priority
-baseurl=https://mirrors.aliyun.com/centos/$releasever/AppStream/$basearch/os/
-        http://mirrors.aliyuncs.com/centos/$releasever/AppStream/$basearch/os/
-        http://mirrors.cloud.aliyuncs.com/centos/$releasever/AppStream/$basearch/os/
-gpgcheck=1
-gpgkey=https://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-Official
-```
-
-## 测试
-```sh
-sudo dhclient
-yum -y update
-yum install -y vim net-tools lsof tree npm nodejs git zip mlocate httpd createrepo iptables iptables-services tar chrony bzip2 
+# 验证
+ssh by201
 ```
 
 ## 防火墙,iptables安装

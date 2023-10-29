@@ -1,5 +1,6 @@
 # 下载 Hive
 - http://archive.apache.org/dist/hive/
+- https://mirror.tuna.tsinghua.edu.cn/apache/hive/
 
 ## 1.配置环境变量
 ```sh
@@ -101,6 +102,8 @@ sh /opt/software/apache-hive-3.1.1/bin/schematool -dbType mysql -initSchema
 ```
 ## 5.HIVE 整合 Spark
 ```http
+由于hive的源码对应了spark,scala版本,自定义安装需手动编译hive,参考文档<windows无法编译,涉及bash,尝试用git bash无法成功>:
+https://www.cnblogs.com/Darlin356230410/p/14879144.html
 https://cwiki.apache.org/confluence/display/Hive/Hive+on+Spark%3A+Getting+Started
 ```
 ### hive-site.xml

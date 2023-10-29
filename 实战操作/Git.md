@@ -3,7 +3,8 @@
 
 ## 常用命令
 ```sh
-git config --global user.name ByDylan-YH
+git config --global init.defaultbranch main
+git config --global user.name BYDylan
 git config --global user.email 921644606@qq.com
 git config --global user.password By96o122
 
@@ -30,7 +31,7 @@ git branch -d local_branch
 ```sh
 git init
 # 设置远程仓库
-git remote add origin https://github.com/BY960122/spring-boot3_example.git
+git remote add github https://gitee.com/fuqiangma/demo.git
 
 git add README.md
 # 提交全部
@@ -42,7 +43,7 @@ git commit -m "first commit"
 git branch -M main
 
 # 推送
-git push -u origin main --forace
+git push -u github master
 ```
 
 ## 拉取分支
@@ -50,7 +51,7 @@ git push -u origin main --forace
 # 拉取远程主机 remote_repository_name,remote_branch 分支与本地 local_branch 合并
 git pull remote_repository_name remote_branch:local_branch
 # 如果已经切换了分支,可以省略 :local_branch
-git pull remote_repository_name remote_branch
+git pull github master:main
 ```
 
 ## 提交流程

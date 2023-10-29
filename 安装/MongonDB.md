@@ -3,9 +3,9 @@
 
 # Windows安装
 ## 1.设置环境变量
-## 2.初始化数据目录,安装服务
+## 2.初始化数据目录,安装服务<cfg文件自己加上>
 ```sh
-mongod --dbpath C:\Software\MongoDB\data --config C:\Software\MongoDB\bin\mongod.cfg --logpath C:\Software\MongoDB\log\mongodb.log --logappend --install --serviceName "MongoDB"
+mongod --config C:\Software\MongoDB\bin\mongod.cfg -replSet rep0 --install --serviceName "MongoDB"
 ```
 ## 3.启动服务,停止服务
 ```sh
@@ -56,7 +56,9 @@ security:
     keyFile: C:\Software\MongoDB\mongodb.keyfile
 # 副本集
 replication:
-    replSetName: "rs0"
+    replSetName: "rep0"
+setParameter:
+   enableLocalhostAuthBypass: false
 ```
 ## 重启后登录配置
 ```mongojs

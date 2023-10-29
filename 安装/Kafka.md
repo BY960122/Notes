@@ -26,6 +26,18 @@ bootstrap.servers=192.168.1.201:9092,192.168.1.202:9092,192.168.1.203:9092
 dataDir=/opt/software/zookeeper-3.6.1/zookeeper
 ```
 
+## windows 启动
+
+### 注意 java home
+
+```bat
+cd C:\Software\kafka_2.12-3.6.0\bin\windows
+zookeeper-server-start.bat C:\Software\kafka_2.12-3.6.0\config\zookeeper.properties
+
+kafka-server-start.bat C:\Software\kafka_2.12-3.6.0\config\server.properties
+
+```
+
 ### 可能出现的报错
 ## 1./opt/software/kafka_2.12-2.8.1/bin/kafka-run-class.sh: line 330: exec: java: not found
 ```shell
@@ -35,3 +47,4 @@ JAVA="/opt/software/jdk1.8.0_291/bin/java"
 scp /opt/software/kafka_2.12-2.8.1/bin/kafka-run-class.sh 192.168.1.202:/opt/software/kafka_2.12-2.8.1/bin/
 scp /opt/software/kafka_2.12-2.8.1/bin/kafka-run-class.sh 192.168.1.203:/opt/software/kafka_2.12-2.8.1/bin/
 ```
+

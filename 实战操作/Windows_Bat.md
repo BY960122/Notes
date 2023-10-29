@@ -1,5 +1,6 @@
 ## 连接Ftp
-```sh
+
+```bat
 echo off
 set ftpUser=wqy_1
 set ftpPass=wqy@123
@@ -37,7 +38,8 @@ del /s /Q E:\test\busy\
 ```
 
 ## 文件合并
-```sh
+
+```bat
 @echo off
 set dest=D:\KLI\RAW_TO_ODS\ktr.txt
 set src=D:\KLI\RAW_TO_ODS\SJCK
@@ -53,12 +55,14 @@ type "%%i" >> %dest%
 ```
 
 ## 批量提取指定后缀的文件名
-```sh
+
+```bat
 for /r D:\Schoolbags %%a in (*.pdf) do echo %%~na >>生成文件.txt
 ```
 
 ## 增量拷贝文件夹 /d 为增量
-```sh
+
+```bat
 @echo off
 set target_dir=C:\mysoft\Apache-maven-3.6.3\mvnRespo
 set src_dir=\\tsclient\D\Mysoft\apache-maven-3.6.3\mvnRespo
@@ -67,6 +71,14 @@ pause
 ```
 
 ## 快速关机
-```sh
+
+```bat
 shutdown.exe /s /t 0
+```
+
+## 清理临时文件
+
+```bat
+RD %TEMP% /S/Q
+MKDIR %TEMP%
 ```

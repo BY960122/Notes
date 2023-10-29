@@ -26,9 +26,9 @@ bin/kafka-producer-perf-test.sh --num-records 100000 --topic test --producer-pro
 kafka-topics.sh --create --topic bingo --replication-factor 3 --partitions 3 --zookeeper by201:2181
 
 ## 查看topic的详情
-kafka-topics.sh --describe --zookeeper 192.168.1.201:2181 --topic bingo 
+kafka-topics.sh --describe --bootstrap-server 127.0.0.1:9092 --zookeeper 192.168.1.201:2181 --topic bingo 
 
-kafka-topics.sh --list --zookeeper 192.168.1.201:2181 --topic test
+kafka-topics.sh --list --bootstrap-server 127.0.0.1:9092 --zookeeper 192.168.1.201:2181 --topic test
 
 ## 删除topic
 ## 注意:此种删除方式仅仅只是逻辑形式上的删除,其topic的数据并没有得到真正的删除,要想真正的删除topic中的数据,只能是到kafka数据存放目录下去一一删除,
